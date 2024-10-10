@@ -10,17 +10,25 @@ Description:
 
 Language: Python, specifically, PyQt
 
-How to Install: follow the instructions on this page: https://www.riverbankcomputing.com/static/Docs/PyQt6/installation.html#installing-from-wheels
+How to Install: follow the instructions on this page: 
+
+https://www.riverbankcomputing.com/static/Docs/PyQt6/installation.html#installing-from-wheels
 
 or 
 
-type
+type:
 
 "pip install PyQt6" in your terminal.
 
-Here is a handy guide for learning how to use PyQt: https://realpython.com/python-pyqt-gui-calculator/#:~:text=PyQt%20is%20a%20Python%20binding,graphical%20user%20interfaces%20(GUIs).
+Here is a handy guide for learning how to use PyQt: 
 
-IDE: 
+https://realpython.com/python-pyqt-gui-calculator/#:~:text=PyQt%20is%20a%20Python%20binding,graphical%20user%20interfaces%20(GUIs).
+
+
+
+IDE: The preferred IDE is the App known as "QT" it is free with an educational license, to apply for that license and then download the IDE go here:
+
+https://www.qt.io/qt-educational-license#application 
 
 
 
