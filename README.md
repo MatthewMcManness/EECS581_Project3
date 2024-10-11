@@ -26,13 +26,10 @@ https://realpython.com/python-pyqt-gui-calculator/#:~:text=PyQt%20is%20a%20Pytho
 
 
 
-IDE: The preferred IDE is the App known as "QT" it is free with an educational license, to apply for that license and then download the IDE go here:
-
-https://www.qt.io/qt-educational-license#application 
+IDE: Preferred: VScode
 
 
-
-How to run: 
+How to run: If you use VScode you can press f5 to run the code.
 
 
 
