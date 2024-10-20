@@ -4,25 +4,19 @@ A project created by Matthew McManness [2210261], Manvir Kaur [3064194], Magaly 
 for further documentation see Documents directory.
 
 Description: 
-	This proposal outlines the development of an all-in-one calendar and to-do list application using Python and PyQt for the user interface. The app will feature an intuitive and visually appealing layout, allowing users to easily manage both their schedules and tasks in one cohesive platform. By leveraging PyQt, the app will support a rich set of functionalities, including event creation, task prioritization, recurring reminders, and data persistence. Users will benefit from an efficient, customizable tool that works across multiple operating systems, ensuring they can stay organized regardless of the device they use.
+	This proposal outlines the development of a mobile-friendly calendar and to-do list application using Python with Kivy and KivyMD for the user interface. The app will feature a modern and clean design, similar to popular productivity apps, with a bottom navigation bar to easily switch between the calendar and to-do list views. The Calendar section will display a grid for the current month, allowing users to view and interact with each day, while the To-Do List section will provide a scrollable list of tasks with the ability to add, check, and remove tasks. The user interface is built with KivyMD's material design components, providing a sleek and responsive look that fits perfectly on mobile devices.
 
-	Utilizing PyQt for the entire user interface is an ideal choice due to its flexibility, scalability, and cross-platform compatibility. With PyQt’s extensive widget set and customization options, the app can offer a modern and user-friendly experience while being highly responsive. PyQt also simplifies event handling and UI management, enabling smooth development of complex features like recurring tasks, notifications, and personalized settings. This approach will result in a powerful, professional-grade application that enhances productivity and can be easily expanded with new features in future updates.
+	Utilizing Kivy and KivyMD ensures cross-platform compatibility and a professional, mobile-optimized experience. Kivy’s layout flexibility makes it ideal for creating responsive designs that adapt to different screen sizes, while KivyMD’s material design elements provide a polished and user-friendly interface. The bottom navigation bar and scrollable layouts for both calendar and to-do list views will offer an intuitive experience for users. This approach allows for easy expansion with future features, such as adding events or task notifications, ensuring the app is scalable and future-ready.
 
-Language: Python, specifically, PyQt
+Language: Python, specifically, Kivy
 
 How to Install: follow the instructions on this page: 
 
-https://www.riverbankcomputing.com/static/Docs/PyQt6/installation.html#installing-from-wheels
-
-or 
 
 type:
 
-"pip install PyQt6" in your terminal.
+"pip install Kivy Kivymd" in your terminal.
 
-Here is a handy guide for learning how to use PyQt: 
-
-https://realpython.com/python-pyqt-gui-calculator/#:~:text=PyQt%20is%20a%20Python%20binding,graphical%20user%20interfaces%20(GUIs).
 
 
 
