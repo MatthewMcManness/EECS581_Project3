@@ -99,6 +99,7 @@ class AddEventModal(ModalView):
         print(f"Event '{event_name}' scheduled for {event_date}")
         self.dismiss()
 
+
 # Custom Date Picker with Time Selection
 class DatePicker(Popup):
     def __init__(self, modal, **kwargs):
@@ -173,6 +174,79 @@ class DatePicker(Popup):
         self.modal.deadline_label.text = f"Deadline: {selected_datetime}"
         self.dismiss()
 
+class RepeatOptionsModal(ModalView):
+    """A modal with repeat options: Does not repeat, Daily, Weekly, Monthly."""
+    def __init__(self, task_modal, **kwargs):
+        super().__init__(**kwargs)
+        self.size_hint = (0.6, 0.4)
+        self.auto_dismiss = False
+        self.task_modal = task_modal
+
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+        # Repeat options
+        options = ["Does not repeat", "Daily repeat", "Weekly repeat", "Monthly repeat"]
+        for option in options:
+            button = Button(text=option, size_hint_y=None, height=50)
+            button.bind(on_release=self.set_repeat_option)
+            layout.add_widget(button)
+
+        # Cancel button
+        cancel_button = Button(text="CANCEL", size_hint_y=None, height=50, on_release=self.dismiss)
+        layout.add_widget(cancel_button)
+
+        self.add_widget(layout)
+
+    def set_repeat_option(self, instance):
+        """Set the selected repeat option and update the task modal."""
+        self.task_modal.repeat_button.text = instance.text  # Update the task modal button text
+        self.dismiss()
+
+# Category Modals
+class CategoryModal(ModalView):
+    def __init__(self, task_modal, **kwargs):
+        super().__init__(**kwargs)
+        self.task_modal = task_modal
+        self.size_hint = (0.8, 0.4)
+
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        self.new_category_input = TextInput(hint_text="Enter new category")
+        layout.add_widget(self.new_category_input)
+
+        button_layout = BoxLayout(orientation='horizontal', spacing=10)
+        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(Button(text="SAVE", on_release=self.save_category))
+        layout.add_widget(button_layout)
+
+        self.add_widget(layout)
+
+    def save_category(self, *args):
+        new_category = self.new_category_input.text.strip()
+        if new_category and new_category not in self.task_modal.categories:
+            self.task_modal.categories.append(new_category)
+            self.task_modal.category_spinner.values = self.task_modal.categories + ["Add New Category"]
+            CategoryConfirmationModal(new_category).open()
+        else:
+            DuplicateCategoryModal().open()
+        self.dismiss()
+
+class DuplicateCategoryModal(ModalView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.size_hint = (0.6, 0.3)
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        layout.add_widget(Label(text="This category already exists."))
+        layout.add_widget(Button(text="OK", on_release=self.dismiss))
+        self.add_widget(layout)
+
+class CategoryConfirmationModal(ModalView):
+    def __init__(self, category_name, **kwargs):
+        super().__init__(**kwargs)
+        self.size_hint = (0.6, 0.3)
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        layout.add_widget(Label(text=f"Category '{category_name}' added successfully!"))
+        layout.add_widget(Button(text="OK", on_release=self.dismiss))
+        self.add_widget(layout)
 # Modal for Adding a New Task
 class AddTaskModal(ModalView):
     def __init__(self, **kwargs):
@@ -188,6 +262,7 @@ class AddTaskModal(ModalView):
         self.title_input = TextInput(hint_text="Task Title")
         layout.add_widget(self.title_input)
 
+        # Deadline section
         deadline_layout = BoxLayout(orientation='horizontal', spacing=10)
         self.deadline_label = Label(text="Pick a deadline", size_hint_x=0.8)
         deadline_layout.add_widget(self.deadline_label)
@@ -196,12 +271,15 @@ class AddTaskModal(ModalView):
         deadline_layout.add_widget(pick_date_button)
         layout.add_widget(deadline_layout)
 
+        # Repeat button (opens RepeatOptionsModal)
         self.repeat_button = Button(text="Does not repeat", on_release=self.open_repeat_window)
         layout.add_widget(self.repeat_button)
 
+        # Notes input
         self.notes_input = TextInput(hint_text="Notes", multiline=True)
         layout.add_widget(self.notes_input)
 
+        # Category spinner
         category_layout = BoxLayout(orientation='horizontal', spacing=10)
         self.category_spinner = Spinner(
             text="Select Category",
@@ -213,9 +291,11 @@ class AddTaskModal(ModalView):
         category_layout.add_widget(self.category_spinner)
         layout.add_widget(category_layout)
 
+        # Applied categories layout
         self.applied_categories_layout = BoxLayout(orientation='vertical', spacing=5)
         layout.add_widget(self.applied_categories_layout)
 
+        # Action buttons
         button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
         button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
         button_layout.add_widget(Button(text="SAVE", on_release=self.save_task))
@@ -227,7 +307,8 @@ class AddTaskModal(ModalView):
         DatePicker(self).open()
 
     def open_repeat_window(self, instance):
-        print("Open Repeat Window")
+        """Open the Repeat Options modal."""
+        RepeatOptionsModal(self).open()
 
     def on_category_selected(self, spinner, text):
         if text == "Add New Category":
@@ -263,6 +344,7 @@ class AddTaskModal(ModalView):
 
         print("Task Saved:", task_data)
         self.dismiss()
+
 
 if __name__ == "__main__":
     BusyBeeApp().run()
