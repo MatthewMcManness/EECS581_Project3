@@ -1,0 +1,48 @@
+ScreenManager:
+    id: screen_manager
+    CalendarView:
+    ToDoListView:
+
+<CalendarView>:
+    name: "calendar"
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDLabel:
+            text: "Calendar View"
+            halign: "center"
+            size_hint_y: 0.6
+
+        BoxLayout:
+            size_hint_y: 0.2
+            MDFlatButton:
+                text: "Open Add Event Popup"
+                on_release: app.open_add_event_window()
+
+        BoxLayout:
+            size_hint_y: 0.2
+            MDFlatButton:
+                text: "To To-Do List"
+                on_release: app.switch_to_screen("todo")
+
+<ToDoListView>:
+    name: "todo"
+    BoxLayout:
+        orientation: 'vertical'
+
+        MDLabel:
+            text: "To-Do List View"
+            halign: "center"
+            size_hint_y: 0.6
+
+        BoxLayout:
+            size_hint_y: 0.2
+            MDFlatButton:
+                text: "Open Add Task Popup"
+                on_release: app.open_add_task_window()
+
+        BoxLayout:
+            size_hint_y: 0.2
+            MDFlatButton:
+                text: "To Calendar"
+                on_release: app.switch_to_screen("calendar")

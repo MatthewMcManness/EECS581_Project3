@@ -10,15 +10,10 @@ Description:
 
 Language: Python, specifically, Kivy
 
-How to Install: follow the instructions on this page: 
-
-
+How to Install: 
 type:
 
 "pip install Kivy Kivymd" in your terminal.
-
-
-
 
 IDE: Preferred: VScode
 
