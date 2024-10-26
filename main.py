@@ -74,6 +74,65 @@ class BusyBeeApp(MDApp):
         """Initializes the app and loads the KV file."""
         Builder.load_file("busybee.kv")
         screen_manager = ScreenManager(transition=NoTransition())
+        screen_manager.add_widget(CalendarView(nafrom kivy.lang import Builder
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.screenmanager import ScreenManager, NoTransition
+from kivymd.app import MDApp
+from kivymd.uix.screen import MDScreen
+from kivymd.uix.dialog import MDDialog
+from kivymd.uix.button import MDFlatButton
+from kivymd.uix.label import MDLabel
+
+# Calendar View Screen
+class CalendarView(MDScreen):
+    pass  # TODO: Add logic to display calendar grid dynamically. (Mariam)
+
+# To-Do List View Screen
+class ToDoListView(MDScreen):
+    pass  # TODO: Add logic to display and manage task items. (Manvir)
+
+# Modal for Adding a New Task
+class AddTaskWindow(BoxLayout):
+    def open(self):
+        """Opens the Add Task dialog."""
+        dialog = MDDialog(
+            title="Add New Task",
+            type="custom",
+            content_cls=self,
+            buttons=[
+                MDFlatButton(text="CLOSE", on_release=lambda x: dialog.dismiss()),
+            ],
+        )
+        # TODO: Add input fields here. (Matthew)
+        dialog.content_cls.add_widget(
+            MDLabel(text="Task Name: (Enter task here)", halign="center")
+        )
+        dialog.open()
+
+# Modal for Adding a New Event
+class AddEventWindow(BoxLayout):
+    def open(self):
+        """Opens the Add Event dialog."""
+        dialog = MDDialog(
+            title="Add New Event",
+            type="custom",
+            content_cls=self,
+            buttons=[
+                MDFlatButton(text="CLOSE", on_release=lambda x: dialog.dismiss()),
+            ],
+        )
+        # TODO: Add input fields here. (Shravya)
+        dialog.content_cls.add_widget(
+            MDLabel(text="Event Name: (Enter event here)", halign="center")
+        )
+        dialog.open()
+
+# Main App with ScreenManager
+class BusyBeeApp(MDApp):
+    def build(self):
+        """Initializes the app and loads the KV file."""
+        Builder.load_file("busybee.kv")
+        screen_manager = ScreenManager(transition=NoTransition())
         screen_manager.add_widget(CalendarView(name="calendar"))
         screen_manager.add_widget(ToDoListView(name="todo"))
         return screen_manager
