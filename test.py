@@ -9,7 +9,12 @@ from kivy.uix.screenmanager import ScreenManager, NoTransition, Screen  # Manage
 from kivy.uix.textinput import TextInput  # Input field for entering text
 from kivy.uix.button import Button  # Standard button widget
 from kivy.uix.spinner import Spinner  # Dropdown-style component to select from options
+from kivy.uix.relativelayout import RelativeLayout  # Used in populate_calendar
+from kivy.metrics import dp  # For density-independent pixels
+from kivy.properties import StringProperty  # Reactive property to update the label
 from kivy.app import App  # Main class for running the Kivy app
+from kivy.clock import Clock
+from calendar import monthcalendar  # To generate the month's calendar layout
 from datetime import datetime, timedelta  # For working with dates and times
 
 ##################### Main App Class with ScreenManager #####################
@@ -43,8 +48,81 @@ class BusyBeeApp(App):
 
 ######################### Calendar View Screen ##########################
 class CalendarView(Screen):
-    """A screen for displaying the calendar."""
-    pass  # To be implemented with calendar-specific functionality
+    month_year_text = StringProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        now = datetime.now()
+        self.current_year = now.year
+        self.current_month = now.month
+        self.update_month_year_text()
+        
+
+    def on_kv_post(self, base_widget):
+        # Populate the calendar after KV loading
+        if 'calendar_grid' in self.ids:
+            """Use Clock to delay the call to ensure everything is loaded."""
+            Clock.schedule_once(lambda dt: self.populate_calendar())
+        else:
+            print("Error: 'calendar_grid' not found in ids.")
+
+    def update_month_year_text(self):
+        """Updates the label showing the current month and year."""
+        self.month_year_text = datetime(self.current_year, self.current_month, 1).strftime('%B %Y')
+
+    def change_month(self, increment):
+        """Changes the month and repopulates the calendar."""
+        self.current_month += increment
+        if self.current_month > 12:
+            self.current_month = 1
+            self.current_year += 1
+        elif self.current_month < 1:
+            self.current_month = 12
+            self.current_year -= 1
+        self.update_month_year_text()
+        self.populate_calendar()
+
+    def populate_calendar(self):
+        """Generates the calendar grid."""
+        grid = self.ids['calendar_grid']
+        grid.clear_widgets()
+        #self.current_year= datetime.now().year
+        #self.current_month= datetime.now().month 
+
+        # Get days of the month and week
+        cal = monthcalendar(self.current_year, self.current_month)
+
+        # Add day numbers to the grid
+        for week in cal:
+            for day in week:
+                if day == 0:
+                    grid.add_widget(Label())  # Empty label for blank spaces
+                else:
+                    cell = RelativeLayout(size_hint=(1, None), height=dp(60))
+                    
+                    day_label = Label(
+                        text=str(day),
+                        size_hint=(None, None),
+                        size=(dp(20), dp(20)),
+                        pos_hint={'right': 1, 'top': 1},
+                        color=(0, 0, 0, 1)  # Black text color
+                    )
+                    
+                    day_button = Button(
+                        background_normal="",
+                        background_color=(0.9, 0.9, 0.9, 1),  # Light gray for day cell
+                        on_press=self.on_day_press,
+                        size_hint=(1, 1),
+                        text=""  # Empty text so only the day label shows
+                    )
+                    cell.add_widget(day_button)
+                    cell.add_widget(day_label)
+                    grid.add_widget(cell)
+
+    def on_day_press(self, instance):
+        """Handles the event when a day is pressed."""
+        day_text = instance.parent.children[1].text
+        print(f"You selected day: {day_text}")
 
 ######################### To-Do List View Screen ##########################
 class ToDoListView(Screen):
@@ -217,28 +295,27 @@ class DatePicker(Popup):
     """A custom popup to select a date and time."""
 
     def __init__(self, modal, **kwargs):
-        super().__init__(**kwargs)  # Initialize the popup with parent properties
-        self.modal = modal  # Reference the task or event modal using this date picker
-        self.title = "Select a Date"  # Title of the date picker window
-        self.size_hint = (0.8, 0.8)  # Set the size of the popup
-        self.selected_button = None  # Track the currently selected date button
+        super().__init__(**kwargs)
+        self.modal = modal  # Reference to the task or event modal
+        self.title = "Select a Date"  # Title of the popup
+        self.size_hint = (0.8, 0.8)  # Size of the popup
+        self.selected_button = None  # Track the selected date button
 
-        # Main layout for the popup
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        # Create a grid layout for the days of the month
-        grid = GridLayout(cols=7, spacing=5, padding=10)  # 7 columns for days of the week
+        # Grid layout for the days of the month
+        grid = GridLayout(cols=7, spacing=5, padding=10)
         days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
 
-        # Add day names as headers in the grid
+        # Add day headers to the grid
         for day in days_of_week:
             grid.add_widget(Label(text=day))
 
         today = datetime.today()  # Get today's date
-        first_day = today.replace(day=1)  # Get the first day of the current month
-        start_day = first_day.weekday()  # Determine which weekday the month starts on
+        first_day = today.replace(day=1)  # First day of the month
+        start_day = first_day.weekday()  # Which day of the week the month starts on
 
-        # Add empty widgets for the days before the first day
+        # Add empty widgets to align the first day correctly
         for _ in range(start_day + 1):
             grid.add_widget(Label(text=""))
 
@@ -251,7 +328,7 @@ class DatePicker(Popup):
 
         layout.add_widget(grid)  # Add the grid to the layout
 
-        # Add time selection using two spinners (for hours and minutes)
+        # Add time selection using spinners
         time_layout = BoxLayout(orientation='horizontal', spacing=10)
         self.hour_spinner = Spinner(text="00", values=[f"{i:02d}" for i in range(24)])
         self.minute_spinner = Spinner(text="00", values=[f"{i:02d}" for i in range(60)])
@@ -260,9 +337,9 @@ class DatePicker(Popup):
         time_layout.add_widget(Label(text="Minute:"))
         time_layout.add_widget(self.minute_spinner)
 
-        layout.add_widget(time_layout)  # Add the time selection to the layout
+        layout.add_widget(time_layout)  # Add the time selection layout
 
-        # Action buttons (Cancel and OK)
+        # Action buttons for the popup
         button_layout = BoxLayout(orientation='horizontal', spacing=10)
         button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
         button_layout.add_widget(Button(text="OK", on_release=self.confirm_selection))
@@ -271,19 +348,28 @@ class DatePicker(Popup):
         self.add_widget(layout)  # Add the main layout to the popup
 
     def select_date(self, button):
-        """Highlight the selected date button and store the selection."""
+        """Highlight the selected date and store the selection."""
         if self.selected_button:
-            self.selected_button.background_color = (1, 1, 1, 1)  # Reset previous button to white
-        button.background_color = (0, 0.5, 1, 1)  # Highlight selected button in blue
-        self.selected_button = button  # Track the currently selected button
+            self.selected_button.background_color = (1, 1, 1, 1)  # Reset previous selection to white
+
+        button.background_color = (0, 0.5, 1, 1)  # Highlight selected date
+        self.selected_button = button
         self.selected_date = datetime.today().replace(day=int(button.text)).strftime("%Y-%m-%d")
 
     def confirm_selection(self, instance):
-        """Update the modal with the selected date and time."""
+        """Update the appropriate modal with the selected date and time."""
         hour = self.hour_spinner.text
         minute = self.minute_spinner.text
         selected_datetime = f"{self.selected_date} {hour}:{minute}"
-        self.modal.deadline_label.text = f"Deadline: {selected_datetime}"  # Update the modal's label
+
+        # Check which modal is calling and update the correct label
+        if hasattr(self.modal, 'deadline_label'):
+            self.modal.deadline_label.text = f"Deadline: {selected_datetime}"
+        elif hasattr(self.modal, 'event_date_label'):
+            self.modal.event_date_label.text = f"Event Date: {selected_datetime}"
+        else:
+            print("Error: No valid label to update.")
+
         self.dismiss()  # Close the popup
 
 ####################### Repeat Options Modal ###########################
