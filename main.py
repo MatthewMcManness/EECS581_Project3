@@ -11,6 +11,11 @@ from kivy.uix.button import Button  # Standard button widget
 from kivy.uix.spinner import Spinner  # Dropdown-style component to select from options
 from kivy.app import App  # Main class for running the Kivy app
 from datetime import datetime, timedelta  # For working with dates and times
+from kivy.properties import StringProperty
+from kivy.uix.relativelayout import RelativeLayout
+from kivy.metrics import dp
+import calendar
+from calendar import monthcalendar
 
 ##################### Main App Class with ScreenManager #####################
 class BusyBeeApp(App):
@@ -24,7 +29,7 @@ class BusyBeeApp(App):
         self.screen_manager = ScreenManager(transition=NoTransition())
 
         # Add the CalendarView and ToDoListView screens to the ScreenManager
-        self.screen_manager.add_widget(CalendarView(name="calendar"))
+        self.screen_manager.add_widget(CalendarScreen(name="calendar"))
         self.screen_manager.add_widget(ToDoListView(name="todo"))
 
         return self.screen_manager  # Return the screen manager as the main UI
@@ -40,11 +45,119 @@ class BusyBeeApp(App):
     def open_add_event_modal(self):
         """Open the Add Event modal."""
         AddEventModal().open()
+        
+    def open_menu(self):
+        # Define content for the menu popup
+        content = BoxLayout(orientation='vertical', padding=dp(10), spacing=dp(10))
+
+        add_event_btn = Button(
+            text="Add Event",
+            size_hint=(1, None),
+            height=dp(40),
+            on_press=self.add_event
+        )
+        add_task_btn = Button(
+            text="Add Task",
+            size_hint=(1, None),
+            height=dp(40),
+            on_press=self.add_task
+        )
+        
+        # Add buttons to the layout
+        content.add_widget(add_event_btn)
+        content.add_widget(add_task_btn)
+        
+        # Create and open the popup
+        self.menu_popup = Popup(
+            title="Menu",
+            content=content,
+            size_hint=(0.8, 0.4),
+            auto_dismiss=True
+        )
+        self.menu_popup.open()
+
+    def add_event(self, instance):
+        print("Add Event button pressed")
+        self.menu_popup.dismiss()  # Close the popup
+
+    def add_task(self, instance):
+        print("Add Task button pressed")
+        self.menu_popup.dismiss()  # Close the popup
 
 ######################### Calendar View Screen ##########################
-class CalendarView(Screen):
-    """A screen for displaying the calendar."""
-    pass  # To be implemented with calendar-specific functionality
+class CalendarScreen(Screen):
+    month_year_text = StringProperty()
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        now = datetime.now()
+        self.current_year = now.year
+        self.current_month = now.month
+        self.update_month_year_text()
+        self.populate_calendar()
+
+    def on_kv_post(self, base_widget):
+        # Populate the calendar after KV loading
+        if 'calendar_grid' in self.ids:
+            self.populate_calendar()
+
+    def update_month_year_text(self):
+        """Updates the label showing the current month and year."""
+        self.month_year_text = datetime(self.current_year, self.current_month, 1).strftime('%B %Y')
+
+    def change_month(self, increment):
+        """Changes the month and repopulates the calendar."""
+        self.current_month += increment
+        if self.current_month > 12:
+            self.current_month = 1
+            self.current_year += 1
+        elif self.current_month < 1:
+            self.current_month = 12
+            self.current_year -= 1
+        self.update_month_year_text()
+        self.populate_calendar()
+
+    def populate_calendar(self):
+        """Generates the calendar grid."""
+        grid = self.ids['calendar_grid']
+        grid.clear_widgets()
+        #self.current_year= datetime.now().year
+        #self.current_month= datetime.now().month 
+
+        # Get days of the month and week
+        cal = monthcalendar(self.current_year, self.current_month)
+
+        # Add day numbers to the grid
+        for week in cal:
+            for day in week:
+                if day == 0:
+                    grid.add_widget(Label())  # Empty label for blank spaces
+                else:
+                    cell = RelativeLayout(size_hint=(1, None), height=dp(60))
+                    
+                    day_label = Label(
+                        text=str(day),
+                        size_hint=(None, None),
+                        size=(dp(20), dp(20)),
+                        pos_hint={'right': 1, 'top': 1},
+                        color=(0, 0, 0, 1)  # Black text color
+                    )
+                    
+                    day_button = Button(
+                        background_normal="",
+                        background_color=(0.9, 0.9, 0.9, 1),  # Light gray for day cell
+                        on_press=self.on_day_press,
+                        size_hint=(1, 1),
+                        text=""  # Empty text so only the day label shows
+                    )
+                    cell.add_widget(day_button)
+                    cell.add_widget(day_label)
+                    grid.add_widget(cell)
+
+    def on_day_press(self, instance):
+        """Handles the event when a day is pressed."""
+        day_text = instance.parent.children[1].text
+        print(f"You selected day: {day_text}")
 
 ######################### To-Do List View Screen ##########################
 class ToDoListView(Screen):
