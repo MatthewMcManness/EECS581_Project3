@@ -43,7 +43,7 @@ class ToDoListView(Screen):
     pass
 
 # Main App with ScreenManager
-class BusyBeeApp(App):  # Inherit from App
+class BusyBeeApp(App):
     def build(self):
         Builder.load_file("busybee.kv")
         self.screen_manager = ScreenManager(transition=NoTransition())
@@ -52,91 +52,126 @@ class BusyBeeApp(App):  # Inherit from App
         return self.screen_manager
 
     def switch_to_screen(self, screen_name):
-        """Switch between Calendar and To-Do List screens."""
         self.root.current = screen_name
 
     def open_add_task_modal(self):
-        """Opens the Add Task modal."""
         AddTaskModal().open()
 
-# Custom Time Picker Popup
-class TimePicker(Popup):
-    def __init__(self, task_modal, **kwargs):
-        super().__init__(**kwargs)
-        self.task_modal = task_modal
-        self.title = "Select Time"
-        self.size_hint = (0.8, 0.8)
+    def open_add_event_modal(self):
+        AddEventModal().open()
 
-        # Main layout for the time picker
+# Modal for Adding a New Event
+class AddEventModal(ModalView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.size_hint = (0.8, 0.5)
+        self.auto_dismiss = False
+
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        # Hour and Minute pickers
-        time_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.hour_input = Spinner(text="00", values=[f"{i:02d}" for i in range(24)])
-        self.minute_input = Spinner(text="00", values=[f"{i:02d}" for i in range(60)])
-        time_layout.add_widget(Label(text="Hour:"))
-        time_layout.add_widget(self.hour_input)
-        time_layout.add_widget(Label(text="Minute:"))
-        time_layout.add_widget(self.minute_input)
-        layout.add_widget(time_layout)
+        self.event_name_input = TextInput(hint_text="Event Name", multiline=False)
+        layout.add_widget(self.event_name_input)
 
-        # Action Buttons
+        self.event_date_label = Label(text="Pick Event Date & Time")
+        layout.add_widget(self.event_date_label)
+
+        pick_date_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
+        layout.add_widget(pick_date_button)
+
         button_layout = BoxLayout(orientation='horizontal', spacing=10)
         button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
-        button_layout.add_widget(Button(text="OK", on_release=self.confirm_time))
+        button_layout.add_widget(Button(text="SAVE", on_release=self.save_event))
         layout.add_widget(button_layout)
 
         self.add_widget(layout)
 
-    def confirm_time(self, instance):
-        """Handles the selected time."""
-        hour = self.hour_input.text
-        minute = self.minute_input.text
-        self.task_modal.deadline_label.text += f" {hour}:{minute}"
+    def open_date_picker(self, instance):
+        DatePicker(self).open()
+
+    def save_event(self, *args):
+        event_name = self.event_name_input.text.strip()
+        event_date = self.event_date_label.text
+
+        if not event_name:
+            print("Event Name is required.")
+            return
+
+        print(f"Event '{event_name}' scheduled for {event_date}")
         self.dismiss()
 
-# Custom Date Picker Popup
+# Custom Date Picker with Time Selection
 class DatePicker(Popup):
-    def __init__(self, task_modal, **kwargs):
+    def __init__(self, modal, **kwargs):
         super().__init__(**kwargs)
-        self.task_modal = task_modal
+        self.modal = modal
         self.title = "Select a Date"
         self.size_hint = (0.8, 0.8)
+        self.selected_button = None  # Track the currently selected button
 
-        # Layout to display days
-        layout = GridLayout(cols=7, spacing=5, padding=10)
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        # Add labels for days of the week
+        # Grid for days of the month
+        grid = GridLayout(cols=7, spacing=5, padding=10)
         days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-        for day in days_of_week:
-            layout.add_widget(Label(text=day, halign="center"))
 
-        # Generate the current month's days
+        for day in days_of_week:
+            grid.add_widget(Label(text=day))
+
         today = datetime.today()
         first_day = today.replace(day=1)
         start_day = first_day.weekday()
 
-        # Add empty slots for days before the first day of the month
         for _ in range(start_day + 1):
-            layout.add_widget(Label(text=""))
+            grid.add_widget(Label(text=""))
 
-        # Add buttons for each day of the month
+        # Create buttons for days and set up click logic with highlighting
         days_in_month = (first_day + timedelta(days=32)).replace(day=1) - first_day
         for day in range(1, days_in_month.days + 1):
             button = Button(text=str(day), on_release=self.select_date)
-            layout.add_widget(button)
+            button.background_color = (1, 1, 1, 1)  # Default white background
+            grid.add_widget(button)
+
+        layout.add_widget(grid)
+
+        # Time selection
+        time_layout = BoxLayout(orientation='horizontal', spacing=10)
+        self.hour_spinner = Spinner(text="00", values=[f"{i:02d}" for i in range(24)])
+        self.minute_spinner = Spinner(text="00", values=[f"{i:02d}" for i in range(60)])
+        time_layout.add_widget(Label(text="Hour:"))
+        time_layout.add_widget(self.hour_spinner)
+        time_layout.add_widget(Label(text="Minute:"))
+        time_layout.add_widget(self.minute_spinner)
+
+        layout.add_widget(time_layout)
+
+        # Action buttons
+        button_layout = BoxLayout(orientation='horizontal', spacing=10)
+        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(Button(text="OK", on_release=self.confirm_selection))
+        layout.add_widget(button_layout)
 
         self.add_widget(layout)
 
     def select_date(self, button):
-        """Handle date selection and open the time picker."""
-        today = datetime.today()
-        selected_date = today.replace(day=int(button.text)).strftime("%Y-%m-%d")
-        self.task_modal.deadline_label.text = f"Deadline: {selected_date}"
-        self.dismiss()
+        """Highlight the selected date button and store the selection."""
+        # Reset the previous button color if one was selected
+        if self.selected_button:
+            self.selected_button.background_color = (1, 1, 1, 1)  # White background
 
-        # Open the Time Picker after selecting the date
-        TimePicker(self.task_modal).open()
+        # Highlight the new selected button
+        button.background_color = (0, 0.5, 1, 1)  # Light blue background
+        self.selected_button = button
+
+        # Store the selected date
+        self.selected_date = datetime.today().replace(day=int(button.text)).strftime("%Y-%m-%d")
+
+    def confirm_selection(self, instance):
+        """Update the modal with the selected date and time."""
+        hour = self.hour_spinner.text
+        minute = self.minute_spinner.text
+        selected_datetime = f"{self.selected_date} {hour}:{minute}"
+        self.modal.deadline_label.text = f"Deadline: {selected_datetime}"
+        self.dismiss()
 
 # Modal for Adding a New Task
 class AddTaskModal(ModalView):
@@ -150,15 +185,15 @@ class AddTaskModal(ModalView):
 
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
-        self.title_input = TextInput(hint_text="Title")
+        self.title_input = TextInput(hint_text="Task Title")
         layout.add_widget(self.title_input)
 
         deadline_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.deadline_label = Label(text="Pick a deadline", halign="left", size_hint_x=0.8)
+        self.deadline_label = Label(text="Pick a deadline", size_hint_x=0.8)
         deadline_layout.add_widget(self.deadline_label)
 
-        deadline_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
-        deadline_layout.add_widget(deadline_button)
+        pick_date_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
+        deadline_layout.add_widget(pick_date_button)
         layout.add_widget(deadline_layout)
 
         self.repeat_button = Button(text="Does not repeat", on_release=self.open_repeat_window)
@@ -189,7 +224,6 @@ class AddTaskModal(ModalView):
         self.add_widget(layout)
 
     def open_date_picker(self, instance):
-        """Opens the custom DatePicker popup."""
         DatePicker(self).open()
 
     def open_repeat_window(self, instance):
@@ -205,10 +239,13 @@ class AddTaskModal(ModalView):
     def open_category_modal(self):
         CategoryModal(self).open()
 
+    def update_category_spinner(self):
+        self.category_spinner.values = self.categories + ["Add New Category"]
+
     def update_applied_categories(self):
         self.applied_categories_layout.clear_widgets()
         for category in self.selected_categories:
-            label = Label(text=category, halign="center")
+            label = Label(text=category)
             self.applied_categories_layout.add_widget(label)
 
     def save_task(self, *args):
