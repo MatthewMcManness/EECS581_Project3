@@ -1,29 +1,70 @@
 ScreenManager:
     id: screen_manager
-    CalendarView:
+    CalendarScreen:
     ToDoListView:
 
-<CalendarView>:
+<CalendarScreen>:
     name: "calendar"
     BoxLayout:
         orientation: 'vertical'
-
-        Label:
-            text: "Calendar View"
-            halign: "center"
-            size_hint_y: 0.6
-
         BoxLayout:
-            size_hint_y: 0.2
+            size_hint_y: None
+            height: dp(50)
+            Label:
+                text: "Calendar"
+                font_size: dp(20)
+                size_hint_x: 1
             Button:
-                text: "Open Add Event Popup"
-                on_release: app.open_add_event_modal()
-
+                text: "Menu"
+                size_hint_x: 0.2
+                on_press: app.open_menu()
         BoxLayout:
-            size_hint_y: 0.2
+            size_hint_y: None
+            height: dp(40)
             Button:
-                text: "To To-Do List"
-                on_release: app.switch_to_screen("todo")
+                text: "Previous"
+                on_press: root.change_month(-1)
+            Label:
+                text: root.month_year_text
+                font_size: dp(18)
+            Button:
+                text: "Next"
+                on_press: root.change_month(1)
+        BoxLayout:
+            size_hint_y: None
+            height: "50dp"
+            Label:
+                text: "Mon"
+                halign: "center"
+            Label:
+                text: "Tue"
+                halign: "center"
+            Label:
+                text: "Wed"
+                halign: "center"
+            Label:
+                text: "Thu"
+                halign: "center"
+            Label:
+                text: "Fri"
+                halign: "center"
+            Label:
+                text: "Sat"
+                halign: "center"
+            Label:
+                text: "Sun"
+                halign: "center"
+        ScrollView:
+            do_scroll_x: False
+            do_scroll_y: True
+            GridLayout:
+                id: calendar_grid
+                cols: 7
+                padding: dp(10)
+                spacing: dp(1)
+                row_default_height: dp(60)
+                row_force_default: True
+                adaptive_height: True
 
 <ToDoListView>:
     name: "todo"
