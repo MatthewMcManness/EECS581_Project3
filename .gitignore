@@ -1,0 +1,17 @@
+"""
+    Name: Git Ignore
+    Description: Files and directories for git to ignore
+    Authors: Magaly Camacho [3072618]
+
+    Date Created: 10/26/2024
+    Revisions: None
+
+    Preconditions: Git must be installed and initialized in the repository
+    Postconditions: Anything listed will be ignored by git
+    Errors/Exceptions: None
+    Side Effects: None
+    Invariants: Until removed, anything listed will be ignored by git
+    Known Faults: None
+"""
+
+__pycache__/
