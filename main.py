@@ -23,133 +23,209 @@ Output: App Window
 
 from kivy.lang import Builder
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.scrollview import ScrollView
-from kivy.uix.screenmanager import ScreenManager, NoTransition
-from kivymd.app import MDApp
-from kivymd.uix.screen import MDScreen
-from kivymd.uix.dialog import MDDialog
-from kivymd.uix.button import MDFlatButton
-from kivymd.uix.label import MDLabel
-from kivymd.uix.textfield import MDTextField
-from kivy.uix.checkbox import CheckBox
+from kivy.uix.modalview import ModalView
+from kivy.uix.popup import Popup
+from kivy.uix.label import Label
+from kivy.uix.gridlayout import GridLayout
+from kivy.uix.screenmanager import ScreenManager, NoTransition, Screen
+from kivy.uix.textinput import TextInput
+from kivy.uix.button import Button
+from kivy.uix.spinner import Spinner
+from kivy.app import App
+from datetime import datetime, timedelta
 
 # Calendar View Screen
-class CalendarView(MDScreen):
-    pass  # TODO: Add logic to display calendar grid dynamically. (Mariam)
+class CalendarView(Screen):
+    pass
 
 # To-Do List View Screen
-class ToDoListView(MDScreen):
-    pass  # TODO: Add logic to display and manage task items. (Manvir)
-
-# Modal for Adding a New Task
-class AddTaskWindow(BoxLayout):
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.orientation = 'vertical'
-        self.padding = 10
-        self.spacing = 10
-        self.priority = "Low"  # Default priority
-
-        # Scrollable layout
-        scroll_view = ScrollView(size_hint=(1, None), size=(400, 300))
-        inner_layout = BoxLayout(orientation='vertical', padding=10, spacing=10, size_hint_y=None)
-        inner_layout.bind(minimum_height=inner_layout.setter('height'))
-
-        # Input fields for task data
-        inner_layout.add_widget(MDTextField(hint_text="Task Title", id="task_title"))
-        inner_layout.add_widget(MDTextField(hint_text="Time (HH:MM)", id="task_time"))
-        inner_layout.add_widget(MDTextField(hint_text="Location", id="task_location"))
-        inner_layout.add_widget(MDTextField(hint_text="Notes", multiline=True, id="task_notes"))
-        inner_layout.add_widget(MDTextField(hint_text="Deadline (YYYY-MM-DD)", id="task_deadline"))
-
-        # Priority selection using CheckBox
-        inner_layout.add_widget(MDLabel(text="Priority", halign="left"))
-        priority_layout = BoxLayout(orientation='horizontal', spacing=10)
-        for text in ["High", "Medium", "Low"]:
-            checkbox = CheckBox(group="priority")
-            checkbox.bind(active=lambda cb, state, p=text: self.set_priority(p) if state else None)
-            priority_layout.add_widget(checkbox)
-            priority_layout.add_widget(MDLabel(text=text))
-        inner_layout.add_widget(priority_layout)
-
-        # Add the inner layout to the scroll view
-        scroll_view.add_widget(inner_layout)
-        self.add_widget(scroll_view)
-
-        # Action buttons
-        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(MDFlatButton(text="CANCEL", on_release=lambda x: MDApp.get_running_app().close_task_window()))
-        button_layout.add_widget(MDFlatButton(text="SAVE", on_release=self.save_task))
-        self.add_widget(button_layout)
-
-    def set_priority(self, priority):
-        """Sets the selected priority."""
-        self.priority = priority
-
-    def save_task(self, *args):
-        """Saves the task data."""
-        task_data = {
-            "title": self.ids.task_title.text,
-            "time": self.ids.task_time.text,
-            "location": self.ids.task_location.text,
-            "notes": self.ids.task_notes.text,
-            "deadline": self.ids.task_deadline.text,
-            "priority": self.priority,
-        }
-
-        if not task_data["title"] or not task_data["time"]:
-            print("Task Title and Time are required.")
-            return
-
-        print("Task Saved:", task_data)  # Placeholder for DB integration
-        MDApp.get_running_app().close_task_window()
-
-# Modal for Adding a New Event
-class AddEventWindow(BoxLayout):
-    def open(self):
-        """Opens the Add Event dialog."""
-        dialog = MDDialog(
-            title="Add New Event",
-            type="custom",
-            content_cls=self,
-            buttons=[MDFlatButton(text="CLOSE", on_release=lambda x: dialog.dismiss())],
-        )
-        dialog.content_cls.add_widget(MDLabel(text="Event Name: (Enter event here)", halign="center"))
-        dialog.open()
+class ToDoListView(Screen):
+    pass
 
 # Main App with ScreenManager
-class BusyBeeApp(MDApp):
+class BusyBeeApp(App):  # Inherit from App
     def build(self):
-        """Initializes the app and loads the KV file."""
         Builder.load_file("busybee.kv")
-        screen_manager = ScreenManager(transition=NoTransition())
-        screen_manager.add_widget(CalendarView(name="calendar"))
-        screen_manager.add_widget(ToDoListView(name="todo"))
-        return screen_manager
+        self.screen_manager = ScreenManager(transition=NoTransition())
+        self.screen_manager.add_widget(CalendarView(name="calendar"))
+        self.screen_manager.add_widget(ToDoListView(name="todo"))
+        return self.screen_manager
 
-    def switch_to_screen(self, screen_name: str):
-        """Switches between Calendar and To-Do List screens."""
+    def switch_to_screen(self, screen_name):
+        """Switch between Calendar and To-Do List screens."""
         self.root.current = screen_name
 
-    def open_add_task_window(self):
-        """Opens the Add Task dialog."""
-        self.dialog = MDDialog(
-            title="Add New Task",
-            type="custom",
-            content_cls=AddTaskWindow(),
-            buttons=[MDFlatButton(text="CLOSE", on_release=self.close_task_window)],
-            size_hint=(0.9, 0.9)  # Set size to fit the screen better
+    def open_add_task_modal(self):
+        """Opens the Add Task modal."""
+        AddTaskModal().open()
+
+# Custom Time Picker Popup
+class TimePicker(Popup):
+    def __init__(self, task_modal, **kwargs):
+        super().__init__(**kwargs)
+        self.task_modal = task_modal
+        self.title = "Select Time"
+        self.size_hint = (0.8, 0.8)
+
+        # Main layout for the time picker
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+        # Hour and Minute pickers
+        time_layout = BoxLayout(orientation='horizontal', spacing=10)
+        self.hour_input = Spinner(text="00", values=[f"{i:02d}" for i in range(24)])
+        self.minute_input = Spinner(text="00", values=[f"{i:02d}" for i in range(60)])
+        time_layout.add_widget(Label(text="Hour:"))
+        time_layout.add_widget(self.hour_input)
+        time_layout.add_widget(Label(text="Minute:"))
+        time_layout.add_widget(self.minute_input)
+        layout.add_widget(time_layout)
+
+        # Action Buttons
+        button_layout = BoxLayout(orientation='horizontal', spacing=10)
+        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(Button(text="OK", on_release=self.confirm_time))
+        layout.add_widget(button_layout)
+
+        self.add_widget(layout)
+
+    def confirm_time(self, instance):
+        """Handles the selected time."""
+        hour = self.hour_input.text
+        minute = self.minute_input.text
+        self.task_modal.deadline_label.text += f" {hour}:{minute}"
+        self.dismiss()
+
+# Custom Date Picker Popup
+class DatePicker(Popup):
+    def __init__(self, task_modal, **kwargs):
+        super().__init__(**kwargs)
+        self.task_modal = task_modal
+        self.title = "Select a Date"
+        self.size_hint = (0.8, 0.8)
+
+        # Layout to display days
+        layout = GridLayout(cols=7, spacing=5, padding=10)
+
+        # Add labels for days of the week
+        days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        for day in days_of_week:
+            layout.add_widget(Label(text=day, halign="center"))
+
+        # Generate the current month's days
+        today = datetime.today()
+        first_day = today.replace(day=1)
+        start_day = first_day.weekday()
+
+        # Add empty slots for days before the first day of the month
+        for _ in range(start_day + 1):
+            layout.add_widget(Label(text=""))
+
+        # Add buttons for each day of the month
+        days_in_month = (first_day + timedelta(days=32)).replace(day=1) - first_day
+        for day in range(1, days_in_month.days + 1):
+            button = Button(text=str(day), on_release=self.select_date)
+            layout.add_widget(button)
+
+        self.add_widget(layout)
+
+    def select_date(self, button):
+        """Handle date selection and open the time picker."""
+        today = datetime.today()
+        selected_date = today.replace(day=int(button.text)).strftime("%Y-%m-%d")
+        self.task_modal.deadline_label.text = f"Deadline: {selected_date}"
+        self.dismiss()
+
+        # Open the Time Picker after selecting the date
+        TimePicker(self.task_modal).open()
+
+# Modal for Adding a New Task
+class AddTaskModal(ModalView):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        self.size_hint = (0.9, 0.9)
+        self.auto_dismiss = False
+
+        self.categories = ["Work", "Personal", "School"]
+        self.selected_categories = []
+
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+        self.title_input = TextInput(hint_text="Title")
+        layout.add_widget(self.title_input)
+
+        deadline_layout = BoxLayout(orientation='horizontal', spacing=10)
+        self.deadline_label = Label(text="Pick a deadline", halign="left", size_hint_x=0.8)
+        deadline_layout.add_widget(self.deadline_label)
+
+        deadline_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
+        deadline_layout.add_widget(deadline_button)
+        layout.add_widget(deadline_layout)
+
+        self.repeat_button = Button(text="Does not repeat", on_release=self.open_repeat_window)
+        layout.add_widget(self.repeat_button)
+
+        self.notes_input = TextInput(hint_text="Notes", multiline=True)
+        layout.add_widget(self.notes_input)
+
+        category_layout = BoxLayout(orientation='horizontal', spacing=10)
+        self.category_spinner = Spinner(
+            text="Select Category",
+            values=self.categories + ["Add New Category"],
+            size_hint=(0.7, None),
+            height=44
         )
-        self.dialog.open()
+        self.category_spinner.bind(text=self.on_category_selected)
+        category_layout.add_widget(self.category_spinner)
+        layout.add_widget(category_layout)
 
-    def close_task_window(self, *args):
-        """Closes the Add Task dialog."""
-        if hasattr(self, 'dialog'):
-            self.dialog.dismiss()
+        self.applied_categories_layout = BoxLayout(orientation='vertical', spacing=5)
+        layout.add_widget(self.applied_categories_layout)
 
-    def open_add_event_window(self):
-        """Opens the Add Event dialog."""
-        AddEventWindow().open()
+        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
+        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(Button(text="SAVE", on_release=self.save_task))
+        layout.add_widget(button_layout)
+
+        self.add_widget(layout)
+
+    def open_date_picker(self, instance):
+        """Opens the custom DatePicker popup."""
+        DatePicker(self).open()
+
+    def open_repeat_window(self, instance):
+        print("Open Repeat Window")
+
+    def on_category_selected(self, spinner, text):
+        if text == "Add New Category":
+            self.open_category_modal()
+        elif text not in self.selected_categories:
+            self.selected_categories.append(text)
+            self.update_applied_categories()
+
+    def open_category_modal(self):
+        CategoryModal(self).open()
+
+    def update_applied_categories(self):
+        self.applied_categories_layout.clear_widgets()
+        for category in self.selected_categories:
+            label = Label(text=category, halign="center")
+            self.applied_categories_layout.add_widget(label)
+
+    def save_task(self, *args):
+        task_data = {
+            "title": self.title_input.text,
+            "deadline": self.deadline_label.text,
+            "repeats": self.repeat_button.text,
+            "notes": self.notes_input.text,
+            "categories": self.selected_categories,
+        }
+
+        if not task_data["title"]:
+            print("Task Title is required.")
+            return
+
+        print("Task Saved:", task_data)
+        self.dismiss()
 
 if __name__ == "__main__":
     BusyBeeApp().run()
