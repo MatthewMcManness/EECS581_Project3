@@ -1,0 +1,71 @@
+\doxysection{EECS581\+\_\+\+Project3.\+main.\+Date\+Picker Class Reference}
+\hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker}{}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker}\index{EECS581\_Project3.main.DatePicker@{EECS581\_Project3.main.DatePicker}}
+Inheritance diagram for EECS581\+\_\+\+Project3.\+main.\+Date\+Picker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_e_e_c_s581___project3_1_1main_1_1_date_picker}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a9b7b0c97c5b69e274dda0bc19a22391f}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a9b7b0c97c5b69e274dda0bc19a22391f} 
+{\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self, modal, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a5bfb17661168b34481399f497888cf9a}{select\+\_\+date}} (self, button)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a994c4705aeaab155f7de88bd712e1fd9}{confirm\+\_\+selection}} (self, instance)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a3c9faac8cf70c165660f73b695788efa}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a3c9faac8cf70c165660f73b695788efa} 
+{\bfseries modal} = modal
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a7a2b4c92f3ab1577d3f0f98815726d3f}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a7a2b4c92f3ab1577d3f0f98815726d3f} 
+str {\bfseries title} = "{}Select a Date"{}
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a8e450f00dde678e85b67d1317fdcbdb4}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a8e450f00dde678e85b67d1317fdcbdb4} 
+tuple {\bfseries size\+\_\+hint} = (0.\+8, 0.\+8)
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_af04085f7d8889031071c2a57fb1331ed}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_af04085f7d8889031071c2a57fb1331ed} 
+{\bfseries selected\+\_\+button} = None
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_ae687989a6293bd191296a99e92eec2db}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_ae687989a6293bd191296a99e92eec2db} 
+{\bfseries hour\+\_\+spinner} = Spinner(text="{}00"{}, values=\mbox{[}f"{}\{i\+:02d\}"{} for i in range(24)\mbox{]})
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a4d76f18cd93fedf3b4d92c004f4e0d1b}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a4d76f18cd93fedf3b4d92c004f4e0d1b} 
+{\bfseries minute\+\_\+spinner} = Spinner(text="{}00"{}, values=\mbox{[}f"{}\{i\+:02d\}"{} for i in range(60)\mbox{]})
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a99852e8ee8b3431c9fa2dd9822bfdd1b}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a99852e8ee8b3431c9fa2dd9822bfdd1b} 
+tuple {\bfseries selected\+\_\+button} = (1, 1, 1, 1)
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a0c3ba99fe06ae4fddcd2c48c96ef4e7f}\label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a0c3ba99fe06ae4fddcd2c48c96ef4e7f} 
+{\bfseries selected\+\_\+date} = datetime.\+today().replace(day=int(button.\+text)).strftime("{}\%Y-\/\%m-\/\%d"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}A custom popup to select a date and time.\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a994c4705aeaab155f7de88bd712e1fd9}\index{EECS581\_Project3.main.DatePicker@{EECS581\_Project3.main.DatePicker}!confirm\_selection@{confirm\_selection}}
+\index{confirm\_selection@{confirm\_selection}!EECS581\_Project3.main.DatePicker@{EECS581\_Project3.main.DatePicker}}
+\doxysubsubsection{\texorpdfstring{confirm\_selection()}{confirm\_selection()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a994c4705aeaab155f7de88bd712e1fd9} 
+EECS581\+\_\+\+Project3.\+main.\+Date\+Picker.\+confirm\+\_\+selection (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Update the appropriate modal with the selected date and time.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a5bfb17661168b34481399f497888cf9a}\index{EECS581\_Project3.main.DatePicker@{EECS581\_Project3.main.DatePicker}!select\_date@{select\_date}}
+\index{select\_date@{select\_date}!EECS581\_Project3.main.DatePicker@{EECS581\_Project3.main.DatePicker}}
+\doxysubsubsection{\texorpdfstring{select\_date()}{select\_date()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1main_1_1_date_picker_a5bfb17661168b34481399f497888cf9a} 
+EECS581\+\_\+\+Project3.\+main.\+Date\+Picker.\+select\+\_\+date (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{button}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Highlight the selected date and store the selection.\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+main.\+py\end{DoxyCompactItemize}

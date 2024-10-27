@@ -1,0 +1,34 @@
+\doxysection{EECS581\+\_\+\+Project3.\+Models.\+category Namespace Reference}
+\hypertarget{namespace_e_e_c_s581___project3_1_1_models_1_1category}{}\label{namespace_e_e_c_s581___project3_1_1_models_1_1category}\index{EECS581\_Project3.Models.category@{EECS581\_Project3.Models.category}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_e_e_c_s581___project3_1_1_models_1_1category_1_1_category}{Category}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}    Name: Category Model
+    Description: Category model class to represent records in Category table of the database
+    Authors: Magaly Camacho [3072618]
+
+    Date Created: 10/26/2024
+    Revisions: 
+        - None
+
+    Preconditions: 
+        - SQLAlchemy must be installed and configured in the environment
+    Postconditions:
+        - None
+    Errors/Exceptions: 
+        - Validation errors if the attribute constraints (e.g. type, string length, etc.) are not met 
+    Side Effects: 
+        - Base class will have Category as a part of its metadata
+    Invariants: 
+        - The class will always be a sub class of the declarative_base from SQLAlchemy
+        - The id attribute will always be unique and automatically generated
+        - Item-category association are implemented
+    Known Faults: 
+        - None
+\end{DoxyVerb}
+ 

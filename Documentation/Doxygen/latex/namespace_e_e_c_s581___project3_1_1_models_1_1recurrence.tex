@@ -1,0 +1,35 @@
+\doxysection{EECS581\+\_\+\+Project3.\+Models.\+recurrence Namespace Reference}
+\hypertarget{namespace_e_e_c_s581___project3_1_1_models_1_1recurrence}{}\label{namespace_e_e_c_s581___project3_1_1_models_1_1recurrence}\index{EECS581\_Project3.Models.recurrence@{EECS581\_Project3.Models.recurrence}}
+\doxysubsubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_e_e_c_s581___project3_1_1_models_1_1recurrence_1_1_recurrence}{Recurrence}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}    Name: Recurrence Model
+    Description: Recurrence model class to represent records in Recurrence table of the database
+    Author: Magaly Camacho [3072618]
+
+    Date Created: 10/26/2024
+    Revisions: 
+        - None
+
+    Preconditions: 
+        - SQLAlchemy must be installed and configured in the environment
+    Postconditions: 
+        - None
+    Errors/Exceptions: 
+        - Validation errors if the attribute constraints (e.g. type, string length, etc.) are not met 
+    Side Effects: 
+        - Base class will have Recurrence as a part of its metadata
+    Invariants: 
+        - The class will always be a sub class of the declarative_base from SQLAlchemy
+        - The id attribute will always be unique and automatically generated
+        - ItemType Enum, Frequency Enum, and Event model are implemented
+        - One-to-Many Relationship With Event_
+    Known Faults: 
+        - None
+\end{DoxyVerb}
+ 
