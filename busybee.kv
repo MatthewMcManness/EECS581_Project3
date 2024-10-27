@@ -113,14 +113,14 @@ ScreenManager:
         BoxLayout:
             size_hint_y: 0.2  # Adjusts the height.
             Button:
-                text: "Open Add Task Popup"  # Opens a popup for adding tasks.
+                text: "Add Event"  # Opens a popup for adding tasks.
                 on_release: app.open_add_event_modal()  # Calls the add event modal.
 
         # Button to switch to the To-Do List screen.
         BoxLayout:
             size_hint_y: 0.2  # Adjusts the height.
             Button:
-                text: "Go to To-Do List"  # Button to switch screens.
+                text: "To-Do List"  # Button to switch screens.
                 on_release: app.switch_to_screen("todo")  # Switches to the To-Do List.
 
 <ToDoListView>:

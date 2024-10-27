@@ -36,6 +36,7 @@ from kivy.uix.button import Button  # Standard button widget
 from screens.usefulwidgets import DatePicker, TimePicker  # Date and time pickers
 from screens.usefulwidgets import RepeatOptionsModal, CategoryModal  # Additional modals
 from kivy.uix.label import Label  # Label widget for displaying text
+from kivy.app import App  # Ensure App is imported
 
 class AddTaskModal(ModalView):
     """
@@ -137,33 +138,39 @@ class AddTaskModal(ModalView):
         self.category_spinner.values = self.categories + ["Add New Category"]
 
     def save_task(self, *args):
-        """
-        Save the task and add it to the To-Do List.
+        """Save the task and add it to the To-Do List screen.
 
         Preconditions:
-            - Task title must not be empty.
+            - The task title must not be empty.
 
         Postconditions:
-            - The task is added to the To-Do ListView.
+            - If valid, the task is added to the To-Do List screen.
 
-        Raises:
-            ValueError: If the task title is empty.
+        Error Conditions:
+            - If the task title is empty, an error message is logged.
         """
+
+        # Collect task data
         task_data = {
-            "title": self.title_input.text.strip(),
+            "title": self.title_input.text,
             "deadline": self.deadline_label.text,
             "repeats": self.repeat_button.text,
             "notes": self.notes_input.text,
             "categories": self.selected_categories,
         }
 
+        # Validate task title
         if not task_data["title"]:
             print("Task Title is required.")
-            return  # Prevent saving without a title
+            return  # Stop execution if title is missing
 
-        # Add the task to the To-Do ListView
-        todo_screen = self.app.screen_manager.get_screen('todo')
-        todo_screen.add_task(task_data)  # Call add_task on the To-Do screen
+        # Access the running app instance
+        app = App.get_running_app()  # Correctly fetch the app instance
+        todo_screen = app.screen_manager.get_screen('todo')  # Get the To-Do List screen
 
-        print("Task Saved:", task_data)  # Debug print
-        self.dismiss()  # Close the modal
+        # Add the task to the To-Do List screen
+        todo_screen.add_task(task_data)
+
+        # Log the task addition and close the modal
+        print(f"Task Saved: {task_data}")
+        self.dismiss()

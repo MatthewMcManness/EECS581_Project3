@@ -37,6 +37,7 @@ from kivy.uix.label import Label  # Label widget to display text.
 from kivy.uix.button import Button  # Button widget for user interaction.
 from screens.usefulwidgets import DatePicker  # Custom date picker modal.
 from screens.usefulwidgets import TimePicker  # Custom time picker modal.
+from kivy.app import App  # Ensure App is imported
 
 class AddEventModal(ModalView):
     """A modal for adding a new event with name, date, and time selection."""
