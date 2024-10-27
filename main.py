@@ -128,7 +128,22 @@ class CalendarView(Screen):
 ######################### To-Do List View Screen ##########################
 class ToDoListView(Screen):
     """A screen for displaying the To-Do List."""
-    pass  # To be implemented with task management functionality
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+        # Sorting state to remember the last sort
+        self.sort_by = "priority"  # Default sort by priority
+
+    def sort_tasks(self, criterion):
+        """Sort the task list based on the chosen criterion (e.g., priority, due date)."""
+        self.sort_by = criterion
+        print(f"Tasks sorted by {criterion}")
+        # Call a function here to sort the task list and refresh the view
+
+    def add_task_item(self, title, due_date, priority_level, category):
+        """Add a task item to the list (dummy function for now)."""
+        print(f"Added task: {title}, Due: {due_date}, Priority: {priority_level}, Category: {category}")
+        # Here you’d add logic to update the list view with the new task
 
 ######################### Add Event Modal ##########################
 class AddEventModal(ModalView):
@@ -269,7 +284,7 @@ class AddTaskModal(ModalView):
         self.category_spinner.values = self.categories + ["Add New Category"]
 
     def save_task(self, *args):
-        """Save the task."""
+        """Save the task and add it to the To-Do List."""
         task_data = {
             "title": self.title_input.text,
             "deadline": self.deadline_label.text,
@@ -282,9 +297,12 @@ class AddTaskModal(ModalView):
             print("Task Title is required.")
             return
 
+        # Find the ToDoListView screen in the ScreenManager and add the task
+        todo_screen = self.app.screen_manager.get_screen('todo')
+        todo_screen.add_task(task_data)
+
         print("Task Saved:", task_data)
         self.dismiss()  # Close the modal
-
 
 ##################################################################################################################################################################
 #################### Usful Widgets and Modals (used by add Task and the Template for add Event) ##################################################################

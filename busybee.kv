@@ -73,7 +73,7 @@ ScreenManager:
         BoxLayout:
             size_hint_y: 0.2
             Button:
-                text: "To To-Do List"
+                text: "Go to To-Do List"
                 on_release: app.switch_to_screen("todo")
                 
 
@@ -81,20 +81,81 @@ ScreenManager:
     name: "todo"
     BoxLayout:
         orientation: 'vertical'
-
-        Label:
-            text: "To-Do List View"
-            halign: "center"
-            size_hint_y: 0.6
-
         BoxLayout:
-            size_hint_y: 0.2
+            size_hint_y: None
+            height: dp(50)
+            Label:
+                text: "To-Do List"
+                font_size: dp(20)
+                size_hint_x: 1
+
+        # Header with Sort Options
+        BoxLayout:
+            size_hint_y: None
+            height: "50dp"
+            padding: "10dp"
+            spacing: "10dp"
+            
             Button:
-                text: "Open Add Task Popup"
+                text: "Add Task"
                 on_release: app.open_add_task_modal()
-
-        BoxLayout:
-            size_hint_y: 0.2
+            
+            Spinner:
+                text: "Sort by"
+                values: ["Priority", "Due Date", "Category"]
+                on_text: root.sort_tasks(self.text.lower())
+            
             Button:
-                text: "To Calendar"
+                text: "Calendar View"
                 on_release: app.switch_to_screen("calendar")
+        
+        # Scrollable Task List
+        ScrollView:
+            GridLayout:
+                id: task_list
+                cols: 1
+                spacing: "5dp"
+                size_hint_y: None
+                height: self.minimum_height
+                
+                # Sample Task Item
+                BoxLayout:
+                    padding: "5dp"
+                    spacing: "5dp"
+                    size_hint_y: None
+                    height: "60dp"
+                    canvas.before:
+                        Color:
+                            rgba: (0.9, 0.9, 0.9, 1) if self.height > 50 else (1, 1, 1, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
+                    Label:
+                        text: "Task Title"
+                        size_hint_x: 0.5
+                        color: (0, 0, 0, 1)
+                    
+                    Label:
+                        text: "Due Date"
+                        size_hint_x: 0.3
+                        color: (0, 0, 0, 1)
+                    
+                    Label:
+                        text: "!"
+                        size_hint_x: 0.1
+                        color: (1, 0, 0, 1)  # Exclamation mark for priority
+                        font_size: "24sp"
+                    
+                    Label:
+                        text: "Category"
+                        size_hint_x: 0.2
+                        color: (0, 0, 0, 1)
+                        
+        # Header with Add Task button
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: "Add Task"
+                on_release: app.open_add_task_modal()  # This calls the modal to add tasks
