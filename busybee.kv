@@ -135,17 +135,22 @@ ScreenManager:
 
                 # Sample task item
                 BoxLayout:
-                    padding: "5dp"
-                    spacing: "5dp"
+                    padding: "2dp"
+                    spacing: "2dp"
                     size_hint_y: None
-                    height: "60dp"
+                    height: "30dp"
                     canvas.before:
                         Color:
                             rgba: (0.9, 0.9, 0.9, 1) if self.height > 50 else (1, 1, 1, 1)
                         Rectangle:
                             size: self.size
                             pos: self.pos
-
+                    
+                    Label:
+                        text: "C"
+                        size_hint_x: 0.1
+                        color: (0.9, 0.9, 0.9, 1)
+                    
                     Label:
                         text: "Task Title"
                         size_hint_x: 0.5
@@ -166,6 +171,156 @@ ScreenManager:
                         text: "Category"
                         size_hint_x: 0.2
                         color: (0, 0, 0, 1)
+                    
+                BoxLayout:
+                    padding: "5dp"
+                    spacing: "5dp"
+                    size_hint_y: None
+                    height: "60dp"
+                    canvas.before:
+                        Color:
+                            rgba: (0.9, 0.9, 0.9, 1) if self.height > 50 else (1, 1, 1, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                            
+                    CheckBox:
+                        size_hint_x: 0.1
+                        on_active: app.mark_task_complete(self, "Homework")
+                        
+                    Label:
+                        text: "Homework"
+                        size_hint_x: 0.5
+                        color: (0, 0, 0, 1)
+
+                    Label:
+                        text: "11/03/2024"
+                        size_hint_x: 0.3
+                        color: (0, 0, 0, 1)
+
+                    Label:
+                        text: ""
+                        size_hint_x: 0.1
+                        color: (1, 0, 0, 1)  # Red exclamation for priority
+                        font_size: "24sp"
+
+                    Label:
+                        text: "School"
+                        size_hint_x: 0.2
+                        color: (0, 0, 0, 1)
+                    
+                BoxLayout:
+                    padding: "5dp"
+                    spacing: "5dp"
+                    size_hint_y: None
+                    height: "60dp"
+                    canvas.before:
+                        Color:
+                            rgba: (0.9, 0.9, 0.9, 1) if self.height > 50 else (1, 1, 1, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
+                    CheckBox:
+                        size_hint_x: 0.1
+                        on_active: app.mark_task_complete()
+                    
+                    Label:
+                        text: "Study for Midterm"
+                        size_hint_x: 0.5
+                        color: (0, 0, 0, 1)
+
+                    Label:
+                        text: "11/11/2024"
+                        size_hint_x: 0.3
+                        color: (0, 0, 0, 1)
+
+                    Label:
+                        text: "!!!"
+                        size_hint_x: 0.1
+                        color: (1, 0, 0, 1)  # Red exclamation for priority
+                        font_size: "24sp"
+
+                    Label:
+                        text: "School"
+                        size_hint_x: 0.2
+                        color: (0, 0, 0, 1)
+                    
+                BoxLayout:
+                    padding: "5dp"
+                    spacing: "5dp"
+                    size_hint_y: None
+                    height: "60dp"
+                    canvas.before:
+                        Color:
+                            rgba: (0.9, 0.9, 0.9, 1) if self.height > 50 else (1, 1, 1, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
+                    CheckBox:
+                        size_hint_x: 0.1
+                        on_active: app.mark_task_complete()
+                    
+                    Label:
+                        text: "Buy gift for Magaly"
+                        size_hint_x: 0.5
+                        color: (0, 0, 0, 1)
+
+                    Label:
+                        text: "12/10/2024"
+                        size_hint_x: 0.3
+                        color: (0, 0, 0, 1)
+
+                    Label:
+                        text: "!"
+                        size_hint_x: 0.1
+                        color: (1, 0, 0, 1)  # Red exclamation for priority
+                        font_size: "24sp"
+
+                    Label:
+                        text: "Personal"
+                        size_hint_x: 0.2
+                        color: (0, 0, 0, 1)
+                    
+                BoxLayout:
+                    padding: "5dp"
+                    spacing: "5dp"
+                    size_hint_y: None
+                    height: "60dp"
+                    canvas.before:
+                        Color:
+                            rgba: (0.9, 0.9, 0.9, 1) if self.height > 50 else (1, 1, 1, 1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    
+                    CheckBox:
+                        size_hint_x: 0.1
+                        on_active: app.mark_task_complete()
+                    
+                    Label:
+                        text: "Submit Project"
+                        size_hint_x: 0.5
+                        color: (0, 0, 0, 1)
+
+                    Label:
+                        text: "12/20/2024"
+                        size_hint_x: 0.3
+                        color: (0, 0, 0, 1)
+
+                    Label:
+                        text: "!!"
+                        size_hint_x: 0.1
+                        color: (1, 0, 0, 1)  # Red exclamation for priority
+                        font_size: "24sp"
+
+                    Label:
+                        text: "School"
+                        size_hint_x: 0.2
+                        color: (0, 0, 0, 1)
+
+
 
         # Footer with Add Task button
         BoxLayout:
