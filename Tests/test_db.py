@@ -5,7 +5,8 @@
 
     Date Created: 10/26/2024
     Revisions: 
-        - None
+        - 10/27/2024 Magaly Camacho
+            Removed Models.databaseEnums.Complete import
 
     Preconditions: 
         - A string with the method to run (run, clean)
@@ -26,7 +27,7 @@
 import sys
 from database import Database
 from Models import Event_, Task, Category, Recurrence
-from Models.databaseEnums import ItemType, Priority, Complete, Frequency
+from Models.databaseEnums import ItemType, Priority, Frequency
 from Models.base import Base
 from datetime import datetime
 from .utils import run_module_method

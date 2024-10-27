@@ -5,7 +5,8 @@
 
     Date Created: 10/24/2024
     Revisions: 
-        - None
+        - 10/27/2024 Magaly Camacho
+            Removed Models.databaseEnums.Complete import
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -27,7 +28,7 @@
 # Imports
 import datetime
 from .item import Item # Superclass model
-from .databaseEnums import ItemType, Complete, Priority # enums for types of item, and complete and priority attributes 
+from .databaseEnums import ItemType, Priority # enums for types of item, and complete and priority attributes 
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column 
 
