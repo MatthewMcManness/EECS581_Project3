@@ -5,8 +5,11 @@ ScreenManager:
 
 <CalendarView>:
     name: "calendar"
+
     BoxLayout:
         orientation: 'vertical'
+
+        # Header with calendar title and menu button
         BoxLayout:
             size_hint_y: None
             height: dp(50)
@@ -18,18 +21,22 @@ ScreenManager:
                 text: "Menu"
                 size_hint_x: 0.2
                 on_press: app.open_menu()
+
+        # Month navigation with Previous and Next buttons
         BoxLayout:
             size_hint_y: None
             height: dp(40)
             Button:
                 text: "Previous"
-                on_press: root.change_month(-1)
+                on_press: root.change_month(-1)  # Calls change_month in CalendarView
             Label:
-                text: root.month_year_text
+                text: root.month_year_text  # Binds to the month_year_text property
                 font_size: dp(18)
             Button:
                 text: "Next"
                 on_press: root.change_month(1)
+
+        # Header for weekdays
         BoxLayout:
             size_hint_y: None
             height: "50dp"
@@ -54,6 +61,8 @@ ScreenManager:
             Label:
                 text: "Sun"
                 halign: "center"
+
+        # Scrollable calendar grid for day buttons
         ScrollView:
             do_scroll_x: False
             do_scroll_y: True
@@ -64,23 +73,29 @@ ScreenManager:
                 spacing: dp(1)
                 row_default_height: dp(60)
                 row_force_default: True
-                adaptive_height: True
+                adaptive_height: True  # Ensures it adapts to content
+
+        # Button to open Add Task popup
         BoxLayout:
             size_hint_y: 0.2
             Button:
                 text: "Open Add Task Popup"
                 on_release: app.open_add_event_modal()
+
+        # Button to switch to To-Do List
         BoxLayout:
             size_hint_y: 0.2
             Button:
                 text: "Go to To-Do List"
                 on_release: app.switch_to_screen("todo")
-                
 
 <ToDoListView>:
     name: "todo"
+
     BoxLayout:
         orientation: 'vertical'
+
+        # Header with To-Do List title
         BoxLayout:
             size_hint_y: None
             height: dp(50)
@@ -89,27 +104,27 @@ ScreenManager:
                 font_size: dp(20)
                 size_hint_x: 1
 
-        # Header with Sort Options
+        # Sort options and add task button
         BoxLayout:
             size_hint_y: None
             height: "50dp"
             padding: "10dp"
             spacing: "10dp"
-            
+
             Button:
                 text: "Add Task"
                 on_release: app.open_add_task_modal()
-            
+
             Spinner:
                 text: "Sort by"
                 values: ["Priority", "Due Date", "Category"]
                 on_text: root.sort_tasks(self.text.lower())
-            
+
             Button:
                 text: "Calendar View"
                 on_release: app.switch_to_screen("calendar")
-        
-        # Scrollable Task List
+
+        # Scrollable task list
         ScrollView:
             GridLayout:
                 id: task_list
@@ -117,8 +132,8 @@ ScreenManager:
                 spacing: "5dp"
                 size_hint_y: None
                 height: self.minimum_height
-                
-                # Sample Task Item
+
+                # Sample task item
                 BoxLayout:
                     padding: "5dp"
                     spacing: "5dp"
@@ -130,32 +145,32 @@ ScreenManager:
                         Rectangle:
                             size: self.size
                             pos: self.pos
-                    
+
                     Label:
                         text: "Task Title"
                         size_hint_x: 0.5
                         color: (0, 0, 0, 1)
-                    
+
                     Label:
                         text: "Due Date"
                         size_hint_x: 0.3
                         color: (0, 0, 0, 1)
-                    
+
                     Label:
                         text: "!"
                         size_hint_x: 0.1
-                        color: (1, 0, 0, 1)  # Exclamation mark for priority
+                        color: (1, 0, 0, 1)  # Red exclamation for priority
                         font_size: "24sp"
-                    
+
                     Label:
                         text: "Category"
                         size_hint_x: 0.2
                         color: (0, 0, 0, 1)
-                        
-        # Header with Add Task button
+
+        # Footer with Add Task button
         BoxLayout:
             size_hint_y: None
             height: dp(50)
             Button:
                 text: "Add Task"
-                on_release: app.open_add_task_modal()  # This calls the modal to add tasks
+                on_release: app.open_add_task_modal()
