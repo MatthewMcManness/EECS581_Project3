@@ -308,88 +308,190 @@ class AddTaskModal(ModalView):
 #################### Usful Widgets and Modals (used by add Task and the Template for add Event) ##################################################################
 ##################################################################################################################################################################
 
-
 ####################### Custom Date Picker ###########################
-class DatePicker(Popup):
-    """A custom popup to select a date and time."""
+class DatePicker(ModalView):
+    """A custom modal for selecting a date."""
 
     def __init__(self, modal, **kwargs):
         super().__init__(**kwargs)
         self.modal = modal  # Reference to the task or event modal
-        self.title = "Select a Date"  # Title of the popup
-        self.size_hint = (0.8, 0.8)  # Size of the popup
-        self.selected_button = None  # Track the selected date button
+        self.size_hint = (0.9, 0.9)  # Adjust size to fit screen
+        self.auto_dismiss = False  # Prevent accidental dismissal
 
-        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        # Initialize the selected_button attribute
+        self.selected_button = None  # No button selected initially
 
-        # Grid layout for the days of the month
-        grid = GridLayout(cols=7, spacing=5, padding=10)
-        days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        # Main layout
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=5)
 
-        # Add day headers to the grid
-        for day in days_of_week:
-            grid.add_widget(Label(text=day))
+        # Header for month/year navigation
+        self.current_year = datetime.today().year
+        self.current_month = datetime.today().month
+        self.month_year_label = Label(
+            text=self.get_month_year_text(),
+            font_size='20sp',
+            size_hint_y=None,
+            height=40
+        )
 
-        today = datetime.today()  # Get today's date
-        first_day = today.replace(day=1)  # First day of the month
-        start_day = first_day.weekday()  # Which day of the week the month starts on
+        header_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=50)
+        header_layout.add_widget(Button(text="<", on_release=lambda _: self.change_month(-1)))
+        header_layout.add_widget(self.month_year_label)
+        header_layout.add_widget(Button(text=">", on_release=lambda _: self.change_month(1)))
+        layout.add_widget(header_layout)
 
-        # Add empty widgets to align the first day correctly
-        for _ in range(start_day + 1):
-            grid.add_widget(Label(text=""))
+        # Grid layout for the calendar
+        self.grid = GridLayout(cols=7, spacing=2, padding=5, size_hint_y=0.8)
+        layout.add_widget(self.grid)
 
-        # Create buttons for each day in the month
-        days_in_month = (first_day + timedelta(days=32)).replace(day=1) - first_day
-        for day in range(1, days_in_month.days + 1):
-            button = Button(text=str(day), on_release=self.select_date)
-            button.background_color = (1, 1, 1, 1)  # Default white background
-            grid.add_widget(button)
-
-        layout.add_widget(grid)  # Add the grid to the layout
-
-        # Add time selection using spinners
-        time_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.hour_spinner = Spinner(text="00", values=[f"{i:02d}" for i in range(24)])
-        self.minute_spinner = Spinner(text="00", values=[f"{i:02d}" for i in range(60)])
-        time_layout.add_widget(Label(text="Hour:"))
-        time_layout.add_widget(self.hour_spinner)
-        time_layout.add_widget(Label(text="Minute:"))
-        time_layout.add_widget(self.minute_spinner)
-
-        layout.add_widget(time_layout)  # Add the time selection layout
-
-        # Action buttons for the popup
-        button_layout = BoxLayout(orientation='horizontal', spacing=10)
-        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
-        button_layout.add_widget(Button(text="OK", on_release=self.confirm_selection))
+        # Footer buttons (Cancel and Select)
+        button_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=50, spacing=10)
+        cancel_button = Button(text="CANCEL", size_hint=(0.5, 1), on_release=self.dismiss)
+        select_button = Button(text="SELECT", size_hint=(0.5, 1), on_release=self.on_select)
+        button_layout.add_widget(cancel_button)
+        button_layout.add_widget(select_button)
         layout.add_widget(button_layout)
 
-        self.add_widget(layout)  # Add the main layout to the popup
+        # Add everything to the modal view
+        self.add_widget(layout)
+        self.populate_calendar()
+
+    def get_month_year_text(self):
+        """Return the current month and year as a string."""
+        return datetime(self.current_year, self.current_month, 1).strftime('%B %Y')
+
+    def change_month(self, increment):
+        """Change the month and update the calendar."""
+        self.current_month += increment
+        if self.current_month > 12:
+            self.current_month = 1
+            self.current_year += 1
+        elif self.current_month < 1:
+            self.current_month = 12
+            self.current_year -= 1
+        self.month_year_label.text = self.get_month_year_text()
+        self.populate_calendar()
+
+    def populate_calendar(self):
+        """Populate the calendar grid with day buttons."""
+        self.grid.clear_widgets()
+
+        # Get the number of weeks in the current month
+        cal = monthcalendar(self.current_year, self.current_month)
+        num_weeks = len(cal)  # 5 or 6 depending on the month
+
+        # Calculate the height for each row (including day headers)
+        total_rows = num_weeks + 1  # +1 for the header row
+        row_height = 1 / total_rows  # Equal height for each row
+
+        # Add day headers
+        days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        for day in days_of_week:
+            self.grid.add_widget(Label(text=day, size_hint_y=row_height, height=30))
+
+        # Add the days of the month
+        for week in cal:
+            for day in week:
+                if day == 0:
+                    # Empty space for non-days
+                    self.grid.add_widget(Label(size_hint_y=row_height))
+                else:
+                    button = Button(
+                        text=str(day),
+                        size_hint_y=row_height,
+                        height=60,
+                        color=(0, 0, 0, 1),
+                        background_normal='',
+                        background_color=(1, 1, 1, 1)  # White background
+                    )
+                    button.bind(on_release=lambda btn=button: self.select_date(btn))
+                    self.grid.add_widget(button)
 
     def select_date(self, button):
-        """Highlight the selected date and store the selection."""
+        """Store the selected date."""
+        # Reset the previously selected button, if any
         if self.selected_button:
-            self.selected_button.background_color = (1, 1, 1, 1)  # Reset previous selection to white
+            self.selected_button.background_color = (1, 1, 1, 1)  # Reset to white
 
-        button.background_color = (0, 0.5, 1, 1)  # Highlight selected date
+        # Highlight the new selected button
+        button.background_color = (0, 0.5, 1, 1)  # Blue highlight
         self.selected_button = button
-        self.selected_date = datetime.today().replace(day=int(button.text)).strftime("%Y-%m-%d")
+        self.selected_date = datetime(self.current_year, self.current_month, int(button.text)).strftime("%Y-%m-%d")
+
+    def on_select(self, instance):
+        """Open the TimePicker only when the Select button is pressed."""
+        if not hasattr(self, 'selected_date'):
+            print("Please select a date first.")
+            return
+        # Open the TimePicker modal
+        TimePicker(self).open()
+
+
+class TimePicker(ModalView):
+    """A custom time picker mimicking MD style."""
+
+    def __init__(self, date_picker, **kwargs):
+        super().__init__(**kwargs)
+        self.date_picker = date_picker  # Reference to the DatePicker
+        self.size_hint = (0.8, 0.5)  # Adjusted size for aesthetics
+        self.auto_dismiss = False  # Prevent dismissal on outside touch
+
+        # Main layout for the time picker
+        layout = BoxLayout(orientation='vertical', padding=20, spacing=15)
+
+        # Time selection layout: Two columns for hours and minutes
+        time_layout = BoxLayout(orientation='horizontal', spacing=30, size_hint=(1, 0.7))
+
+        # Hour selection column
+        hour_layout = BoxLayout(orientation='vertical', spacing=10)
+        hour_label = Label(text="HOURS", font_size='16sp', size_hint_y=None, height=30)
+        self.hour_spinner = Spinner(
+            text="00", values=[f"{i:02d}" for i in range(24)], size_hint=(None, None),
+            size=(80, 44), background_color=(1, 1, 1, 1)
+        )
+        hour_layout.add_widget(hour_label)
+        hour_layout.add_widget(self.hour_spinner)
+        time_layout.add_widget(hour_layout)
+
+        # Minute selection column
+        minute_layout = BoxLayout(orientation='vertical', spacing=10)
+        minute_label = Label(text="MINUTES", font_size='16sp', size_hint_y=None, height=30)
+        self.minute_spinner = Spinner(
+            text="00", values=[f"{i:02d}" for i in range(60)], size_hint=(None, None),
+            size=(80, 44), background_color=(1, 1, 1, 1)
+        )
+        minute_layout.add_widget(minute_label)
+        minute_layout.add_widget(self.minute_spinner)
+        time_layout.add_widget(minute_layout)
+
+        layout.add_widget(time_layout)
+
+        # Action buttons (Cancel and OK)
+        button_layout = BoxLayout(orientation='horizontal', spacing=20, size_hint=(1, 0.3))
+        cancel_button = Button(text="CANCEL", size_hint=(0.5, 1), on_release=self.dismiss)
+        ok_button = Button(text="OK", size_hint=(0.5, 1), on_release=self.confirm_selection)
+        button_layout.add_widget(cancel_button)
+        button_layout.add_widget(ok_button)
+
+        layout.add_widget(button_layout)
+        self.add_widget(layout)
 
     def confirm_selection(self, instance):
-        """Update the appropriate modal with the selected date and time."""
+        """Save the selected time and update the modal."""
         hour = self.hour_spinner.text
         minute = self.minute_spinner.text
-        selected_datetime = f"{self.selected_date} {hour}:{minute}"
+        selected_datetime = f"{self.date_picker.selected_date} {hour}:{minute}"
 
-        # Check which modal is calling and update the correct label
-        if hasattr(self.modal, 'deadline_label'):
-            self.modal.deadline_label.text = f"Deadline: {selected_datetime}"
-        elif hasattr(self.modal, 'event_date_label'):
-            self.modal.event_date_label.text = f"Event Date: {selected_datetime}"
+        if hasattr(self.date_picker.modal, 'deadline_label'):
+            self.date_picker.modal.deadline_label.text = f"Deadline: {selected_datetime}"
+        elif hasattr(self.date_picker.modal, 'event_date_label'):
+            self.date_picker.modal.event_date_label.text = f"Event Date: {selected_datetime}"
         else:
             print("Error: No valid label to update.")
 
-        self.dismiss()  # Close the popup
+        self.dismiss()  # Close the time picker
+        self.date_picker.dismiss()  # Close the date picker
+
 
 ####################### Repeat Options Modal ###########################
 class RepeatOptionsModal(ModalView):
