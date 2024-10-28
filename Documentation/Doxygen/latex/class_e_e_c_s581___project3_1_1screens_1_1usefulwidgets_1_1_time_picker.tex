@@ -1,0 +1,73 @@
+\doxysection{EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Time\+Picker Class Reference}
+\hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker}{}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker}\index{EECS581\_Project3.screens.usefulwidgets.TimePicker@{EECS581\_Project3.screens.usefulwidgets.TimePicker}}
+Inheritance diagram for EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Time\+Picker\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_ab8b3eacf10dd49a9740674babe9ef8ec}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, date\+\_\+picker, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_a0a9c8db89be342c7165f3b241ebb7c07}{confirm\+\_\+selection}} (self, instance)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_a241b00f7188d13130a37f3003caeaff6}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_a241b00f7188d13130a37f3003caeaff6} 
+{\bfseries date\+\_\+picker} = date\+\_\+picker
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_ab178eaded976e38c9f5c2f275a8eee27}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_ab178eaded976e38c9f5c2f275a8eee27} 
+tuple {\bfseries size\+\_\+hint} = (0.\+8, 0.\+5)
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_a75aee801434d1b0dd83f45fb865fa89a}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_a75aee801434d1b0dd83f45fb865fa89a} 
+bool {\bfseries auto\+\_\+dismiss} = False
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_afe2551a9bed6ae4f038a363cea0bd0c5}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_afe2551a9bed6ae4f038a363cea0bd0c5} 
+{\bfseries hour\+\_\+spinner} = Spinner(text="{}00"{}, values=\mbox{[}f"{}\{i\+:02d\}"{} for i in range(24)\mbox{]})
+\item 
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_aabd61b528739832c2366d64898a84b0f}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_aabd61b528739832c2366d64898a84b0f} 
+{\bfseries minute\+\_\+spinner} = Spinner(text="{}00"{}, values=\mbox{[}f"{}\{i\+:02d\}"{} for i in range(60)\mbox{]})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}A custom time picker mimicking Material Design style.\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_ab8b3eacf10dd49a9740674babe9ef8ec}\index{EECS581\_Project3.screens.usefulwidgets.TimePicker@{EECS581\_Project3.screens.usefulwidgets.TimePicker}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!EECS581\_Project3.screens.usefulwidgets.TimePicker@{EECS581\_Project3.screens.usefulwidgets.TimePicker}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_ab8b3eacf10dd49a9740674babe9ef8ec} 
+EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Time\+Picker.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{date\+\_\+picker}{, }\item[{\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{kwargs}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Initializes the TimePicker.
+
+Args:
+    date_picker (DatePicker): Reference to the DatePicker instance.
+
+Preconditions:
+    - The calling code must provide a valid DatePicker reference.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_a0a9c8db89be342c7165f3b241ebb7c07}\index{EECS581\_Project3.screens.usefulwidgets.TimePicker@{EECS581\_Project3.screens.usefulwidgets.TimePicker}!confirm\_selection@{confirm\_selection}}
+\index{confirm\_selection@{confirm\_selection}!EECS581\_Project3.screens.usefulwidgets.TimePicker@{EECS581\_Project3.screens.usefulwidgets.TimePicker}}
+\doxysubsubsection{\texorpdfstring{confirm\_selection()}{confirm\_selection()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker_a0a9c8db89be342c7165f3b241ebb7c07} 
+EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Time\+Picker.\+confirm\+\_\+selection (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Confirms the selected time and updates the parent modal.
+
+Postconditions:
+    - The selected time is saved and displayed in the parent modal.
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+screens/usefulwidgets.\+py\end{DoxyCompactItemize}

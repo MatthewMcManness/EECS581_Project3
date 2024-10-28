@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['update_5fapplied_5fcategories_0',['update_applied_categories',['../class_e_e_c_s581___project3_1_1main_1_1_add_task_modal.html#a6e30afe77f6d947f6eab32efcb774439',1,'EECS581_Project3.main.AddTaskModal.update_applied_categories()'],['../class_e_e_c_s581___project3_1_1test_1_1_add_task_modal.html#a39673dc193af78edadf4bee0cd8d1865',1,'EECS581_Project3.test.AddTaskModal.update_applied_categories()']]],
-  ['update_5fcategory_5fspinner_1',['update_category_spinner',['../class_e_e_c_s581___project3_1_1main_1_1_add_task_modal.html#a9d41efa1799787afa250678ba6258427',1,'EECS581_Project3.main.AddTaskModal.update_category_spinner()'],['../class_e_e_c_s581___project3_1_1test_1_1_add_task_modal.html#a26490dbc193d6da612b2b0406462efc8',1,'EECS581_Project3.test.AddTaskModal.update_category_spinner()']]],
-  ['update_5fmonth_5fyear_5ftext_2',['update_month_year_text',['../class_e_e_c_s581___project3_1_1main_1_1_calendar_view.html#a1124784256889e053fc26d5bea0ab76b',1,'EECS581_Project3.main.CalendarView.update_month_year_text()'],['../class_e_e_c_s581___project3_1_1test_1_1_calendar_view.html#ac418031e337e75685e74fef73b7d0edf',1,'EECS581_Project3.test.CalendarView.update_month_year_text()']]]
+  ['update_5fapplied_5fcategories_0',['update_applied_categories',['../class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#af663293ecdc25bc5f04c9beeb1eba1c6',1,'EECS581_Project3::screens::addtask::AddTaskModal']]],
+  ['update_5fcategory_5fspinner_1',['update_category_spinner',['../class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#aada294bc7050a5cb71f5e8095808a634',1,'EECS581_Project3::screens::addtask::AddTaskModal']]],
+  ['update_5fmonth_5fyear_5ftext_2',['update_month_year_text',['../class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view.html#a285ceb404bd6f7db394498aa4f39bf5b',1,'EECS581_Project3::screens::calendarview::CalendarView']]]
 ];

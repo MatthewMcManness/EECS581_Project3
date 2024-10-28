@@ -11,5 +11,6 @@ var searchData=
   ['eecs581_5fproject3_3a_3amodels_3a_3aitemcategory_8',['itemCategory',['../namespace_e_e_c_s581___project3_1_1_models_1_1item_category.html',1,'EECS581_Project3::Models']]],
   ['eecs581_5fproject3_3a_3amodels_3a_3arecurrence_9',['recurrence',['../namespace_e_e_c_s581___project3_1_1_models_1_1recurrence.html',1,'EECS581_Project3::Models']]],
   ['eecs581_5fproject3_3a_3amodels_3a_3atask_10',['task',['../namespace_e_e_c_s581___project3_1_1_models_1_1task.html',1,'EECS581_Project3::Models']]],
-  ['event_5f_11',['Event_',['../class_e_e_c_s581___project3_1_1_models_1_1event_1_1_event__.html',1,'EECS581_Project3::Models::event']]]
+  ['eecs581_5fproject3_3a_3ascreens_11',['screens',['../namespace_e_e_c_s581___project3_1_1screens.html',1,'EECS581_Project3']]],
+  ['event_5f_12',['Event_',['../class_e_e_c_s581___project3_1_1_models_1_1event_1_1_event__.html',1,'EECS581_Project3::Models::event']]]
 ];

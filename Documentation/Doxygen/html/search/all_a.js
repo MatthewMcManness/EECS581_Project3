@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['populate_5fcalendar_0',['populate_calendar',['../class_e_e_c_s581___project3_1_1_calendar_app_1_1_calendar_screen.html#a32ff03bce3f77464be4e89aa8ee09eb9',1,'EECS581_Project3.CalendarApp.CalendarScreen.populate_calendar()'],['../class_e_e_c_s581___project3_1_1main_1_1_calendar_view.html#aa889b8738bd7eaa78dfc7ced66f6dbec',1,'EECS581_Project3.main.CalendarView.populate_calendar()'],['../class_e_e_c_s581___project3_1_1test_1_1_calendar_view.html#abbb36f9a5d7445a4377c06e19982f349',1,'EECS581_Project3.test.CalendarView.populate_calendar()']]],
+  ['populate_5fcalendar_0',['populate_calendar',['../class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view.html#a614fbfa175f71ed4a6049345d8d1b308',1,'EECS581_Project3.screens.calendarview.CalendarView.populate_calendar()'],['../class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_date_picker.html#a527d1d98c9b675a6404c632d6bfd9ddd',1,'EECS581_Project3.screens.usefulwidgets.DatePicker.populate_calendar()']]],
   ['priority_1',['Priority',['../class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_priority.html',1,'EECS581_Project3::Models::databaseEnums']]]
 ];

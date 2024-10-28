@@ -2,8 +2,8 @@ var hierarchy =
 [
     [ "EECS581_Project3.database.Database", "class_e_e_c_s581___project3_1_1database_1_1_database.html", null ],
     [ "App", null, [
-      [ "EECS581_Project3.main.BusyBeeApp", "class_e_e_c_s581___project3_1_1main_1_1_busy_bee_app.html", null ],
-      [ "EECS581_Project3.test.BusyBeeApp", "class_e_e_c_s581___project3_1_1test_1_1_busy_bee_app.html", null ]
+      [ "EECS581_Project3.busybee.BusyBeeApp", "class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app.html", null ],
+      [ "EECS581_Project3.original.BusyBeeApp", "class_e_e_c_s581___project3_1_1original_1_1_busy_bee_app.html", null ]
     ] ],
     [ "DeclarativeBase", null, [
       [ "EECS581_Project3.Models.base.Base", "class_e_e_c_s581___project3_1_1_models_1_1base_1_1_base.html", [
@@ -20,32 +20,28 @@ var hierarchy =
       [ "EECS581_Project3.Models.databaseEnums.ItemType", "class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_item_type.html", null ],
       [ "EECS581_Project3.Models.databaseEnums.Priority", "class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_priority.html", null ]
     ] ],
-    [ "MDApp", null, [
-      [ "EECS581_Project3.CalendarApp.CalendarApp", "class_e_e_c_s581___project3_1_1_calendar_app_1_1_calendar_app.html", null ]
-    ] ],
     [ "ModalView", null, [
-      [ "EECS581_Project3.main.AddEventModal", "class_e_e_c_s581___project3_1_1main_1_1_add_event_modal.html", null ],
-      [ "EECS581_Project3.main.AddTaskModal", "class_e_e_c_s581___project3_1_1main_1_1_add_task_modal.html", null ],
-      [ "EECS581_Project3.main.CategoryConfirmationModal", "class_e_e_c_s581___project3_1_1main_1_1_category_confirmation_modal.html", null ],
-      [ "EECS581_Project3.main.CategoryModal", "class_e_e_c_s581___project3_1_1main_1_1_category_modal.html", null ],
-      [ "EECS581_Project3.main.DuplicateCategoryModal", "class_e_e_c_s581___project3_1_1main_1_1_duplicate_category_modal.html", null ],
-      [ "EECS581_Project3.main.RepeatOptionsModal", "class_e_e_c_s581___project3_1_1main_1_1_repeat_options_modal.html", null ],
-      [ "EECS581_Project3.test.AddEventModal", "class_e_e_c_s581___project3_1_1test_1_1_add_event_modal.html", null ],
-      [ "EECS581_Project3.test.AddTaskModal", "class_e_e_c_s581___project3_1_1test_1_1_add_task_modal.html", null ],
-      [ "EECS581_Project3.test.CategoryConfirmationModal", "class_e_e_c_s581___project3_1_1test_1_1_category_confirmation_modal.html", null ],
-      [ "EECS581_Project3.test.CategoryModal", "class_e_e_c_s581___project3_1_1test_1_1_category_modal.html", null ],
-      [ "EECS581_Project3.test.DuplicateCategoryModal", "class_e_e_c_s581___project3_1_1test_1_1_duplicate_category_modal.html", null ],
-      [ "EECS581_Project3.test.RepeatOptionsModal", "class_e_e_c_s581___project3_1_1test_1_1_repeat_options_modal.html", null ]
-    ] ],
-    [ "Popup", null, [
-      [ "EECS581_Project3.main.DatePicker", "class_e_e_c_s581___project3_1_1main_1_1_date_picker.html", null ],
-      [ "EECS581_Project3.test.DatePicker", "class_e_e_c_s581___project3_1_1test_1_1_date_picker.html", null ]
+      [ "EECS581_Project3.original.AddEventModal", "class_e_e_c_s581___project3_1_1original_1_1_add_event_modal.html", null ],
+      [ "EECS581_Project3.original.AddTaskModal", "class_e_e_c_s581___project3_1_1original_1_1_add_task_modal.html", null ],
+      [ "EECS581_Project3.original.CategoryConfirmationModal", "class_e_e_c_s581___project3_1_1original_1_1_category_confirmation_modal.html", null ],
+      [ "EECS581_Project3.original.CategoryModal", "class_e_e_c_s581___project3_1_1original_1_1_category_modal.html", null ],
+      [ "EECS581_Project3.original.DatePicker", "class_e_e_c_s581___project3_1_1original_1_1_date_picker.html", null ],
+      [ "EECS581_Project3.original.DuplicateCategoryModal", "class_e_e_c_s581___project3_1_1original_1_1_duplicate_category_modal.html", null ],
+      [ "EECS581_Project3.original.RepeatOptionsModal", "class_e_e_c_s581___project3_1_1original_1_1_repeat_options_modal.html", null ],
+      [ "EECS581_Project3.original.TimePicker", "class_e_e_c_s581___project3_1_1original_1_1_time_picker.html", null ],
+      [ "EECS581_Project3.screens.addevent.AddEventModal", "class_e_e_c_s581___project3_1_1screens_1_1addevent_1_1_add_event_modal.html", null ],
+      [ "EECS581_Project3.screens.addtask.AddTaskModal", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html", null ],
+      [ "EECS581_Project3.screens.usefulwidgets.CategoryConfirmationModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_confirmation_modal.html", null ],
+      [ "EECS581_Project3.screens.usefulwidgets.CategoryModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_modal.html", null ],
+      [ "EECS581_Project3.screens.usefulwidgets.DatePicker", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_date_picker.html", null ],
+      [ "EECS581_Project3.screens.usefulwidgets.DuplicateCategoryModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_duplicate_category_modal.html", null ],
+      [ "EECS581_Project3.screens.usefulwidgets.RepeatOptionsModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal.html", null ],
+      [ "EECS581_Project3.screens.usefulwidgets.TimePicker", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker.html", null ]
     ] ],
     [ "Screen", null, [
-      [ "EECS581_Project3.CalendarApp.CalendarScreen", "class_e_e_c_s581___project3_1_1_calendar_app_1_1_calendar_screen.html", null ],
-      [ "EECS581_Project3.main.CalendarView", "class_e_e_c_s581___project3_1_1main_1_1_calendar_view.html", null ],
-      [ "EECS581_Project3.main.ToDoListView", "class_e_e_c_s581___project3_1_1main_1_1_to_do_list_view.html", null ],
-      [ "EECS581_Project3.test.CalendarView", "class_e_e_c_s581___project3_1_1test_1_1_calendar_view.html", null ],
-      [ "EECS581_Project3.test.ToDoListView", "class_e_e_c_s581___project3_1_1test_1_1_to_do_list_view.html", null ]
+      [ "EECS581_Project3.original.CalendarView", "class_e_e_c_s581___project3_1_1original_1_1_calendar_view.html", null ],
+      [ "EECS581_Project3.original.ToDoListView", "class_e_e_c_s581___project3_1_1original_1_1_to_do_list_view.html", null ],
+      [ "EECS581_Project3.screens.calendarview.CalendarView", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view.html", null ],
+      [ "EECS581_Project3.screens.todolistview.ToDoListView", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html", null ]
     ] ]
 ];
