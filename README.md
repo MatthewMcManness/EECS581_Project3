@@ -5,7 +5,10 @@ A project created by Matthew McManness [2210261], Manvir Kaur [3064194], Magaly 
 This proposal outlines the development of a mobile-friendly calendar and to-do list application using Python with Kivy and KivyMD for the user interface. The app will feature a modern and clean design, similar to popular productivity apps, with a bottom navigation bar to easily switch between the calendar and to-do list views. The Calendar section will display a grid for the current month, allowing users to view and interact with each day, while the To-Do List section will provide a scrollable list of tasks with the ability to add, check, and remove tasks. The user interface is built with KivyMD's material design components, providing a sleek and responsive look that fits perfectly on mobile devices.
 
 ## Running BusyBee 
-To run BusyBee, first download the repository and install all requirements listed in the next section. Then, in a terminal, navigate to the *EECS581_Project3* directory and run the following command:
+To run BusyBee, first download the repository and install all requirements listed in the next section. 
+
+Then, in a terminal, navigate to the *EECS581_Project3* directory and run the following command:
+
 ```
 python main.py
 ```
@@ -13,13 +16,14 @@ python main.py
 ## Requirements
 First, make sure you have Python (and pip) installed. To download them, visit the Python website [here](https://www.python.org/downloads/).
 
-The other requirements are Kivy, KivyMD, and SQLAlchemy. To install the these run the following in the terminal:
+The other requirements are Kivy, KivyMD, and SQLAlchemy. To install these run the following in the terminal:
 ```
 pip install Kivy Kivymd SQLAlchemy
 ```
 
-If you use Anaconda, run the following instead:
+If you use [Anaconda](https://www.anaconda.com/download), run the following instead:
 ```
+pip install SQLAlchemy
 conda install kivy -c conda-forge
 ```
 
