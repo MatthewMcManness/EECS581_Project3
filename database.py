@@ -5,7 +5,8 @@
 
     Date Created: 10/20/2024
     Revisions: 
-        - None
+        - 11/1/2024 Magaly Camacho
+            Added method to get database session
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -37,7 +38,6 @@ class Database:
     
     Attributes:
         engine (Engine): database engine created from models
-        Session (Session): session class used to instantiate database session to run queries
     """
     def __init__(self, db_path:str, debug:bool=False):
         """
@@ -53,7 +53,8 @@ class Database:
         # create database if it doesn't exist already
         Base.metadata.create_all(self.engine) 
 
-        # save Session class
-        self.Session = Session
-
+    
+    def get_session(self) -> Session:
+        """Starts and returns a session to manage persistence operations for ORM-mapped objects. Must be used with "with" statement"""
+        return Session(self.engine)
 
