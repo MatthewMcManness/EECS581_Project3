@@ -7,6 +7,8 @@
     Revisions: 
         - 10/27/2024 Magaly Camacho
             Removed Models.databaseEnums.Complete import
+        - 11/01/2024 Magaly Camacho
+            Added __repr__() method, and added superclass attributes to docstring
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -40,6 +42,8 @@ class Task(Item):
     Attributes:
         __tablename__ (str): the name of the table
         id (int): task id (foreign key to Item.id)
+        name (str): name of task (from Item superclass)
+        notes (str): notes about the task, max 255 chars (optional, from Item superclass)
         complete (bool): whether task is complete or not, defaults to False
         priority (Models.databaseEnums.Priority): task priority (low, medium, high)
         t_created (datetime): date and time task was created
@@ -76,3 +80,15 @@ class Task(Item):
     __mapper_args__ = {
         "polymorphic_identity": ItemType.TASK
     }
+
+    def __repr__(self):
+        """String representation of task instance"""
+        string = "\nTask("
+        string += f"\n\tid={self.id}"
+        string += f"\n\tname={self.name}"
+        string += f"\n\tnotes={self.notes}"
+        string += f"\n\tcomplete={self.complete}"
+        string += f"\n\tpriority={self.priority}"
+        string += "\n)\n"
+
+        return string

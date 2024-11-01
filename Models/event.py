@@ -5,7 +5,8 @@
 
     Date Created: 10/24/2024
     Revisions: 
-        - None
+        - 11/01/2024 Magaly Camacho
+            Added __repr__() method, and added superclass attributes to docstring
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -41,6 +42,8 @@ class Event_(Item):
     Attributes:
         __tablename__ (str): the name of the table
         id (int): event id (foreign key to Item.id)
+        name (str): name of event (from Item superclass)
+        notes (str): notes about the event, max 255 chars (optional, from Item superclass)
         location_ (str): location of event, max 100 chars
         start_time (datetime): start date and time of event
         e_created (datetime): date and time event was created
@@ -87,3 +90,17 @@ class Event_(Item):
     reccurence: Mapped[Optional["Recurrence"]] = relationship( # type: ignore
         back_populates="events" # attribute
     )
+
+
+    def __repr__(self):
+        """String representation of event instance"""
+        string = "\nEvent("
+        string += f"\n\tid={self.id}"
+        string += f"\n\tname={self.name}"
+        string += f"\n\tnotes={self.notes}"
+        string += f"\n\tlocation={self.location_}"
+        string += f"\n\tstart_time={self.start_time}"
+        string += f"\n\trecurrence_id={self.reccurence}"
+        string += "\n)\n"
+
+        return string

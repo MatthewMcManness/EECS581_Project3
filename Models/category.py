@@ -5,7 +5,8 @@
 
     Date Created: 10/26/2024
     Revisions: 
-        - None
+        - 11/01/2024 Magaly Camacho
+            Added __repr__() method
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -60,7 +61,6 @@ class Category(Base):
         default="FFFFFF" # defaults to white
     )
     
-    
     c_created: Mapped[datetime] = mapped_column(
         default=datetime.now # defaults to inserted date and time
     )
@@ -76,3 +76,14 @@ class Category(Base):
         secondary=item_category_association, # association table
         back_populates="categories" # attribute in Item
     )
+
+
+    def __repr__(self):
+        """String representation of category instance"""
+        string = "\nCategory("
+        string += f"\n\tid={self.id}"
+        string += f"\n\tname={self.name}"
+        string += f"\n\tcolor_hex={self.color_hex}"
+        string += "\n)\n"
+
+        return string

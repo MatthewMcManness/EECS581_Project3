@@ -4,8 +4,9 @@
     Author: Magaly Camacho [3072618]
 
     Date Created: 10/26/2024
-    Revisions: 
-        - None
+    Revisions:
+        - 11/01/2024 Magaly Camacho
+            Added __repr__() method
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -73,3 +74,14 @@ class Recurrence(Base):
         back_populates="reccurence", # attribute
         cascade="all, delete-orphan" # delete recurrence if all of it's events are deleted
     )
+
+
+    def __repr__(self):
+        """String representation of recurrence instance"""
+        string = "\nRecurrence("
+        string += f"\n\tid={self.id}"
+        string += f"\n\tend_date={self.end_date}"
+        string += f"\n\tfrequency={self.frequency}"
+        string += "\n)\n"
+
+        return string
