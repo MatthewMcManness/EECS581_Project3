@@ -44,7 +44,7 @@ class Event_(Item):
         id (int): event id (foreign key to Item.id)
         name (str): name of event (from Item superclass)
         notes (str): notes about the event, max 255 chars (optional, from Item superclass)
-        location_ (str): location of event, max 100 chars
+        place (str): place of event, max 100 chars
         start_time (datetime): start date and time of event
         e_created (datetime): date and time event was created
         e_last_updated (datetime): date and time event was last updated
@@ -54,13 +54,13 @@ class Event_(Item):
     __tablename__ = "Event_"
 
 
-    # Attributes, all are NOT NULL (required) except location_
+    # Attributes, all are NOT NULL (required) except place
     id: Mapped[int] = mapped_column(
         ForeignKey("Item.id"),  # Foreign Key: Item(id)
         primary_key=True # foreign key is primary key
     )
 
-    location_: Mapped[Optional[str]] = mapped_column(String(100))
+    place: Mapped[Optional[str]] = mapped_column(String(100))
     
     start_time: Mapped[datetime] = mapped_column(
         default=datetime.now # defaults to inserted date and time
@@ -98,7 +98,7 @@ class Event_(Item):
         string += f"\n\tid={self.id}"
         string += f"\n\tname={self.name}"
         string += f"\n\tnotes={self.notes}"
-        string += f"\n\tlocation={self.location_}"
+        string += f"\n\tplace={self.place}"
         string += f"\n\tstart_time={self.start_time}"
         string += f"\n\trecurrence_id={self.reccurence}"
         string += "\n)\n"
