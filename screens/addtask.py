@@ -167,7 +167,7 @@ class AddTaskModal(ModalView):
             print("Task Title is required.")
             return  # Stop execution if title is missing
 
-        # Get ask info from inputs
+        # Get task info from inputs
         name=self.title_input.text
         notes=self.notes_input.text
         priority=Priority.LOW # *** need to add priority input/spinner
