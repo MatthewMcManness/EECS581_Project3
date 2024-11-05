@@ -9,6 +9,8 @@
             Removed Models.databaseEnums.Complete import
         - 11/01/2024 Magaly Camacho
             Added __repr__() method, and added superclass attributes to docstring
+        - 11/04/2024 Magaly Camacho
+            Added due_date attribute
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -28,7 +30,8 @@
 
 
 # Imports
-import datetime
+from typing import Optional
+from datetime import datetime
 from .item import Item # Superclass model
 from .databaseEnums import ItemType, Priority # enums for types of item, and complete and priority attributes 
 from sqlalchemy import ForeignKey
@@ -42,6 +45,7 @@ class Task(Item):
     Attributes:
         __tablename__ (str): the name of the table
         id (int): task id (foreign key to Item.id)
+        due_date (datetime): optional due date for task
         name (str): name of task (from Item superclass)
         notes (str): notes about the task, max 255 chars (optional, from Item superclass)
         complete (bool): whether task is complete or not, defaults to False
@@ -57,6 +61,8 @@ class Task(Item):
         ForeignKey("Item.id"), # Foreign Key: Item(id)
         primary_key=True # foreign key is primary key
     ) 
+
+    due_date: Mapped[Optional[datetime]] # optional due date
     
     complete: Mapped[bool] = mapped_column(
         default=False # defaults to not complete
@@ -66,13 +72,13 @@ class Task(Item):
         default=Priority.LOW # defaults to low priority
     )
     
-    t_created: Mapped[datetime.datetime] = mapped_column(
-        default=datetime.datetime.now # defaults to inserted date and time
+    t_created: Mapped[datetime] = mapped_column(
+        default=datetime.now # defaults to inserted date and time
     )
     
-    t_last_updated: Mapped[datetime.datetime] = mapped_column(
-        default=datetime.datetime.now, # defaults to inserted date and time
-        onupdate=datetime.datetime.now # aut update this attribute when record is updated
+    t_last_updated: Mapped[datetime] = mapped_column(
+        default=datetime.now, # defaults to inserted date and time
+        onupdate=datetime.now # aut update this attribute when record is updated
     )
 
 
@@ -89,6 +95,7 @@ class Task(Item):
         string += f"\n\tnotes={self.notes}"
         string += f"\n\tcomplete={self.complete}"
         string += f"\n\tpriority={self.priority}"
+        string += f"\n\tdue_date={self.due_date}"
         string += "\n)\n"
 
         return string

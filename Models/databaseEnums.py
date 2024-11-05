@@ -5,7 +5,8 @@
 
     Date Created: 10/20/2024
     Revisions: 
-        - None
+        - 11/04/2024 Magaly Camacho
+            Added a static method to Priority to get string and color associated with a given priority
 
     Preconditions: 
         - None
@@ -37,6 +38,31 @@ class Priority(Enum):
     MEDIUM = 1
     HIGH = 2
 
+
+    @staticmethod
+    def get_str_and_color(priority) -> tuple[str, tuple[float, float, float, float]]:
+        """
+        Returns string and color associated with a given priority
+
+        Parameters:
+            priority (Priority): a given priority (LOW, MEDIUM, or HIGH)
+
+        Returns:
+            tuple[str, tuple[float, float, float, float]: the string and color associated with the priority (string, color)
+        """
+        str_list = ["Low", "Medium", "High"]
+        colors = [
+            (0, 255, 0, 1), # green, low
+            (255, 255, 0, 1), # yellow, medium
+            (255, 0, 0, 1) # red, high
+        ]
+
+        if priority in Priority:
+            val = priority.value
+            return str_list[val], tuple(c / 255 if i != 3 else c for i, c in enumerate(colors[val]))
+        
+        raise ValueError("Invalid Priority value")
+    
 
 class Frequency(Enum):
     """Enumeration for Recurrence.Frequency"""
