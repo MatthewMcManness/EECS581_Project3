@@ -3,11 +3,12 @@
 # Description: This module contains the main application logic for the BusyBee 
 #              app. It manages the screens and provides functionality to open 
 #              task/event modals.
-# Programmer: Matthew McManness (2210261)
+# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618)
 # Date Created: October 26, 2024
 # Revision History:
 # - October 26, 2024: Initial version created. (Author: Matthew McManness)
 # - October 27, 2024: Current version created (added comments). (Updated by: Matthew McManness)
+# - November 4, 2024: Added call to To Do list view so that tasks already in the database are populated (Updated by: Magaly Camacho)
 #
 # Preconditions:
 # - Kivy must be installed and properly configured in the Python environment.
@@ -74,9 +75,13 @@ class BusyBeeApp(App):
         """
         self.screen_manager = ScreenManager(transition=NoTransition())  # Initialize ScreenManager
 
+        # Initialize To Do list view
+        todo = ToDoListView(name="todo")
+        todo.populate() # add existing tasks 
+
         # Add the CalendarView and ToDoListView screens to the manager
         self.screen_manager.add_widget(CalendarView(name="calendar"))
-        self.screen_manager.add_widget(ToDoListView(name="todo"))
+        self.screen_manager.add_widget(todo)
 
         return self.screen_manager  # Return the configured ScreenManager
 

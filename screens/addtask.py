@@ -8,6 +8,7 @@
 # Revision History:
 # - October 26, 2024: Initial version created (Author: Matthew McManness)
 # - October 27, 2024: Updated to include proper comments (Matthew McManness)
+# - November 4, 2024: Added connection to database to save tasks (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -24,7 +25,7 @@
 # Side Effects:
 # - Updates the category list and modifies the To-Do ListView when tasks are added.
 # Known Faults:
-# - None identified.
+# - Priority picker needs to be implemented
 # -----------------------------------------------------------------------------
 
 # Import necessary Kivy modules and custom widgets
@@ -33,10 +34,17 @@ from kivy.uix.boxlayout import BoxLayout  # Layout for organizing widgets
 from kivy.uix.textinput import TextInput  # Input fields for user text
 from kivy.uix.spinner import Spinner  # Dropdown-style component
 from kivy.uix.button import Button  # Standard button widget
-from screens.usefulwidgets import DatePicker, TimePicker  # Date and time pickers
+from screens.usefulwidgets import DatePicker # Date picker
 from screens.usefulwidgets import RepeatOptionsModal, CategoryModal  # Additional modals
 from kivy.uix.label import Label  # Label widget for displaying text
 from kivy.app import App  # Ensure App is imported
+from Models import Task, Category # Task and Category classes
+from Models.databaseEnums import Priority # for tasl priorities
+from database import get_database # to connect to database
+from sqlalchemy import select # to query database
+from datetime import datetime # for Task.due_date
+
+db = get_database() # get database
 
 class AddTaskModal(ModalView):
     """
@@ -53,9 +61,13 @@ class AddTaskModal(ModalView):
         self.size_hint = (0.9, 0.9)  # Set modal size
         self.auto_dismiss = False  # Prevent accidental dismissal
 
-        # Initialize predefined categories and the selected category list
-        self.categories = ["Work", "Personal", "School"]
-        self.selected_categories = []
+        # Initialize categories and the selected category list
+        with db.get_session() as session, session.begin():
+            stmt = select(Category).where(True) # sql statement
+            results = session.scalars(stmt).all() # query the database for all categories
+            self.categories = [result.name for result in results] # save the names of all categories in the database
+            self.categories_ids = [result.id for result in results] # cache ids
+        self.selected_categories = [] # initially none
 
         # Create the main layout
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
@@ -150,27 +162,57 @@ class AddTaskModal(ModalView):
             - If the task title is empty, an error message is logged.
         """
 
-        # Collect task data
-        task_data = {
-            "title": self.title_input.text,
-            "deadline": self.deadline_label.text,
-            "repeats": self.repeat_button.text,
-            "notes": self.notes_input.text,
-            "categories": self.selected_categories,
-        }
-
-        # Validate task title
-        if not task_data["title"]:
+        # Check for task title
+        if not self.title_input.text:
             print("Task Title is required.")
             return  # Stop execution if title is missing
+
+        # Get ask info from inputs
+        name=self.title_input.text
+        notes=self.notes_input.text
+        priority=Priority.LOW # *** need to add priority input/spinner
+        due_date = self.deadline_label.text
+        categories=None # initially assume no categories
+        if len(self.selected_categories) > 0: # if there's categories, make a string
+            categories=", ".join(self.selected_categories)
+
+        # connect to database with a session
+        with db.get_session() as session:
+            with session.begin(): # start a transaction, auto commits before exiting context
+                # Get instances for selected categories
+                selected_categories_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
+                selected_categories_instances = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
+
+                # Collect task data
+                new_task = Task(
+                    name=name,
+                    notes=notes,
+                    priority=priority
+                )
+
+                # Add due date, if applicable
+                if self.deadline_label.text:
+                    due_date = (" ").join(self.deadline_label.text.split(" ")[1:]) # get rid of "Deadline: " in label
+                    new_task.due_date = datetime.strptime(due_date, "%Y-%m-%d %H:%M") # add due date to task
+
+                # Log message
+                print(f"Saving task: {new_task}")
+
+                # Create relationship between task and categories, note this can't be done in the constructor Task()
+                new_task.categories = selected_categories_instances 
+
+                # add task to session
+                session.add(new_task)
+
+            task_id = new_task.id # get new_task id
 
         # Access the running app instance
         app = App.get_running_app()  # Correctly fetch the app instance
         todo_screen = app.screen_manager.get_screen('todo')  # Get the To-Do List screen
 
         # Add the task to the To-Do List screen
-        todo_screen.add_task(task_data)
+        todo_screen.add_task(task_id, name, priority, due_date, categories)
 
         # Log the task addition and close the modal
-        print(f"Task Saved: {task_data}")
+        print(f"Task saved with ID: {task_id}")
         self.dismiss()

@@ -3,11 +3,12 @@
 # Description: This module contains custom UI components such as the DatePicker, 
 #              TimePicker, RepeatOptionsModal, and category-related modals used 
 #              throughout the BusyBee application.
-# Programmer: Matthew McManness (2210261)
+# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618)
 # Date Created: October 26, 2024
 # Revision History:
 # - October 26, 2024: Initial version created (Author: Matthew McManness)
 # - October 27, 2024: Updated the datepicker to match calendar and added proper comments. (Matthew McManness)
+# - November 4, 2024: Made it so that the CategoryModal pulls from and updates to the database (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and functional.
@@ -19,7 +20,7 @@
 #   selections within the app.
 #
 # Known Faults:
-# - None identified as of this writing.
+# - Can't add two categories in a row, must select in between.
 # Side Effects:
 # - The modals modify the underlying app's properties (e.g., category lists, 
 #   selected dates) when used.
@@ -34,10 +35,12 @@ from kivy.uix.gridlayout import GridLayout  # Arrange widgets in a grid
 from kivy.uix.button import Button  # Standard button widget
 from kivy.uix.spinner import Spinner  # Dropdown-style component for selections
 from kivy.uix.textinput import TextInput  # Input field for user text
-from kivy.clock import Clock  # Schedule functions and delays
-from kivy.metrics import dp  # Density-independent pixels for layout sizing
 from calendar import monthcalendar  # Generate a month’s calendar layout
-from datetime import datetime, timedelta  # Date and time utilities
+from datetime import datetime  # Date and time utilities
+from Models import Category # Category model
+from database import get_database # class to interact with database
+
+db = get_database() # get database
 
 ####################### Custom Date Picker ###########################
 class DatePicker(ModalView):
@@ -347,9 +350,21 @@ class CategoryModal(ModalView):
             - The category is added to the task modal's list, or an error is displayed.
         """
         new_category = self.new_category_input.text.strip()  # Get input text
+
         if new_category and new_category not in self.task_modal.categories:
             self.task_modal.categories.append(new_category)  # Add category
             self.task_modal.update_category_spinner()  # Update spinner options
+
+            category_object = Category(name=new_category) # make a category object
+
+            # save new category
+            with db.get_session() as session: # connect to database with a session
+                with session.begin(): # start transaction (auto commits)
+                    session.add(category_object) # insert new category
+                
+                category_id = category_object.id # get generated id
+                self.task_modal.categories_ids.append(category_id) # cache id
+                
             CategoryConfirmationModal(new_category).open()  # Open confirmation modal
         else:
             DuplicateCategoryModal().open()  # Open duplicate error modal
