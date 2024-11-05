@@ -5,7 +5,10 @@
 #   Date Created: 10/26/2024
 #   Revisions: 
 #       - 10/26/2024 by Magaly Camacho 
-#         Git now ignores all test output files but keeps the Output folder
+#           Git now ignores all test output files but keeps the Output folder
+#       - 10/01/2024 by Magaly Camacho
+#           Git now ignores database file
+
 
 #   Preconditions: Git must be installed and initialized in the repository
 #   Postconditions: Anything listed will be ignored by git
@@ -19,3 +22,6 @@ __pycache__/
 # ignore all test output files but keep the Output folder
 Tests/Output/
 !Tests/Output/.gitkeep
+
+# ignore database file
+busybee.db
