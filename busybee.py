@@ -9,6 +9,7 @@
 # - October 26, 2024: Initial version created. (Author: Matthew McManness)
 # - October 27, 2024: Current version created (added comments). (Updated by: Matthew McManness)
 # - November 4, 2024: Added call to To Do list view so that tasks already in the database are populated (Updated by: Magaly Camacho)
+# - November 11, 2024: Added open_edit_task_modal(self, task_id) (Updated by: Matthew McManness)
 #
 # Preconditions:
 # - Kivy must be installed and properly configured in the Python environment.
@@ -52,6 +53,7 @@ from screens.calendarview import CalendarView
 from screens.todolistview import ToDoListView
 from screens.addevent import AddEventModal
 from screens.addtask import AddTaskModal
+from screens.edittask import EditTaskModal  # Import the edit modal
 
 # -----------------------------------------------------------------------------
 # Main Application Class: BusyBeeApp
@@ -152,3 +154,16 @@ class BusyBeeApp(App):
         - None.
         """
         self.screen_manager.current = screen_name  # Change the active screen
+
+    def open_edit_task_modal(self, task_id):
+        """
+        Open the Edit Task modal for a specific task.
+
+        Args:
+        - task_id (int): ID of the task to edit.
+
+        Postconditions:
+        - The Edit Task modal will open with the task data preloaded.
+        """
+        edit_task_modal = EditTaskModal(task_id=task_id)  # Create EditTaskModal with the task ID
+        edit_task_modal.open()  # Open the modal

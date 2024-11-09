@@ -7,6 +7,7 @@
 # Dates Revised:
 #   - October 26, 2024: Initial creation of ToDoListView structure  (placeholder for navigation) - [Matthew McManness]
 #   - November 4, 2024: Updated add_task to connect to database, and added a method populate() that adds all tasks in the database - [Magaly Camacho]
+#   - November 11, 2024: Added def on_task_click(self, task_id) - [Matthew McManness]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -38,6 +39,7 @@ from database import get_database # to connect to database
 from sqlalchemy import select # to query database
 from Models import Task # task model class
 from Models.databaseEnums import Priority # for Task.priority
+from kivy.app import App
 
 db = get_database() # get database
 
@@ -128,3 +130,9 @@ class ToDoListView(Screen):
 
                 # add task 
                 self.add_task(task.id, task.name, task.priority, due_date, categories)
+
+def on_task_click(self, task_id):
+    # Call the app instance to open EditTaskModal with the task ID
+    app = App.get_running_app()
+    app.open_edit_task_modal(task_id)
+
