@@ -165,5 +165,10 @@ class BusyBeeApp(App):
         Postconditions:
         - The Edit Task modal will open with the task data preloaded.
         """
-        edit_task_modal = EditTaskModal(task_id=task_id)  # Create EditTaskModal with the task ID
-        edit_task_modal.open()  # Open the modal
+        """Open the Edit Task modal for a specific task."""
+        # Get the ToDoListView instance to access its refresh_tasks method
+        todo_screen = self.screen_manager.get_screen("todo")
+        
+        # Create the EditTaskModal and pass the task ID and refresh callback
+        edit_task_modal = EditTaskModal(task_id=task_id, refresh_callback=todo_screen.refresh_tasks)
+        edit_task_modal.open()

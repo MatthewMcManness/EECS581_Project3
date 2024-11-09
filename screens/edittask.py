@@ -6,7 +6,7 @@
 # Programmer: Matthew McManness (2210261)
 # Date Created: November 9, 2024
 # Revision History:
-# - November 9, 2024: Initial version copied from addtask.py (Author: Matthew McManness)
+# - November 9, 2024: Initial version copied from addtask.py then added the nessecary functions to update or delete a task (Author: Matthew McManness)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -45,12 +45,13 @@ from datetime import datetime # for Task.due_date
 db = get_database() # get database
 
 class EditTaskModal(ModalView):
-    def __init__(self, task_id=None, **kwargs):
+    def __init__(self, task_id=None, refresh_callback=None, **kwargs):
         """Initialize the EditTaskModal with layout components, loading task data if editing."""
         super().__init__(**kwargs)
         self.task_id = task_id  # Store task ID for editing
         self.size_hint = (0.9, 0.9)
         self.auto_dismiss = False
+        self.refresh_callback = refresh_callback  # Store the refresh callback
 
         # Load categories
         with db.get_session() as session, session.begin():
@@ -125,7 +126,8 @@ class EditTaskModal(ModalView):
                 self.update_applied_categories()
 
     def save_task(self, *args):
-        """Update the task if editing, or save new data."""
+        """Save the task, updating if it exists or creating a new one."""
+
         if not self.title_input.text:
             print("Task Title is required.")
             return
@@ -140,17 +142,25 @@ class EditTaskModal(ModalView):
         selected_categories_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
 
         with db.get_session() as session:
-            task = session.query(Task).filter_by(id=self.task_id).first() if self.task_id else Task()
-            task.name = name
-            task.notes = notes
-            task.due_date = due_date
-            task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
-
-            if not self.task_id:  # New task
+            if self.task_id:
+                task = session.query(Task).filter_by(id=self.task_id).first()
+                task.name = name
+                task.notes = notes
+                task.due_date = due_date
+                task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
+            else:
+                task = Task(name=name, notes=notes, due_date=due_date)
+                task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
                 session.add(task)
-            session.commit()
 
-        print(f"Task {'updated' if self.task_id else 'saved'} with ID: {task.id}")
+            # Commit the session and capture the task ID before the session closes
+            session.commit()
+            task_id = task.id  # Capture the ID before the session closes
+
+        if self.refresh_callback:
+            self.refresh_callback()
+
+        print(f"Task {'updated' if self.task_id else 'saved'} with ID: {task_id}")
         self.dismiss()
 
     def delete_task(self, *args):
@@ -161,6 +171,11 @@ class EditTaskModal(ModalView):
                 if task:
                     session.delete(task)
             print(f"Task with ID {self.task_id} deleted.")
+
+            # Call the refresh callback to update the ToDoListView after deletion
+            if self.refresh_callback:
+                self.refresh_callback()
+
             self.dismiss()
 
     def open_date_picker(self, instance):
