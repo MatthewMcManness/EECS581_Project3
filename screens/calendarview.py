@@ -48,6 +48,11 @@ from kivy.app import App  # Main class to run the Kivy app.
 from kivy.clock import Clock  # Schedule functions after a delay.
 from calendar import monthcalendar  # Generate calendar layout for a given month.
 from datetime import datetime, timedelta  # Work with dates and times.
+from database import get_database # to connect to database
+from sqlalchemy import select, extract # to query database
+from Models import Event_ # task model class
+
+db = get_database() # get database
 
 class CalendarView(Screen):
     """Displays a monthly calendar with navigational buttons and day selection."""
@@ -134,3 +139,54 @@ class CalendarView(Screen):
         """Handle the event when a day button is pressed."""
         day_text = instance.parent.children[1].text  # Get the selected day number.
         print(f"You selected day: {day_text}")  # Print the selected day to the console.
+
+    def add_event(self, event_id, name, place, start_time):
+        pass
+    
+    def get_cell_widget(self, date_str):
+        """Retrieve the widget for the specified date."""
+        # Parse the date string into a datetime object
+        target_date = datetime.strptime(date_str, '%Y-%m-%d %H:%M')
+        target_day = target_date.day
+        target_month = target_date.month
+        target_year = target_date.year
+
+        # Check if the date is in the current calendar view
+        if target_month != self.current_month or target_year != self.current_year:
+            print("Error: The specified date is not in the current month or year.")
+            return None
+
+        # Get the calendar layout for the current month
+        cal = monthcalendar(self.current_year, self.current_month)
+
+        (comment)# Locate the widget for the target day in calendar_grid
+        grid = self.ids['calendar_grid']
+        widget_index = 0
+        for week in cal:
+            for day in week:
+                if day == target_day:
+                    # Found the target day; retrieve the widget
+                    return grid.children[len(grid.children) - widget_index - 1]
+                widget_index += 1
+
+        print("Error: Day widget not found.")
+        return None
+    
+    def populate(self):
+        with db.session() as session:
+            stmt = select(Event_).where(
+                extract("year",Event_.start_time)== self.current_year,
+                extract("month", Event_.start_time) == self.current_month)
+            events = session.scalars(stmt).all()
+
+            for event in events:
+                start_time = event.start_time.strftime("%Y-%m-%d %H:%M")
+                cell_widget = self.get_cell_widget(start_time)
+                
+                #add event 
+                self.add_event(event.id, event.name, event.place, event.start_time)
+                
+            
+        
+
+
