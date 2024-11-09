@@ -7,7 +7,7 @@
 # Dates Revised:
 #   - October 26, 2024: Initial creation of ToDoListView structure  (placeholder for navigation) - [Matthew McManness]
 #   - November 4, 2024: Updated add_task to connect to database, and added a method populate() that adds all tasks in the database - [Magaly Camacho]
-#   - November 11, 2024: Added def on_task_click(self, task_id) - [Matthew McManness]
+#   - November 11, 2024: Added def on_task_click(self, task_id), refresh_tasks(self), toggle_complete(self, checkbox, task_id, task_box), grey_out_task(self, task_box), reset_task_appearance(self, task_box)  - [Matthew McManness]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -52,6 +52,7 @@ class TaskBox(BoxLayout):
         """Initialize the TaskBox with a callback for clicks."""
         super().__init__(**kwargs)
         self.on_click_callback = on_click_callback  # Set the callback attribute
+        self.check_box = None  # Placeholder for checkbox reference
 
         # Initialize the size and background color of the TaskBox
         with self.canvas.before:
@@ -61,17 +62,28 @@ class TaskBox(BoxLayout):
         # Update the rectangle size and position when TaskBox is resized
         self.bind(size=self.update_rect, pos=self.update_rect)
 
+    def add_checkbox(self, callback):
+        """Add a checkbox to the task box and bind it to a callback."""
+        self.check_box = CheckBox(size_hint_x=0.1)
+        self.check_box.bind(on_release=callback)
+        self.add_widget(self.check_box)
+
     def update_rect(self, *args):
         """Update rectangle to match the size and position of the TaskBox."""
         self.rect.pos = self.pos
         self.rect.size = self.size
 
     def on_touch_down(self, touch):
-        """Detect if the TaskBox was clicked."""
+        """Detect if the TaskBox was clicked but ignore if the checkbox was clicked."""
+        if self.check_box and self.check_box.collide_point(*touch.pos):
+            # If clicking on the checkbox, do not trigger the task click callback
+            return super().on_touch_down(touch)
+
+        # Otherwise, proceed with the task box click event
         if self.collide_point(*touch.pos):
-            # If clicked, call the on_click_callback with task_id
-            self.on_click_callback(self.task_id)
-            return True  # Indicate that the event was handled
+            if self.on_click_callback:
+                self.on_click_callback(self.task_id)
+            return True
         return super().on_touch_down(touch)
 
 class ToDoListView(Screen):
@@ -81,15 +93,16 @@ class ToDoListView(Screen):
         """Initialize the ToDoListView screen."""
         super().__init__(**kwargs)  # Initialize the superclass with provided arguments.
 
-    def add_task(self, task_id, name, priority, due_date=None, categories=None):
+    def add_task(self, task_id, name, priority, due_date=None, categories=None, complete=False):
         """Add a new task to the to-do list."""
         # Create a TaskBox and pass `on_task_click` as the click callback
         task_box = TaskBox(on_click_callback=self.on_task_click, padding="5dp", spacing="5dp", size_hint_y=None, height="60dp", size_hint_x=1)
         task_box.task_id = task_id
 
-        # Add checkbox for Task.complete
-        check_box = CheckBox(size_hint_x=0.1, active=False)
-        task_box.add_widget(check_box)
+        # Add checkbox for Task.complete and bind it to toggle_complete
+        # Add checkbox with binding to toggle_complete
+        task_box.add_checkbox(lambda instance: self.toggle_complete(instance, task_id, task_box))
+        task_box.check_box.active = complete  # Set initial checkbox state
 
         # Check/update info to display None if needed
         if due_date is None:
@@ -105,6 +118,10 @@ class ToDoListView(Screen):
         task_box.add_widget(Label(text=due_date, size_hint_x=0.3, color=(0,0,0,1)))
         task_box.add_widget(Label(text=priority, size_hint_x=0.1, color=priority_color))
         task_box.add_widget(Label(text=categories, size_hint_x=0.5, color=(0,0,0,1)))
+
+        # Grey out task if already complete
+        if complete:
+            self.grey_out_task(task_box)
 
         # Add task box to task list layout
         self.ids.task_list.add_widget(task_box)
@@ -123,7 +140,7 @@ class ToDoListView(Screen):
                 categories = ", ".join([cat.name for cat in task.categories])
 
                 # Add task 
-                self.add_task(task.id, task.name, task.priority, due_date, categories)
+                self.add_task(task.id, task.name, task.priority, due_date, categories, complete=task.complete)
 
     def on_task_click(self, task_id):
         """Open the EditTaskModal for the clicked task."""
@@ -135,3 +152,53 @@ class ToDoListView(Screen):
         """Refresh the list of tasks by reloading from the database."""
         self.ids.task_list.clear_widgets()  # Clear the current list
         self.populate()  # Re-populate with updated data from the database
+
+    def toggle_complete(self, checkbox, task_id, task_box):
+        """Toggle the completion status of a task."""
+        complete = checkbox.active  # True if checked, False if unchecked
+
+        # Update the task in the database
+        with db.get_session() as session:
+            task = session.query(Task).filter_by(id=task_id).first()
+            if task:
+                task.complete = complete  # Assume `complete` is a field in the Task model
+                session.commit()
+
+        # Update the visual appearance of the task
+        if complete:
+            # Set text and background color to greyed-out
+            self.grey_out_task(task_box)
+        else:
+            # Set text and background color back to normal
+            self.reset_task_appearance(task_box)
+
+    def grey_out_task(self, task_box):
+        """Grey out the task's appearance."""
+        # Change text color to grey
+        for widget in task_box.children:
+            if isinstance(widget, Label):
+                widget.color = (0.5, 0.5, 0.5, 1)  # Grey color
+
+        # Change background color to a lighter grey
+        with task_box.canvas.before:
+            Color(0.9, 0.9, 0.9, 1)
+            task_box.rect = Rectangle(size=task_box.size, pos=task_box.pos)
+
+        # Bind update_rect on task_box to keep the grey background consistent
+        task_box.bind(size=task_box.update_rect, pos=task_box.update_rect)
+
+
+    def reset_task_appearance(self, task_box):
+        """Reset the task's appearance to its original color."""
+        # Reset text color to black
+        for widget in task_box.children:
+            if isinstance(widget, Label):
+                widget.color = (0, 0, 0, 1)  # Original black color
+
+        # Reset background color to white
+        with task_box.canvas.before:
+            Color(1, 1, 1, 1)
+            task_box.rect = Rectangle(size=task_box.size, pos=task_box.pos)
+
+        # Bind update_rect on task_box to maintain the white background
+        task_box.bind(size=task_box.update_rect, pos=task_box.update_rect)
