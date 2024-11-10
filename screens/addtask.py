@@ -9,6 +9,7 @@
 # - October 26, 2024: Initial version created (Author: Matthew McManness)
 # - October 27, 2024: Updated to include proper comments (Matthew McManness)
 # - November 4, 2024: Added connection to database to save tasks (Magaly Camacho)
+# - November 10, 2024: Fixed bug where app crashed when there wasn't a due date (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -191,8 +192,10 @@ class AddTaskModal(ModalView):
                 )
 
                 # Add due date, if applicable
-                if self.deadline_label.text:
-                    due_date = (" ").join(self.deadline_label.text.split(" ")[1:]) # get rid of "Deadline: " in label
+                if due_date == "Pick a deadline":
+                    due_date = None
+                else:
+                    due_date = (" ").join(due_date.split(" ")[1:]) # get rid of "Deadline: " in label
                     new_task.due_date = datetime.strptime(due_date, "%Y-%m-%d %H:%M") # add due date to task
 
                 # Log message

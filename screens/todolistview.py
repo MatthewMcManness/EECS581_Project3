@@ -7,7 +7,8 @@
 # Dates Revised:
 #   - October 26, 2024: Initial creation of ToDoListView structure  (placeholder for navigation) - [Matthew McManness]
 #   - November 4, 2024: Updated add_task to connect to database, and added a method populate() that adds all tasks in the database - [Magaly Camacho]
-#   - November 11, 2024: Added def on_task_click(self, task_id), refresh_tasks(self), toggle_complete(self, checkbox, task_id, task_box), grey_out_task(self, task_box), reset_task_appearance(self, task_box)  - [Matthew McManness]
+#   - November 10, 2024: Added def on_task_click(self, task_id), refresh_tasks(self), toggle_complete(self, checkbox, task_id, task_box), grey_out_task(self, task_box), reset_task_appearance(self, task_box)  - [Matthew McManness]
+#   - November 10, 2024: Fixed bug that crashed app when there's no due date - [Magaly Camacho]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -135,8 +136,12 @@ class ToDoListView(Screen):
             tasks = session.scalars(stmt).all()  # Query database to get the tasks
 
             for task in tasks:
-                # Stringify due_date and categories
-                due_date = task.due_date.strftime("%Y-%m-%d %H:%M") 
+                # Stringify due date, if applicable
+                due_date = None
+                if task.due_date is not None:
+                    due_date = task.due_date.strftime("%Y-%m-%d %H:%M") 
+
+                # Stringify categories
                 categories = ", ".join([cat.name for cat in task.categories])
 
                 # Add task 
