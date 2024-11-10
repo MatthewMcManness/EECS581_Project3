@@ -39,8 +39,8 @@ class Priority(Enum):
     HIGH = 2
 
 
-    @staticmethod
-    def get_str_and_color(priority) -> tuple[str, tuple[float, float, float, float]]:
+    @classmethod
+    def get_str_and_color(cls, priority) -> tuple[str, tuple[float, float, float, float]]:
         """
         Returns string and color associated with a given priority
 
@@ -50,11 +50,11 @@ class Priority(Enum):
         Returns:
             tuple[str, tuple[float, float, float, float]: the string and color associated with the priority (string, color)
         """
-        str_list = ["Low", "Medium", "High"]
+        str_list = cls.priority_options()
         colors = [
-            (0, 255, 0, 1), # green, low
-            (255, 255, 0, 1), # yellow, medium
-            (255, 0, 0, 1) # red, high
+            (16, 111, 16, 1), # green, low
+            (171, 113, 18, 1), # orange, medium
+            (114, 11, 11, 1) # red, high
         ]
 
         if priority in Priority:
@@ -62,6 +62,34 @@ class Priority(Enum):
             return str_list[val], tuple(c / 255 if i != 3 else c for i, c in enumerate(colors[val]))
         
         raise ValueError("Invalid Priority value")
+    
+    @classmethod
+    def str2enum(cls, priority:str):
+        """
+        Converts string representation of priority to corresponding enum
+
+        Parameters:
+            priority (str): the string representation of the priority ("Low", "Medium", or "High")
+
+        Returns:
+            Priority: the corresponding Priority enum value
+
+        Raises:
+            ValueError: If the provided priority string is not valid
+        """
+        str_list = cls.priority_options()
+
+        # check to make sure its a valid priority
+        if priority not in str_list:
+            raise ValueError("Invalid Priority value")
+        
+        # return valid enum
+        return Priority(str_list.index(priority))
+
+    @staticmethod
+    def priority_options():
+        """Returns a list of stringified priority options"""
+        return ["Low", "Medium", "High"]
     
 
 class Frequency(Enum):

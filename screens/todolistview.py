@@ -8,7 +8,7 @@
 #   - October 26, 2024: Initial creation of ToDoListView structure  (placeholder for navigation) - [Matthew McManness]
 #   - November 4, 2024: Updated add_task to connect to database, and added a method populate() that adds all tasks in the database - [Magaly Camacho]
 #   - November 10, 2024: Added def on_task_click(self, task_id), refresh_tasks(self), toggle_complete(self, checkbox, task_id, task_box), grey_out_task(self, task_box), reset_task_appearance(self, task_box)  - [Matthew McManness]
-#   - November 10, 2024: Fixed bug that crashed app when there's no due date - [Magaly Camacho]
+#   - November 10, 2024: Fixed bug that crashed app when there's no due date. Added priority picker functionality - [Magaly Camacho]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -94,7 +94,7 @@ class ToDoListView(Screen):
         """Initialize the ToDoListView screen."""
         super().__init__(**kwargs)  # Initialize the superclass with provided arguments.
 
-    def add_task(self, task_id, name, priority, due_date=None, categories=None, complete=False):
+    def add_task(self, task_id, name, priority=None, due_date=None, categories=None, complete=False):
         """Add a new task to the to-do list."""
         # Create a TaskBox and pass `on_task_click` as the click callback
         task_box = TaskBox(on_click_callback=self.on_task_click, padding="5dp", spacing="5dp", size_hint_y=None, height="60dp", size_hint_x=1)
@@ -110,9 +110,13 @@ class ToDoListView(Screen):
             due_date = "-" 
         if categories is None:
             categories = "-" 
+        if priority is None:
+            priority = "-"
+            priority_color = (0,0,0,1)
 
         # Get priority text and color
-        priority, priority_color = Priority.get_str_and_color(priority)
+        else:
+            priority, priority_color = Priority.get_str_and_color(priority)
 
         # Add widgets to display task info
         task_box.add_widget(Label(text=name, size_hint_x=0.5, color=(0,0,0,1)))

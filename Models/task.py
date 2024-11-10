@@ -68,7 +68,7 @@ class Task(Item):
         default=False # defaults to not complete
     )
     
-    priority: Mapped[Priority] = mapped_column(
+    priority: Mapped[Optional[Priority]] = mapped_column(
         default=Priority.LOW # defaults to low priority
     )
     

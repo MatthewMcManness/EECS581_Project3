@@ -9,7 +9,7 @@
 # - October 26, 2024: Initial version created (Author: Matthew McManness)
 # - October 27, 2024: Updated to include proper comments (Matthew McManness)
 # - November 4, 2024: Added connection to database to save tasks (Magaly Camacho)
-# - November 10, 2024: Fixed bug where app crashed when there wasn't a due date (Magaly Camacho)
+# - November 10, 2024: Fixed bug where app crashed when there wasn't a due date. Added priority picker functionality (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -36,7 +36,7 @@ from kivy.uix.textinput import TextInput  # Input fields for user text
 from kivy.uix.spinner import Spinner  # Dropdown-style component
 from kivy.uix.button import Button  # Standard button widget
 from screens.usefulwidgets import DatePicker # Date picker
-from screens.usefulwidgets import RepeatOptionsModal, CategoryModal  # Additional modals
+from screens.usefulwidgets import RepeatOptionsModal, PriorityOptionsModal, CategoryModal  # Additional modals
 from kivy.uix.label import Label  # Label widget for displaying text
 from kivy.app import App  # Ensure App is imported
 from Models import Task, Category # Task and Category classes
@@ -88,6 +88,10 @@ class AddTaskModal(ModalView):
         # Button to open the Repeat Options modal
         self.repeat_button = Button(text="Does not repeat", on_release=self.open_repeat_window)
         layout.add_widget(self.repeat_button)
+        
+        # Button to open the Priority Options modal
+        self.priority_button = Button(text="Pick Priority", on_release=self.open_priority_window)
+        layout.add_widget(self.priority_button)
 
         # Input field for additional task notes
         self.notes_input = TextInput(hint_text="Notes", multiline=True)
@@ -124,6 +128,10 @@ class AddTaskModal(ModalView):
     def open_repeat_window(self, instance):
         """Open the RepeatOptionsModal to choose a repeat option."""
         RepeatOptionsModal(self).open()
+
+    def open_priority_window(self, instance):
+        """Open the RepeatOptionsModal to choose a repeat option."""
+        PriorityOptionsModal(self).open()
 
     def on_category_selected(self, spinner, text):
         """
@@ -171,7 +179,9 @@ class AddTaskModal(ModalView):
         # Get task info from inputs
         name=self.title_input.text
         notes=self.notes_input.text
-        priority=Priority.LOW # *** need to add priority input/spinner
+        priority=None # assume no priority 
+        if self.priority_button.text != "Pick Priority": # if there's a priority convert it to an enum
+            priority = Priority.str2enum(self.priority_button.text)
         due_date = self.deadline_label.text
         categories=None # initially assume no categories
         if len(self.selected_categories) > 0: # if there's categories, make a string
@@ -197,6 +207,10 @@ class AddTaskModal(ModalView):
                 else:
                     due_date = (" ").join(due_date.split(" ")[1:]) # get rid of "Deadline: " in label
                     new_task.due_date = datetime.strptime(due_date, "%Y-%m-%d %H:%M") # add due date to task
+
+                # Add priority, if applicable
+                if priority is not None:
+                    new_task.priority = priority
 
                 # Log message
                 print(f"Saving task: {new_task}")

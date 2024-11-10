@@ -10,6 +10,7 @@
 # - October 27, 2024: Updated the datepicker to match calendar and added proper comments. (Matthew McManness)
 # - November 4, 2024: Made it so that the CategoryModal pulls from and updates to the database (Magaly Camacho)
 # - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
+# - November 10, 2024: Added PriorityOptionsModal (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and functional.
@@ -39,6 +40,7 @@ from kivy.uix.textinput import TextInput  # Input field for user text
 from calendar import monthcalendar  # Generate a month’s calendar layout
 from datetime import datetime  # Date and time utilities
 from Models import Category # Category model
+from Models.databaseEnums import Priority # priorities for tasks
 from database import get_database # class to interact with database
 import calendar  # Import calendar for setting first day of the week
 
@@ -308,6 +310,53 @@ class RepeatOptionsModal(ModalView):
             - The repeat button in the task modal reflects the selected option.
         """
         self.task_modal.repeat_button.text = instance.text  # Update the repeat option in the parent modal
+        self.dismiss()  # Close the modal
+
+        
+####################### Repeat Options Modal ###########################
+class PriorityOptionsModal(ModalView):
+    """A modal that provides options for task priority: Low, Medium, High."""
+
+    def __init__(self, task_modal, **kwargs):
+        """
+        Initializes the PriorityOptionsModal.
+
+        Args:
+            task_modal (ModalView): The parent task modal to update priority information.
+            **kwargs: Additional keyword arguments passed to the superclass.
+        """
+        super().__init__(**kwargs)
+        self.size_hint = (0.6, 0.4)  # Set modal size
+        self.auto_dismiss = False  # Prevent accidental dismissal
+        self.task_modal = task_modal  # Store reference to the task modal
+
+        # Create the main layout for priority options
+        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+        # Add buttons for each priority option
+        options = Priority.priority_options() + ["Clear"]
+        for option in options:
+            button = Button(text=option, size_hint_y=None, height=50)
+            button.bind(on_release=self.set_priority_option)  # Bind selection to handler
+            layout.add_widget(button)
+
+        # Add a cancel button to dismiss the modal
+        cancel_button = Button(text="CANCEL", size_hint_y=None, height=50, on_release=self.dismiss)
+        layout.add_widget(cancel_button)
+
+        self.add_widget(layout)  # Add the layout to the modal
+
+    def set_priority_option(self, instance):
+        """
+        Sets the selected priority option and updates the task modal.
+
+        Args:
+            instance (Button): The button representing the selected priority option.
+        """
+        if instance.text == "Clear":
+            self.task_modal.priority_button.text = "Pick Priority" # Clear the priority
+        else:
+            self.task_modal.priority_button.text = instance.text  # Update the priority option in the parent modal
         self.dismiss()  # Close the modal
 
 ####################### Category Modals ###########################

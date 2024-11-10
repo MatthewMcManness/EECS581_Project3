@@ -3,10 +3,11 @@
 # Description: This module defines the AddTaskModal class, which provides a 
 #              modal interface to create and save tasks within the BusyBee 
 #              application.
-# Programmer: Matthew McManness (2210261)
+# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618)
 # Date Created: November 9, 2024
 # Revision History:
 # - November 9, 2024: Initial version copied from addtask.py then added the nessecary functions to update or delete a task (Author: Matthew McManness)
+# - November 10, 2024: Added priority picker and functionality (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -33,7 +34,7 @@ from kivy.uix.textinput import TextInput  # Input fields for user text
 from kivy.uix.spinner import Spinner  # Dropdown-style component
 from kivy.uix.button import Button  # Standard button widget
 from screens.usefulwidgets import DatePicker # Date picker
-from screens.usefulwidgets import RepeatOptionsModal, CategoryModal  # Additional modals
+from screens.usefulwidgets import RepeatOptionsModal, PriorityOptionsModal, CategoryModal  # Additional modals
 from kivy.uix.label import Label  # Label widget for displaying text
 from kivy.app import App  # Ensure App is imported
 from Models import Task, Category # Task and Category classes
@@ -80,6 +81,10 @@ class EditTaskModal(ModalView):
         # Repeat button
         self.repeat_button = Button(text="Does not repeat", on_release=self.open_repeat_window)
         layout.add_widget(self.repeat_button)
+        
+        # Button to open the Priority Options modal
+        self.priority_button = Button(text="Pick Priority", on_release=self.open_priority_window)
+        layout.add_widget(self.priority_button)
 
         # Notes input
         self.notes_input = TextInput(hint_text="Notes", multiline=True)
@@ -122,6 +127,7 @@ class EditTaskModal(ModalView):
                 self.title_input.text = task.name
                 self.notes_input.text = task.notes
                 self.deadline_label.text = f"Deadline: {task.due_date.strftime('%Y-%m-%d %H:%M')}" if task.due_date else "Pick a deadline"
+                self.priority_button.text = Priority.get_str_and_color(task.priority)[0] if task.priority else "Pick Priority"
                 self.selected_categories = [category.name for category in task.categories]
                 self.update_applied_categories()
 
@@ -137,6 +143,7 @@ class EditTaskModal(ModalView):
         notes = self.notes_input.text
         due_date = self.deadline_label.text.split(" ", 1)[1] if "Deadline" in self.deadline_label.text else None
         due_date = datetime.strptime(due_date, "%Y-%m-%d %H:%M") if due_date else None
+        priority = Priority.str2enum(self.priority_button.text) if "Pick Priority" != self.priority_button.text else None
 
         # Retrieve category instances
         selected_categories_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
@@ -147,9 +154,12 @@ class EditTaskModal(ModalView):
                 task.name = name
                 task.notes = notes
                 task.due_date = due_date
+                task.priority = priority
                 task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
             else:
                 task = Task(name=name, notes=notes, due_date=due_date)
+                if priority is not None:
+                    task.priority = priority
                 task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
                 session.add(task)
 
@@ -185,6 +195,10 @@ class EditTaskModal(ModalView):
     def open_repeat_window(self, instance):
         """Open the RepeatOptionsModal to choose a repeat option."""
         RepeatOptionsModal(self).open()
+
+    def open_priority_window(self, instance):
+        """Open the RepeatOptionsModal to choose a repeat option."""
+        PriorityOptionsModal(self).open()
 
     def on_category_selected(self, spinner, text):
         """
