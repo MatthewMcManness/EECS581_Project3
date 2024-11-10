@@ -6,7 +6,7 @@
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of event modal structure (placeholder for navigation) - [Matthew McManness]
-#   - November 10, 2024: Fixed start time not being saved correctly - [Magaly Camacho]
+#   - November 10, 2024: Fixed start time not being saved correctly, added check to make sure date and time are picked - [Magaly Camacho]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - The `DatePicker` class must be implemented and correctly imported from `screens.usefulwidgets`.
@@ -94,8 +94,8 @@ class AddEventModal(ModalView):
         event_date = self.event_date_label.text  # Get the selected event date from the label.
 
         # Ensure the event name is not empty before saving.
-        if not self.event_name_input.text:
-            print("Event Name is required.")  # Print error if the name is empty.
+        if not self.event_name_input.text or self.event_date_label.text == "Pick Event Date & Time":
+            print("Event Name and Datetime are required.")  # Print error if the name is empty.
             return  # Stop execution to prevent saving.
         
         # gets info from inputs
