@@ -2,7 +2,7 @@
 # Code Artifact: AddEventModal Class Definition
 # Brief Description: This code defines the `AddEventModal` class, which provides a pop-up modal for creating 
 # new events. Users can input an event name and select a date and time using a date picker widget.
-# Programmer: Matthew McManness (2210261), and 
+# Programmer: Matthew McManness (2210261), Manvir Kaur (3064194)
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of event modal structure (placeholder for navigation) - [Matthew McManness]
@@ -38,6 +38,12 @@ from kivy.uix.button import Button  # Button widget for user interaction.
 from screens.usefulwidgets import DatePicker  # Custom date picker modal.
 from screens.usefulwidgets import TimePicker  # Custom time picker modal.
 from kivy.app import App  # Ensure App is imported
+from database import get_database # to connect to database
+from sqlalchemy import select # to query database
+from datetime import datetime # for date
+from Models import Event_
+
+db = get_database()
 
 class AddEventModal(ModalView):
     """A modal for adding a new event with name, date, and time selection."""
@@ -64,6 +70,10 @@ class AddEventModal(ModalView):
         pick_date_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
         layout.add_widget(pick_date_button)  # Add the button to the layout.
 
+        # Input field for additional task notes
+        self.notes_input = TextInput(hint_text="Notes", multiline=True)
+        layout.add_widget(self.notes_input)
+        
         # Layout for the action buttons (Cancel and Save).
         button_layout = BoxLayout(orientation='horizontal', spacing=10)
         button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))  # Cancel button.
@@ -83,9 +93,38 @@ class AddEventModal(ModalView):
         event_date = self.event_date_label.text  # Get the selected event date from the label.
 
         # Ensure the event name is not empty before saving.
-        if not event_name:
+        if not self.event_name_input.text:
             print("Event Name is required.")  # Print error if the name is empty.
             return  # Stop execution to prevent saving.
+        
+        # gets info from inputs
+        name = self.event_name_input.text
+        notes = self.notes_input.text
+        date = self.event_date_label.text
+        
+        #connection to the database
+        with db.get_session() as session:
+            with session.begin(): # transaction started that will auto commit before exiting
+                # collecting event data
+                new_event = Event_(name = name, notes = notes)
+                
+                # Add the date of the event
+                date = (" ").join(self.event_date_label.text.split(" ")[2:])
+                new_event.date = datetime.strptime(date, "%Y-%m-%d %H:%M") # adding date and time to the event
+                
+                # Log message
+                print(f"Saving event: {new_event}")
+                
+                # add the event to the session
+                session.add(new_event)
+            event_id = new_event.id # get new_event id
+            
+        # Access the running app
+        app = App.get_running_app()
+        calendar_screen = app.screen_manager.get_screen('calendar')
+        
+        # Add the event to the Calendar screen
+        calendar_screen.add_event(event_id, name, date)
 
         # Print the saved event details to the console.
         print(f"Event '{event_name}' scheduled for {event_date}")
