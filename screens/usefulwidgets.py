@@ -145,7 +145,7 @@ class DatePicker(ModalView):
         row_height = 1 / total_rows
 
         # Add headers for days of the week
-        days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
+        days_of_week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
         for day in days_of_week:
             self.grid.add_widget(Label(text=day, size_hint_y=row_height))
 
