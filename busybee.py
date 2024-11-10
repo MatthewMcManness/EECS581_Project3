@@ -3,7 +3,7 @@
 # Description: This module contains the main application logic for the BusyBee 
 #              app. It manages the screens and provides functionality to open 
 #              task/event modals.
-# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618)
+# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618), Manvir Kaur (3064194)
 # Date Created: October 26, 2024
 # Revision History:
 # - October 26, 2024: Initial version created. (Author: Matthew McManness)

@@ -53,6 +53,7 @@ from sqlalchemy import select, extract # to query database
 from Models import Event_ # task model class
 
 db = get_database() # get database
+        
 
 class CalendarView(Screen):
     """Displays a monthly calendar with navigational buttons and day selection."""
@@ -140,8 +141,18 @@ class CalendarView(Screen):
         day_text = instance.parent.children[1].text  # Get the selected day number.
         print(f"You selected day: {day_text}")  # Print the selected day to the console.
 
-    def add_event(self, event_id, name, place, start_time):
-        pass
+    def add_event(self, event_id, name, place = None):
+        """Add a new event to the calendar"""
+        # Create an EventBox and pass on_event_click as the click callback
+        event_box = EventBox(on_click_callback = self.on_event_click, padding = "5dp", spacing = "5dp", size_hint_y = None, height = "60dp", size_hint_x = 1)
+        event_box.event_id = event_id
+        
+        # Add widgets to display event info
+        event_box.add_widget(Label(text = name, size_hint_x=0.5, color=(0,0,0,1)))
+        event_box.add_widget(Label(text = start_time, size_hint_x=0.3, color=(0,0,0,1)))
+
+        print(f"Added evnet: {event_id}")  # Log the event addition
+
     
     def get_cell_widget(self, date_str):
         """Retrieve the widget for the specified date."""
