@@ -39,6 +39,10 @@ from calendar import monthcalendar  # Generate a month’s calendar layout
 from datetime import datetime  # Date and time utilities
 from Models import Category # Category model
 from database import get_database # class to interact with database
+import calendar  # Import calendar for setting first day of the week
+
+# Set the first day of the week to Sunday
+calendar.setfirstweekday(calendar.SUNDAY)
 
 db = get_database() # get database
 
@@ -145,7 +149,7 @@ class DatePicker(ModalView):
         row_height = 1 / total_rows
 
         # Add headers for days of the week
-        days_of_week = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
         for day in days_of_week:
             self.grid.add_widget(Label(text=day, size_hint_y=row_height))
 

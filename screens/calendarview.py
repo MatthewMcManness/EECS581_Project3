@@ -56,7 +56,10 @@ from sqlalchemy import select, extract # to query database
 from Models import Event_ # task model class
 from kivy.uix.anchorlayout import AnchorLayout  # Import for anchoring widgets
 from kivy.graphics import Color, Rectangle, RoundedRectangle  # Import for rounded rectangle backgrounds
+import calendar  # Import calendar for setting first day of the week
 
+# Set the first day of the week to Sunday
+calendar.setfirstweekday(calendar.SUNDAY)
 
 
 

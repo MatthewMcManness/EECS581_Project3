@@ -76,6 +76,9 @@ ScreenManager:
             size_hint_y: None  # Fixed height for the weekday header.
             height: "50dp"  # Sets the height of the header.
             Label:
+                text: "Sun"  # Displays Sunday.
+                halign: "center"
+            Label:
                 text: "Mon"  # Displays Monday.
                 halign: "center"  # Centers the text horizontally.
             Label:
@@ -92,9 +95,6 @@ ScreenManager:
                 halign: "center"
             Label:
                 text: "Sat"  # Displays Saturday.
-                halign: "center"
-            Label:
-                text: "Sun"  # Displays Sunday.
                 halign: "center"
 
         # Scrollable calendar grid for displaying day buttons.
