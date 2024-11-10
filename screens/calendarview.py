@@ -155,6 +155,7 @@ class CalendarView(Screen):
 
                     # Add the cell to the calendar grid.
                     grid.add_widget(container)
+        self.populate()
 
     def on_day_press(self, instance):
         """Handle the event when a day button is pressed."""
@@ -170,19 +171,21 @@ class CalendarView(Screen):
         # Add widgets to display event info
         event_box.add_widget(Label(text = name, size_hint_x=0.5, color=(0,0,0,1)))
         cell = self.get_cell_widget(start_time)
-        cell.add_widget(event_box)
-        
-        print(f"Added evnet: {event_id}")  # Log the event addition
+        if cell:  # Ensure cell exists for the specified date
+            cell.add_widget(event_box)
+            print(f"Added event: {event_id} - {name} on {start_time}")
         
 
     
-    def get_cell_widget(self, date_str):
+    def get_cell_widget(self, date_obj):
         """Retrieve the widget for the specified date."""
         # Parse the date string into a datetime object
-        target_date = datetime.strptime(date_str, '%Y-%m-%d %H:%M')
-        target_day = target_date.day
-        target_month = target_date.month
-        target_year = target_date.year
+        if isinstance(date_obj, str):
+            date_obj = datetime.strptime(date_obj, '%Y-%m-%d %H:%M')
+
+        target_day = date_obj.day
+        target_month = date_obj.month
+        target_year = date_obj.year
 
         # Check if the date is in the current calendar view
         if target_month != self.current_month or target_year != self.current_year:
@@ -206,21 +209,22 @@ class CalendarView(Screen):
         return None
     
     def populate(self):
-        with db.session() as session:
+        session = db.get_session()  # assume db has a method to get a session
+        try:
             stmt = select(Event_).where(
-                extract("year",Event_.start_time)== self.current_year,
+                extract("year", Event_.start_time) == self.current_year,
                 extract("month", Event_.start_time) == self.current_month)
             events = session.scalars(stmt).all()
 
             for event in events:
-                start_time = event.start_time.strftime("%Y-%m-%d %H:%M")
+                # Convert start_time to datetime if it’s not already
+                start_time = event.start_time if isinstance(event.start_time, datetime) else datetime.strptime(event.start_time, "%Y-%m-%d %H:%M")
+                
+                # Get the widget for the target date.
                 cell_widget = self.get_cell_widget(start_time)
                 
-                #add event 
-                self.add_event(event.id, event.name, event.place, event.start_time)
+                if cell_widget:  # Only add the event if the cell_widget exists
+                    self.add_event(event.id, event.name, start_time, event.place)
+        finally:
+            session.close()  # close session to free resources
         print("here")
-                
-            
-        
-
-
