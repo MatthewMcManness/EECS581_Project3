@@ -64,7 +64,7 @@ class EventBox(BoxLayout):
         super().__init__(**kwargs) # initialize BoxLayout class
         # initialize sixe of event box and make it's background color white
         with self.canvas.before:
-            Color(1, 1, 1, 1)
+            Color(0, 0, 0, 0)
             self.rect = Rectangle(size=self.size, pos=self.pos)
         # when eventbox is updated, make sure size is correct
         self.bind(size=self.update_rect, pos=self.update_rect)
@@ -127,7 +127,8 @@ class CalendarView(Screen):
                     grid.add_widget(Label())
                 else:
                     # Create a relative layout for each day cell.
-                    cell = RelativeLayout(size_hint=(1, None), height=dp(60))
+                    cell = BoxLayout(orientation = 'vertical', spacing = -20)
+                    container = RelativeLayout(size_hint=(1, None), height=dp(60))
 
                     # Create a label to display the day number.
                     day_label = Label(
@@ -148,11 +149,12 @@ class CalendarView(Screen):
                     )
 
                     # Add the button and label to the cell.
-                    cell.add_widget(day_button)
+                    container.add_widget(day_button)
                     cell.add_widget(day_label)
+                    container.add_widget(cell)
 
                     # Add the cell to the calendar grid.
-                    grid.add_widget(cell)
+                    grid.add_widget(container)
 
     def on_day_press(self, instance):
         """Handle the event when a day button is pressed."""
@@ -162,14 +164,16 @@ class CalendarView(Screen):
     def add_event(self, event_id, name, start_time, place = None):
         """Add a new event to the calendar"""
         # Create an EventBox and pass on_event_click as the click callback
-        event_box = EventBox(padding = "5dp", spacing = "5dp", size_hint_y = None, height = "60dp", size_hint_x = 1)
+        event_box = EventBox(padding = "5dp", spacing = "5dp", size_hint_y = 1, height = "60dp", size_hint_x = 1)
         event_box.event_id = event_id
         
         # Add widgets to display event info
         event_box.add_widget(Label(text = name, size_hint_x=0.5, color=(0,0,0,1)))
-        event_box.add_widget(Label(text = start_time, size_hint_x=0.3, color=(0,0,0,1)))
-
+        cell = self.get_cell_widget(start_time)
+        cell.add_widget(event_box)
+        
         print(f"Added evnet: {event_id}")  # Log the event addition
+        
 
     
     def get_cell_widget(self, date_str):
@@ -188,7 +192,7 @@ class CalendarView(Screen):
         # Get the calendar layout for the current month
         cal = monthcalendar(self.current_year, self.current_month)
 
-        (comment)# Locate the widget for the target day in calendar_grid
+        # Locate the widget for the target day in calendar_grid
         grid = self.ids['calendar_grid']
         widget_index = 0
         for week in cal:
@@ -214,6 +218,7 @@ class CalendarView(Screen):
                 
                 #add event 
                 self.add_event(event.id, event.name, event.place, event.start_time)
+        print("here")
                 
             
         
