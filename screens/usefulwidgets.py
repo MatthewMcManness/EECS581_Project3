@@ -9,6 +9,7 @@
 # - October 26, 2024: Initial version created (Author: Matthew McManness)
 # - October 27, 2024: Updated the datepicker to match calendar and added proper comments. (Matthew McManness)
 # - November 4, 2024: Made it so that the CategoryModal pulls from and updates to the database (Magaly Camacho)
+# - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
 #
 # Preconditions:
 # - Kivy framework must be installed and functional.

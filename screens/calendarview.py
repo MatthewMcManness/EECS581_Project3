@@ -9,6 +9,7 @@
 #   - October 26, 2024: Initial creation of calendar view structure (just a placeholder for navigation) - [Matthew McManness]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 #   - November 10, 2024: Updated what Manvir added to make it stack events correctly - [Matthew McManness]
+#   - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
 
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
