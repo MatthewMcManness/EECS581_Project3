@@ -2,10 +2,11 @@
 # Code Artifact: AddEventModal Class Definition
 # Brief Description: This code defines the `AddEventModal` class, which provides a pop-up modal for creating 
 # new events. Users can input an event name and select a date and time using a date picker widget.
-# Programmer: Matthew McManness (2210261), Manvir Kaur (3064194)
+# Programmer: Matthew McManness (2210261), Manvir Kaur (3064194), Magaly Camacho (3072618)
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of event modal structure (placeholder for navigation) - [Matthew McManness]
+#   - November 10, 2024: Fixed start time not being saved correctly - [Magaly Camacho]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - The `DatePicker` class must be implemented and correctly imported from `screens.usefulwidgets`.
@@ -110,7 +111,7 @@ class AddEventModal(ModalView):
                 
                 # Add the date of the event
                 date = (" ").join(self.event_date_label.text.split(" ")[2:])
-                new_event.date = datetime.strptime(date, "%Y-%m-%d %H:%M") # adding date and time to the event
+                new_event.start_time = datetime.strptime(date, "%Y-%m-%d %H:%M") # adding date and time to the event
                 
                 # Log message
                 print(f"Saving event: {new_event}")
