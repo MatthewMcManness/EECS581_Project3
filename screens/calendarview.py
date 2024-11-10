@@ -8,6 +8,8 @@
 # Dates Revised:
 #   - October 26, 2024: Initial creation of calendar view structure (just a placeholder for navigation) - [Matthew McManness]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
+#   - November 10, 2024: Updated what Manvir added to make it stack events correctly - [Matthew McManness]
+
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
 #   - The app must have valid Kivy widgets and dependencies available (e.g., Button, Label, etc.).
@@ -52,6 +54,11 @@ from datetime import datetime, timedelta  # Work with dates and times.
 from database import get_database # to connect to database
 from sqlalchemy import select, extract # to query database
 from Models import Event_ # task model class
+from kivy.uix.anchorlayout import AnchorLayout  # Import for anchoring widgets
+from kivy.graphics import Color, Rectangle, RoundedRectangle  # Import for rounded rectangle backgrounds
+
+
+
 
 db = get_database() # get database
 
@@ -162,19 +169,96 @@ class CalendarView(Screen):
         day_text = instance.parent.children[1].text  # Get the selected day number.
         print(f"You selected day: {day_text}")  # Print the selected day to the console.
 
-    def add_event(self, event_id, name, start_time, place = None):
-        """Add a new event to the calendar"""
-        # Create an EventBox and pass on_event_click as the click callback
-        event_box = EventBox(padding = "5dp", spacing = "5dp", size_hint_y = 1, height = "60dp", size_hint_x = 1)
-        event_box.event_id = event_id
-        
-        # Add widgets to display event info
-        event_box.add_widget(Label(text = name, size_hint_x=0.5, color=(0,0,0,1)))
+    def add_event(self, event_id, name, start_time, place=None):
+        """
+        Add a new event to the calendar with a colored button for each event.
+
+        Parameters:
+            event_id (int): The ID of the event.
+            name (str): The name of the event.
+            start_time (datetime or str): The start date and time of the event.
+            place (Optional[str]): The location of the event (if available).
+        """
+        # Convert start_time to datetime if it’s a string
+        if isinstance(start_time, str):
+            try:
+                start_time = datetime.strptime(start_time, '%Y-%m-%d %H:%M')
+            except ValueError:
+                print(f"Error: Incorrect date format for event '{name}'. Expected '%Y-%m-%d %H:%M'.")
+                return  # Exit the function if date format is incorrect
+
+        # Create a Button for the event with rounded corners and padding
+        event_button = Button(
+            text=f"{name} ({start_time.strftime('%H:%M')})",  # Display name and formatted time
+            size_hint_y=None,
+            height=dp(15),  # Set a fixed, smaller height for each event button
+            background_normal="",
+            background_color=(0.7, 0.3, 0.3, 1),  # Change color as desired
+            on_press=lambda instance: self.on_event_click(event_id)
+        )
+
+        # Use canvas instructions to round the button's corners
+        with event_button.canvas.before:
+            Color(0.7, 0.3, 0.3, 1)  # Same color as background_color
+            event_button.rect = RoundedRectangle(
+                size=event_button.size,
+                pos=event_button.pos,
+                radius=[(dp(5), dp(5), dp(5), dp(5))]  # Rounded corners
+            )
+
+        # Bind button size and position updates to keep the rounded rectangle in sync
+        event_button.bind(size=lambda inst, val: setattr(inst.rect, 'size', val))
+        event_button.bind(pos=lambda inst, val: setattr(inst.rect, 'pos', val))
+
+        # Retrieve the cell widget for the event's start date
         cell = self.get_cell_widget(start_time)
-        if cell:  # Ensure cell exists for the specified date
-            cell.add_widget(event_box)
+        if cell:
+            # Check if an AnchorLayout exists in the cell; if not, create one
+            if not cell.children or not isinstance(cell.children[0], AnchorLayout):
+                # Create an AnchorLayout to anchor events to the top
+                anchor_layout = AnchorLayout(anchor_y='top', size_hint_y=None, height=dp(60))
+                events_layout = BoxLayout(orientation='vertical', size_hint_y=None, padding=(2, 2))  # Small padding for spacing
+                events_layout.bind(minimum_height=events_layout.setter('height'))
+                anchor_layout.add_widget(events_layout)
+                cell.add_widget(anchor_layout)
+            else:
+                events_layout = cell.children[0].children[0]  # Access the BoxLayout inside AnchorLayout
+
+            # Add the new event button to the layout
+            events_layout.add_widget(event_button)
+
+            # Sort events within the layout by start time after all events are added
+            sorted_events = []
+            for btn in events_layout.children:
+                time_str = btn.text.split("(")[-1].strip(")")
+                try:
+                    event_time = datetime.strptime(time_str, '%H:%M')
+                    sorted_events.append((event_time, btn))
+                except ValueError:
+                    print(f"Skipping button with invalid time format: {btn.text}")
+                    continue
+
+            # Sort events by time and only keep the first 2
+            sorted_events = sorted(sorted_events, key=lambda x: x[0])
+            display_events = sorted_events[:2]
+
+            # Clear and re-add only the top 2 events at the top
+            events_layout.clear_widgets()
+            for _, sorted_event in display_events:
+                events_layout.add_widget(sorted_event)
+
+            # If there are more than 2 events, add a "More..." label
+            if len(sorted_events) > 2:
+                more_label = Label(
+                    text="More...",
+                    size_hint_y=None,
+                    height=dp(15),  # Reduced height for the "More..." label as well
+                    color=(0.5, 0.5, 0.5, 1)  # Grey color for the "More..." label
+                )
+                events_layout.add_widget(more_label)
+
             print(f"Added event: {event_id} - {name} on {start_time}")
-        
+            
 
     
     def get_cell_widget(self, date_obj):
@@ -209,22 +293,18 @@ class CalendarView(Screen):
         return None
     
     def populate(self):
-        session = db.get_session()  # assume db has a method to get a session
+        """Retrieve and display events for the current month."""
+        session = db.get_session()
         try:
             stmt = select(Event_).where(
                 extract("year", Event_.start_time) == self.current_year,
-                extract("month", Event_.start_time) == self.current_month)
+                extract("month", Event_.start_time) == self.current_month
+            )
             events = session.scalars(stmt).all()
+            events.sort(key=lambda event: event.start_time)  # Sort events by start time
 
             for event in events:
-                # Convert start_time to datetime if it’s not already
                 start_time = event.start_time if isinstance(event.start_time, datetime) else datetime.strptime(event.start_time, "%Y-%m-%d %H:%M")
-                
-                # Get the widget for the target date.
-                cell_widget = self.get_cell_widget(start_time)
-                
-                if cell_widget:  # Only add the event if the cell_widget exists
-                    self.add_event(event.id, event.name, start_time, event.place)
+                self.add_event(event.id, event.name, start_time, event.place)
         finally:
-            session.close()  # close session to free resources
-        print("here")
+            session.close()
