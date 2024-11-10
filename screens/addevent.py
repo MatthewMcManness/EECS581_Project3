@@ -109,7 +109,7 @@ class AddEventModal(ModalView):
                 new_event = Event_(name = name, notes = notes)
                 
                 # Add the date of the event
-                date = (" ").join(self.event_date_label.text.split(" ")[1:])
+                date = (" ").join(self.event_date_label.text.split(" ")[2:])
                 new_event.date = datetime.strptime(date, "%Y-%m-%d %H:%M") # adding date and time to the event
                 
                 # Log message

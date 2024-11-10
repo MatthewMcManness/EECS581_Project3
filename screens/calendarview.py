@@ -31,6 +31,7 @@
 #   - None identified.
 
 # Import necessary modules from Kivy and Python standard libraries.
+from kivy.graphics import Color, Rectangle # to control color and size of event background
 from kivy.lang import Builder  # Load .kv files for UI definitions.
 from kivy.uix.boxlayout import BoxLayout  # Organize widgets horizontally/vertically.
 from kivy.uix.modalview import ModalView  # Define modals (pop-up windows).
@@ -43,7 +44,7 @@ from kivy.uix.button import Button  # Standard button widget.
 from kivy.uix.spinner import Spinner  # Dropdown for selecting from options.
 from kivy.uix.relativelayout import RelativeLayout  # Layout used in calendar population.
 from kivy.metrics import dp  # Use density-independent pixels for UI scaling.
-from kivy.properties import StringProperty  # Property to update UI reactively.
+from kivy.properties import StringProperty, ObjectProperty  # Property to update UI reactively.
 from kivy.app import App  # Main class to run the Kivy app.
 from kivy.clock import Clock  # Schedule functions after a delay.
 from calendar import monthcalendar  # Generate calendar layout for a given month.
@@ -53,8 +54,25 @@ from sqlalchemy import select, extract # to query database
 from Models import Event_ # task model class
 
 db = get_database() # get database
-        
 
+class EventBox(BoxLayout):
+    """A BoxLayout to hold event details"""
+    event_id = ObjectProperty(None)
+        
+    def __init__(self, **kwargs):
+        """Initialize the Eventkbox"""
+        super().__init__(**kwargs) # initialize BoxLayout class
+        # initialize sixe of event box and make it's background color white
+        with self.canvas.before:
+            Color(1, 1, 1, 1)
+            self.rect = Rectangle(size=self.size, pos=self.pos)
+        # when eventbox is updated, make sure size is correct
+        self.bind(size=self.update_rect, pos=self.update_rect)
+    def update_rect(self, *args):
+        """Update rectanlge to match the size and position of the EventBox"""
+        self.rect.pos = self.pos
+        self.rect.size = self.size
+        
 class CalendarView(Screen):
     """Displays a monthly calendar with navigational buttons and day selection."""
 
@@ -141,10 +159,10 @@ class CalendarView(Screen):
         day_text = instance.parent.children[1].text  # Get the selected day number.
         print(f"You selected day: {day_text}")  # Print the selected day to the console.
 
-    def add_event(self, event_id, name, place = None):
+    def add_event(self, event_id, name, start_time, place = None):
         """Add a new event to the calendar"""
         # Create an EventBox and pass on_event_click as the click callback
-        event_box = EventBox(on_click_callback = self.on_event_click, padding = "5dp", spacing = "5dp", size_hint_y = None, height = "60dp", size_hint_x = 1)
+        event_box = EventBox(padding = "5dp", spacing = "5dp", size_hint_y = None, height = "60dp", size_hint_x = 1)
         event_box.event_id = event_id
         
         # Add widgets to display event info
