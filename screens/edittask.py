@@ -1,7 +1,7 @@
 # -----------------------------------------------------------------------------
 # Name: edittask.py
-# Description: This module defines the AddTaskModal class, which provides a 
-#              modal interface to create and save tasks within the BusyBee 
+# Description: This module defines the EditTaskModal class, which provides a 
+#              modal interface to edit, save, and delete tasks within the BusyBee 
 #              application.
 # Programmer: Matthew McManness (2210261)
 # Date Created: November 9, 2024
