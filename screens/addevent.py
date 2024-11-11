@@ -6,6 +6,7 @@
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of event modal structure (placeholder for navigation) - [Matthew McManness]
+#   - November 9. 2024: Added connection to database to save events and show on the calendar - [Manvir Kaur]
 #   - November 10, 2024: Fixed start time not being saved correctly, added check to make sure date and time are picked - [Magaly Camacho]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:

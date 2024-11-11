@@ -3,15 +3,15 @@
 # Brief Description: This code defines the `CalendarView` class for displaying a monthly calendar
 # with functionality to navigate months and select days. It also updates the display with the 
 # current month and year and populates the calendar dynamically using a grid layout.
-# Programmer: Matthew McManness (2210261) and Mariam Oraby (3127776)
+# Programmer: Matthew McManness (2210261), Manvir Kaur (3064194), Mariam Oraby (3127776)
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of calendar view structure (just a placeholder for navigation) - [Matthew McManness]
-#   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
-#   - November 9, 2024: Created the populate() and get_cell_widgets() and updated the populate_calendar() functions - [Mariam Oraby] 
-#   - November 10, 2024: Updated what Manvir added to make it stack events correctly - [Matthew McManness]
+#   - November 9, 2024: Added EventBox, connection to the database to add all events to the database and show up on the calendar - [Manvir Kaur]
+#   - November 9, 2024: Updated the populate(), get_cell_widgets(), and populate_calendar() functions - [Mariam Oraby]
+#   - November 10, 2024: Updated what Manvir and Mariam added to make it stack events correctly - [Matthew McManness]
 #   - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
-#   - November 10, 2024: Group modified to ensure event button clicks open the edit modal (Author whole group)
+#   - November 10, 2024: Group modified to ensure event button clicks open the edit modal - [Whole Group]
 #
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
