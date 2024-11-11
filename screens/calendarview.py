@@ -10,7 +10,8 @@
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 #   - November 10, 2024: Updated what Manvir added to make it stack events correctly - [Matthew McManness]
 #   - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
-
+# - November 10, 2024: Group modified to ensure event button clicks open the edit modal (Author whole group)
+#
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
 #   - The app must have valid Kivy widgets and dependencies available (e.g., Button, Label, etc.).
@@ -58,6 +59,7 @@ from Models import Event_ # task model class
 from kivy.uix.anchorlayout import AnchorLayout  # Import for anchoring widgets
 from kivy.graphics import Color, Rectangle, RoundedRectangle  # Import for rounded rectangle backgrounds
 import calendar  # Import calendar for setting first day of the week
+from screens.editEvent import EditEventModal  # Adjust the path if the file is located elsewhere
 
 # Set the first day of the week to Sunday
 calendar.setfirstweekday(calendar.SUNDAY)
@@ -191,14 +193,13 @@ class CalendarView(Screen):
                 print(f"Error: Incorrect date format for event '{name}'. Expected '%Y-%m-%d %H:%M'.")
                 return  # Exit the function if date format is incorrect
 
-        # Create a Button for the event with rounded corners and padding
         event_button = Button(
-            text=f"{name} ({start_time.strftime('%H:%M')})",  # Display name and formatted time
+            text=f"{name} ({start_time.strftime('%H:%M')})",
             size_hint_y=None,
-            height=dp(15),  # Set a fixed, smaller height for each event button
+            height=dp(15),
             background_normal="",
-            background_color=(0.7, 0.3, 0.3, 1),  # Change color as desired
-            on_press=lambda instance: self.on_event_click(event_id)
+            background_color=(0.7, 0.3, 0.3, 1),
+            on_press=lambda instance, event_id=event_id: self.open_edit_event_modal(event_id)  # Pass event ID to the method
         )
 
         # Use canvas instructions to round the button's corners
@@ -296,8 +297,16 @@ class CalendarView(Screen):
         print("Error: Day widget not found.")
         return None
     
+    def refresh_calendar(self):
+        grid = self.ids['calendar_grid']  # Get the calendar grid from the KV file.
+        grid.clear_widgets()  # Clear any existing widgets from the grid.
+        self.populate_calendar()
+        self.populate()
+
+
     def populate(self):
         """Retrieve and display events for the current month."""
+
         session = db.get_session()
         try:
             stmt = select(Event_).where(
@@ -312,3 +321,8 @@ class CalendarView(Screen):
                 self.add_event(event.id, event.name, start_time, event.place)
         finally:
             session.close()
+
+    def open_edit_event_modal(self, event_id):
+        """Open the Edit Event modal for a specific event ID and refresh calendar upon save."""
+        edit_event_modal = EditEventModal(event_id=event_id, refresh_callback=self.refresh_calendar)
+        edit_event_modal.open()

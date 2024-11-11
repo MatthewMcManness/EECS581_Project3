@@ -32,18 +32,22 @@ from kivy.uix.spinner import Spinner  # Dropdown-style component for categories
 from kivy.uix.button import Button  # Standard button widget
 from kivy.uix.label import Label  # Label widget for displaying text
 from kivy.app import App  # Ensure App is imported
-from Models import Event, Category  # Event and Category classes
+from Models import Event_, Category  # Event and Category classes
 from database import get_database  # To connect to the database
 from sqlalchemy import select  # To query the database
 from datetime import datetime  # For event date and time
+from Models.event import Event_
+from screens.usefulwidgets import DatePicker # Date picker
+from screens.usefulwidgets import RepeatOptionsModal, PriorityOptionsModal, CategoryModal  # Additional modals
+
 
 db = get_database()  # Get the database connection
 
+
 class EditEventModal(ModalView):
     def __init__(self, event_id=None, refresh_callback=None, **kwargs):
-        """Initialize the EditEventModal with layout components, loading event data if editing."""
         super().__init__(**kwargs)
-        self.event_id = event_id  # Store event ID for editing
+        self.event_id = event_id  # Store the event ID for loading
         self.size_hint = (0.9, 0.9)
         self.auto_dismiss = False
         self.refresh_callback = refresh_callback  # Store the refresh callback
@@ -101,20 +105,22 @@ class EditEventModal(ModalView):
 
         self.add_widget(layout)
 
-        # Load existing event data if editing
         if event_id:
             self.load_event(event_id)
 
     def load_event(self, event_id):
         """Load event data into fields for editing."""
         with db.get_session() as session, session.begin():
-            event = session.query(Event).filter_by(id=event_id).first()
+            event = session.query(Event_).filter_by(id=event_id).first()
             if event:
+                # Populate the title and notes fields
                 self.title_input.text = event.name
                 self.notes_input.text = event.notes
-                self.date_label.text = f"Event on: {event.event_time.strftime('%Y-%m-%d %H:%M')}" if event.event_time else "Pick a date & time"
+                # Format and display the event start time
+                self.date_label.text = f"Event on: {event.start_time.strftime('%Y-%m-%d %H:%M')}" if event.start_time else "Pick a date & time"
+                # Populate categories
                 self.selected_categories = [category.name for category in event.categories]
-                self.update_applied_categories()
+                self.update_applied_categories()  # Update the display of selected categories
 
     def save_event(self, *args):
         """Save the event, updating if it exists or creating a new one."""
@@ -125,41 +131,43 @@ class EditEventModal(ModalView):
         # Collect data from the modal
         name = self.title_input.text
         notes = self.notes_input.text
-        event_time = self.date_label.text.split(" ", 1)[1] if "Event on:" in self.date_label.text else None
-        event_time = datetime.strptime(event_time, "%Y-%m-%d %H:%M") if event_time else None
+        start_time = (" ").join(self.date_label.text.split(" ")[2:]) if "Event on:" in self.date_label.text else None
+        start_time = datetime.strptime(start_time, "%Y-%m-%d %H:%M") if start_time else None
 
-        # Retrieve category instances
+        # Retrieve selected category instances
         selected_category_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
 
         with db.get_session() as session:
             if self.event_id:
                 # Update existing event
-                event = session.query(Event).filter_by(id=self.event_id).first()
-                event.name = name
-                event.notes = notes
-                event.event_time = event_time
-                event.categories = session.query(Category).filter(Category.id.in_(selected_category_ids)).all()
+                event = session.query(Event_).filter_by(id=self.event_id).first()
+                if event:
+                    event.name = name
+                    event.notes = notes
+                    event.start_time = start_time
+                    event.categories = session.query(Category).filter(Category.id.in_(selected_category_ids)).all()
+                else:
+                    print(f"No event found with ID {self.event_id}.")
             else:
-                # Create new event
-                event = Event(name=name, notes=notes, event_time=event_time)
+                # Create a new event only if no event_id was provided
+                event = Event_(name=name, notes=notes, start_time=start_time)
                 event.categories = session.query(Category).filter(Category.id.in_(selected_category_ids)).all()
                 session.add(event)
 
-            # Commit the session and capture the event ID
+            # Commit the session to save changes
             session.commit()
-            event_id = event.id  # Capture the ID before the session closes
 
+        # Refresh the calendar after saving if callback is provided
         if self.refresh_callback:
             self.refresh_callback()
 
-        print(f"Event {'updated' if self.event_id else 'saved'} with ID: {event_id}")
         self.dismiss()
 
     def delete_event(self, *args):
         """Delete the event from the database."""
         if self.event_id:
             with db.get_session() as session, session.begin():
-                event = session.query(Event).filter_by(id=self.event_id).first()
+                event = session.query(Event_).filter_by(id=self.event_id).first()
                 if event:
                     session.delete(event)
             print(f"Event with ID {self.event_id} deleted.")

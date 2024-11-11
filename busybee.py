@@ -54,6 +54,7 @@ from screens.todolistview import ToDoListView
 from screens.addevent import AddEventModal
 from screens.addtask import AddTaskModal
 from screens.edittask import EditTaskModal  # Import the edit modal
+from screens.editEvent import EditEventModal # Import the edit event modal
 
 # -----------------------------------------------------------------------------
 # Main Application Class: BusyBeeApp
@@ -172,3 +173,7 @@ class BusyBeeApp(App):
         # Create the EditTaskModal and pass the task ID and refresh callback
         edit_task_modal = EditTaskModal(task_id=task_id, refresh_callback=todo_screen.refresh_tasks)
         edit_task_modal.open()
+
+def open_edit_event_modal(self, event_id):
+    edit_event_modal = EditEventModal(event_id=event_id, refresh_callback=self.populate)
+    edit_event_modal.open()
