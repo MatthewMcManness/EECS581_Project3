@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">BusyBee<span id="projectnumber">&#160;0.1.0</span>
+   <div id="projectname">BusyBee
    </div>
    <div id="projectbrief">Mobile friendly calendar and to-do list application</div>
   </td>
@@ -114,8 +114,20 @@ Inheritance diagram for EECS581_Project3.screens.todolistview.ToDoListView:</div
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ad1706810dd7874a79e5592d3f2418e26" id="r_ad1706810dd7874a79e5592d3f2418e26"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad1706810dd7874a79e5592d3f2418e26">__init__</a> (self, **kwargs)</td></tr>
 <tr class="separator:ad1706810dd7874a79e5592d3f2418e26"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb2b07fac418050340d9b6cce6832a43" id="r_afb2b07fac418050340d9b6cce6832a43"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afb2b07fac418050340d9b6cce6832a43">add_task</a> (self, task_data)</td></tr>
-<tr class="separator:afb2b07fac418050340d9b6cce6832a43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a828ba94c3e2720812b050f89350461f9" id="r_a828ba94c3e2720812b050f89350461f9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a828ba94c3e2720812b050f89350461f9">add_task</a> (self, task_id, name, priority=None, due_date=None, categories=None, complete=False)</td></tr>
+<tr class="separator:a828ba94c3e2720812b050f89350461f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a590d57fdc5cbb27dd11c89f9dd9dc1f2" id="r_a590d57fdc5cbb27dd11c89f9dd9dc1f2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a590d57fdc5cbb27dd11c89f9dd9dc1f2">populate</a> (self)</td></tr>
+<tr class="separator:a590d57fdc5cbb27dd11c89f9dd9dc1f2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae6615a60a71c53c30a1b324f0e4adee1" id="r_ae6615a60a71c53c30a1b324f0e4adee1"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae6615a60a71c53c30a1b324f0e4adee1">on_task_click</a> (self, task_id)</td></tr>
+<tr class="separator:ae6615a60a71c53c30a1b324f0e4adee1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae08f577dde9378bd9d472cff2585c375" id="r_ae08f577dde9378bd9d472cff2585c375"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae08f577dde9378bd9d472cff2585c375">refresh_tasks</a> (self)</td></tr>
+<tr class="separator:ae08f577dde9378bd9d472cff2585c375"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa110e01a65750ca429c79cf68257e57f" id="r_aa110e01a65750ca429c79cf68257e57f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa110e01a65750ca429c79cf68257e57f">toggle_complete</a> (self, checkbox, task_id, task_box)</td></tr>
+<tr class="separator:aa110e01a65750ca429c79cf68257e57f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aecaf06f67724bbc9a0977de58691654a" id="r_aecaf06f67724bbc9a0977de58691654a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aecaf06f67724bbc9a0977de58691654a">grey_out_task</a> (self, task_box)</td></tr>
+<tr class="separator:aecaf06f67724bbc9a0977de58691654a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4d164a99dd2dca22fa8d9a79898cfe7" id="r_af4d164a99dd2dca22fa8d9a79898cfe7"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4d164a99dd2dca22fa8d9a79898cfe7">reset_task_appearance</a> (self, task_box)</td></tr>
+<tr class="separator:af4d164a99dd2dca22fa8d9a79898cfe7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">A screen for displaying the To-Do List.</pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -141,8 +153,8 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="afb2b07fac418050340d9b6cce6832a43" name="afb2b07fac418050340d9b6cce6832a43"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afb2b07fac418050340d9b6cce6832a43">&#9670;&#160;</a></span>add_task()</h2>
+<a id="a828ba94c3e2720812b050f89350461f9" name="a828ba94c3e2720812b050f89350461f9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a828ba94c3e2720812b050f89350461f9">&#9670;&#160;</a></span>add_task()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -155,45 +167,175 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_data</em></span>&#160;)</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>name</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>priority</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>due_date</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>categories</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>complete</em></span><span class="paramdefsep"> = </span><span class="paramdefval">False</span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Add a new task to the to-do list.
+<pre class="fragment">Add a new task to the to-do list.</pre> 
+</div>
+</div>
+<a id="aecaf06f67724bbc9a0977de58691654a" name="aecaf06f67724bbc9a0977de58691654a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aecaf06f67724bbc9a0977de58691654a">&#9670;&#160;</a></span>grey_out_task()</h2>
 
-Preconditions:
-    - `task_data` must be a dictionary containing valid task information.
-Postconditions:
-    - Logs the task addition to the console.
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.todolistview.ToDoListView.grey_out_task </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_box</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Grey out the task's appearance.</pre> 
+</div>
+</div>
+<a id="ae6615a60a71c53c30a1b324f0e4adee1" name="ae6615a60a71c53c30a1b324f0e4adee1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae6615a60a71c53c30a1b324f0e4adee1">&#9670;&#160;</a></span>on_task_click()</h2>
 
-Args:
-    task_data (dict): A dictionary containing details about the task to be added.
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.todolistview.ToDoListView.on_task_click </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_id</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Open the EditTaskModal for the clicked task.</pre> 
+</div>
+</div>
+<a id="a590d57fdc5cbb27dd11c89f9dd9dc1f2" name="a590d57fdc5cbb27dd11c89f9dd9dc1f2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a590d57fdc5cbb27dd11c89f9dd9dc1f2">&#9670;&#160;</a></span>populate()</h2>
 
-Side Effects:
-    - Prints a message to the console with the task details.
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.todolistview.ToDoListView.populate </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Adds all tasks in the database to the view, ordered by due date.</pre> 
+</div>
+</div>
+<a id="ae08f577dde9378bd9d472cff2585c375" name="ae08f577dde9378bd9d472cff2585c375"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae08f577dde9378bd9d472cff2585c375">&#9670;&#160;</a></span>refresh_tasks()</h2>
 
-Example:
-    task_data = {
-        "title": "Complete Assignment",
-        "deadline": "2024-11-01",
-        "priority": "High"
-    }
-    self.add_task(task_data)
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.todolistview.ToDoListView.refresh_tasks </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Refresh the list of tasks by reloading from the database.</pre> 
+</div>
+</div>
+<a id="af4d164a99dd2dca22fa8d9a79898cfe7" name="af4d164a99dd2dca22fa8d9a79898cfe7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4d164a99dd2dca22fa8d9a79898cfe7">&#9670;&#160;</a></span>reset_task_appearance()</h2>
 
-Error Conditions:
-    - If `task_data` is not provided or is invalid, the function will print 
-      an incorrect log message but will not crash.</pre> 
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.todolistview.ToDoListView.reset_task_appearance </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_box</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Reset the task's appearance to its original color.</pre> 
+</div>
+</div>
+<a id="aa110e01a65750ca429c79cf68257e57f" name="aa110e01a65750ca429c79cf68257e57f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa110e01a65750ca429c79cf68257e57f">&#9670;&#160;</a></span>toggle_complete()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.todolistview.ToDoListView.toggle_complete </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>checkbox</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_id</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_box</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Toggle the completion status of a task.</pre> 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>screens/<b>todolistview.py</b></li>
+<li>screens/<a class="el" href="todolistview_8py.html">todolistview.py</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><b>todolistview</b></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html">ToDoListView</a></li>
+    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens_1_1todolistview.html">todolistview</a></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html">ToDoListView</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

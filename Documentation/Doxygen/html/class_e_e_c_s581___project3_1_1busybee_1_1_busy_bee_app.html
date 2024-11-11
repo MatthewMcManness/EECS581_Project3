@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">BusyBee<span id="projectnumber">&#160;0.1.0</span>
+   <div id="projectname">BusyBee
    </div>
    <div id="projectbrief">Mobile friendly calendar and to-do list application</div>
   </td>
@@ -121,11 +121,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a7fb8ed4d3428acf45d7bd9df5815b114"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10116a76a5951d079fa5730d53a9245b" id="r_a10116a76a5951d079fa5730d53a9245b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a10116a76a5951d079fa5730d53a9245b">switch_to_screen</a> (self, screen_name)</td></tr>
 <tr class="separator:a10116a76a5951d079fa5730d53a9245b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afeb62db2741f09c2be6b86c6dcf3924a" id="r_afeb62db2741f09c2be6b86c6dcf3924a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afeb62db2741f09c2be6b86c6dcf3924a">open_edit_task_modal</a> (self, task_id)</td></tr>
+<tr class="separator:afeb62db2741f09c2be6b86c6dcf3924a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a010dfc6d1c7c84d7f79d9e04eb72186b" id="r_a010dfc6d1c7c84d7f79d9e04eb72186b"><td class="memItemLeft" align="right" valign="top"><a id="a010dfc6d1c7c84d7f79d9e04eb72186b" name="a010dfc6d1c7c84d7f79d9e04eb72186b"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>screen_manager</b> = ScreenManager(transition=NoTransition())</td></tr>
+<tr class="memitem:a010dfc6d1c7c84d7f79d9e04eb72186b" id="r_a010dfc6d1c7c84d7f79d9e04eb72186b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a010dfc6d1c7c84d7f79d9e04eb72186b">screen_manager</a> = ScreenManager(transition=NoTransition())</td></tr>
 <tr class="separator:a010dfc6d1c7c84d7f79d9e04eb72186b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -223,6 +224,34 @@ Return:
 </pre> 
 </div>
 </div>
+<a id="afeb62db2741f09c2be6b86c6dcf3924a" name="afeb62db2741f09c2be6b86c6dcf3924a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afeb62db2741f09c2be6b86c6dcf3924a">&#9670;&#160;</a></span>open_edit_task_modal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.busybee.BusyBeeApp.open_edit_task_modal </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_id</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Open the Edit Task modal for a specific task.
+
+Args:
+- task_id (int): ID of the task to edit.
+
+Postconditions:
+- The Edit Task modal will open with the task data preloaded.
+</pre><pre class="fragment">Open the Edit Task modal for a specific task.</pre> 
+</div>
+</div>
 <a id="a10116a76a5951d079fa5730d53a9245b" name="a10116a76a5951d079fa5730d53a9245b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a10116a76a5951d079fa5730d53a9245b">&#9670;&#160;</a></span>switch_to_screen()</h2>
 
@@ -263,15 +292,30 @@ Return:
 </pre> 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a010dfc6d1c7c84d7f79d9e04eb72186b" name="a010dfc6d1c7c84d7f79d9e04eb72186b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a010dfc6d1c7c84d7f79d9e04eb72186b">&#9670;&#160;</a></span>screen_manager</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.busybee.BusyBeeApp.screen_manager = ScreenManager(transition=NoTransition())</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li><b>busybee.py</b></li>
+<li><a class="el" href="busybee_8py.html">busybee.py</a></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><b>busybee</b></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app.html">BusyBeeApp</a></li>
+    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1busybee.html">busybee</a></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app.html">BusyBeeApp</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

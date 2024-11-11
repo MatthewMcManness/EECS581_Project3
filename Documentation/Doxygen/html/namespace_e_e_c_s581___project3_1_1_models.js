@@ -5,7 +5,9 @@ var namespace_e_e_c_s581___project3_1_1_models =
     [ "databaseEnums", "namespace_e_e_c_s581___project3_1_1_models_1_1database_enums.html", "namespace_e_e_c_s581___project3_1_1_models_1_1database_enums" ],
     [ "event", "namespace_e_e_c_s581___project3_1_1_models_1_1event.html", "namespace_e_e_c_s581___project3_1_1_models_1_1event" ],
     [ "item", "namespace_e_e_c_s581___project3_1_1_models_1_1item.html", "namespace_e_e_c_s581___project3_1_1_models_1_1item" ],
-    [ "itemCategory", "namespace_e_e_c_s581___project3_1_1_models_1_1item_category.html", null ],
+    [ "itemCategory", "namespace_e_e_c_s581___project3_1_1_models_1_1item_category.html", [
+      [ "item_category_association", "namespace_e_e_c_s581___project3_1_1_models_1_1item_category.html#a2895b0aabb3de241e0d293fcfd32465b", null ]
+    ] ],
     [ "recurrence", "namespace_e_e_c_s581___project3_1_1_models_1_1recurrence.html", "namespace_e_e_c_s581___project3_1_1_models_1_1recurrence" ],
     [ "task", "namespace_e_e_c_s581___project3_1_1_models_1_1task.html", "namespace_e_e_c_s581___project3_1_1_models_1_1task" ]
 ];

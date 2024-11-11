@@ -27,7 +27,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">BusyBee<span id="projectnumber">&#160;0.1.0</span>
+   <div id="projectname">BusyBee
    </div>
    <div id="projectbrief">Mobile friendly calendar and to-do list application</div>
   </td>
@@ -98,7 +98,8 @@ $(function(){initNavTree('namespace_e_e_c_s581___project3_1_1database.html','');
 
 <div class="header">
   <div class="summary">
-<a href="#nested-classes">Classes</a>  </div>
+<a href="#nested-classes">Classes</a> &#124;
+<a href="#func-members">Functions</a>  </div>
   <div class="headertitle"><div class="title">EECS581_Project3.database Namespace Reference</div></div>
 </div><!--header-->
 <div class="contents">
@@ -107,6 +108,11 @@ $(function(){initNavTree('namespace_e_e_c_s581___project3_1_1database.html','');
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_e_e_c_s581___project3_1_1database_1_1_database.html">Database</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Functions</h2></td></tr>
+<tr class="memitem:ac811bd2a95c3824d44cd7825a2bb3448" id="r_ac811bd2a95c3824d44cd7825a2bb3448"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac811bd2a95c3824d44cd7825a2bb3448">get_database</a> (bool test=False, bool debug=False)</td></tr>
+<tr class="separator:ac811bd2a95c3824d44cd7825a2bb3448"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">    Name: Database Class
@@ -115,7 +121,10 @@ Classes</h2></td></tr>
 
     Date Created: 10/20/2024
     Revisions: 
-        - None
+        - 11/01/2024 Magaly Camacho
+            Added method to get database session
+        - 11/04/2024 Magaly Camacho
+            Added method default db for testing (Tests/Output/test_db.db)
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -132,7 +141,37 @@ Classes</h2></td></tr>
         - The database schema will be consistent with the defined models
     Known Faults: 
         - None
-</pre> </div></div><!-- contents -->
+</pre> </div><h2 class="groupheader">Function Documentation</h2>
+<a id="ac811bd2a95c3824d44cd7825a2bb3448" name="ac811bd2a95c3824d44cd7825a2bb3448"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac811bd2a95c3824d44cd7825a2bb3448">&#9670;&#160;</a></span>get_database()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.database.get_database </td>
+          <td>(</td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>test</em></span><span class="paramdefsep"> = </span><span class="paramdefval">False</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool</td>          <td class="paramname"><span class="paramname"><em>debug</em></span><span class="paramdefsep"> = </span><span class="paramdefval">False</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Returns database object for busybee
+
+Parameters:
+    test (bool): whether to connect to test the database (default in Database)
+    debug (bool): whether to print logs or not
+
+Returns:
+    Database: database object
+</pre> 
+</div>
+</div>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

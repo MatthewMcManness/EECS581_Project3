@@ -5,6 +5,10 @@ var hierarchy =
       [ "EECS581_Project3.busybee.BusyBeeApp", "class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app.html", null ],
       [ "EECS581_Project3.original.BusyBeeApp", "class_e_e_c_s581___project3_1_1original_1_1_busy_bee_app.html", null ]
     ] ],
+    [ "BoxLayout", null, [
+      [ "EECS581_Project3.screens.calendarview.EventBox", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_event_box.html", null ],
+      [ "EECS581_Project3.screens.todolistview.TaskBox", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_task_box.html", null ]
+    ] ],
     [ "DeclarativeBase", null, [
       [ "EECS581_Project3.Models.base.Base", "class_e_e_c_s581___project3_1_1_models_1_1base_1_1_base.html", [
         [ "EECS581_Project3.Models.category.Category", "class_e_e_c_s581___project3_1_1_models_1_1category_1_1_category.html", null ],
@@ -31,10 +35,13 @@ var hierarchy =
       [ "EECS581_Project3.original.TimePicker", "class_e_e_c_s581___project3_1_1original_1_1_time_picker.html", null ],
       [ "EECS581_Project3.screens.addevent.AddEventModal", "class_e_e_c_s581___project3_1_1screens_1_1addevent_1_1_add_event_modal.html", null ],
       [ "EECS581_Project3.screens.addtask.AddTaskModal", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html", null ],
+      [ "EECS581_Project3.screens.editEvent.EditEventModal", "class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal.html", null ],
+      [ "EECS581_Project3.screens.edittask.EditTaskModal", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html", null ],
       [ "EECS581_Project3.screens.usefulwidgets.CategoryConfirmationModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_confirmation_modal.html", null ],
       [ "EECS581_Project3.screens.usefulwidgets.CategoryModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_modal.html", null ],
       [ "EECS581_Project3.screens.usefulwidgets.DatePicker", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_date_picker.html", null ],
       [ "EECS581_Project3.screens.usefulwidgets.DuplicateCategoryModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_duplicate_category_modal.html", null ],
+      [ "EECS581_Project3.screens.usefulwidgets.PriorityOptionsModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_priority_options_modal.html", null ],
       [ "EECS581_Project3.screens.usefulwidgets.RepeatOptionsModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal.html", null ],
       [ "EECS581_Project3.screens.usefulwidgets.TimePicker", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker.html", null ]
     ] ],

@@ -1,0 +1,27 @@
+var class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal =
+[
+    [ "__init__", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#adb6bf157740bf0491dc8a9a4a7c05100", null ],
+    [ "delete_task", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a18eb86651b7c0bb5c050cd056408a2dd", null ],
+    [ "load_task", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#ad306b4db1f67e6b5dfd751a8e990a92c", null ],
+    [ "on_category_selected", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a7a60480ef7a6d3dd4b1956c617b632eb", null ],
+    [ "open_date_picker", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#acca5031e24d4dd4ffa05281e7d505376", null ],
+    [ "open_priority_window", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#aa679c2f05b69cf6420adc96767b8f7b4", null ],
+    [ "open_repeat_window", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#ab50447594fa8357e306ac5099b202b3d", null ],
+    [ "save_task", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#ab75b7846d7a41d70caf04422d3f87c79", null ],
+    [ "update_applied_categories", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#aeae9b549b8bb27f1c16c1a2ccfeb16dc", null ],
+    [ "update_category_spinner", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a2a9c0d946ffc1a082cc5eecbff4eae22", null ],
+    [ "applied_categories_layout", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a1df48c030df5b5b6513da824374bed85", null ],
+    [ "auto_dismiss", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a1e653d72ad658c917bb3f73334bf3459", null ],
+    [ "categories", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#ad6eb2c1d9920b66f2f8556de638c73b9", null ],
+    [ "categories_ids", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#afa7822fa327541eaf30bcc6e409f31fb", null ],
+    [ "category_spinner", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#aaf4a8e852c3ec104057f288b10e403bf", null ],
+    [ "deadline_label", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a16bfc2e3a7f7b24daf6a96ac8c019f32", null ],
+    [ "notes_input", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a113b120d899a5948db6931e8acc4b18e", null ],
+    [ "priority_button", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a89ca28571d9081a6ec9c2a9525167a23", null ],
+    [ "refresh_callback", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#aa6c405ee561ce26d301afcf0ce7c834f", null ],
+    [ "repeat_button", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#ae80cf3c6444644790db13ef97a532760", null ],
+    [ "selected_categories", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a3fb3a8d0382b1cad68f569c2ffbd4ff3", null ],
+    [ "size_hint", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a67face9dd12a3db5420fcbd9efe41674", null ],
+    [ "task_id", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#a4e38948d975fb27147cc52c22d9e479a", null ],
+    [ "title_input", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html#af63d3643ce6a1e5c2dcdf5b5e4b5b782", null ]
+];
