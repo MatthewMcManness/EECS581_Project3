@@ -6,6 +6,7 @@
 # Date Created: November 8, 2024
 # Revision History:
 # - November 8, 2024: Initial version created for editing events (Author: Shravya Matta)
+# - November 10, 2024: Group modified to ensure event button clicks open the edit modal (Author whole group)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.

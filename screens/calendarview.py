@@ -301,7 +301,7 @@ class CalendarView(Screen):
         grid = self.ids['calendar_grid']  # Get the calendar grid from the KV file.
         grid.clear_widgets()  # Clear any existing widgets from the grid.
         self.populate_calendar()
-        self.populate()
+        #self.populate()
 
 
     def populate(self):
