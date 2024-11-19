@@ -11,7 +11,7 @@
 # - November 4, 2024: Made it so that the CategoryModal pulls from and updates to the database (Magaly Camacho)
 # - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
 # - November 10, 2024: Added PriorityOptionsModal (Magaly Camacho)
-# - November 18, 2024: Updated RepeatOptionsModal to include how many times to repeat (Magaly Camacho)
+# - November 18, 2024: Updated RepeatOptionsModal to include how many times to repeat, made it so it pulls info from task modal (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and functional.
@@ -294,11 +294,16 @@ class RepeatOptionsModal(ModalView):
             button.bind(on_release=self.set_repeat_frequency)  # Bind selection to handler
             layout.add_widget(button)
 
+        # Get existing inputs
+        old_input = self.task_modal.repeat_button.text.split(" ")
+        old_frequency = (" ").join(old_input[0:2]) if len(old_input) == 2 else old_input[0]
+        old_times = "#" if len(old_input) == 2 else old_input[1].split(" ")[0].replace("(", "")
+
         # Input for how many times to repeat
         self.repeats_layout = BoxLayout(orientation='horizontal', spacing=10)
         repeats_label_1 = Label(text="Repeats:")
-        self.repeats_frequency = Label(text="Doesn't Repeat")
-        self.repeat_times = TextInput(hint_text="#", multiline=False)
+        self.repeats_frequency = Label(text=old_frequency)
+        self.repeat_times = TextInput(hint_text=old_times, multiline=False)
         repeats_label_2 = Label(text="times")
         for widget in [repeats_label_1, self.repeats_frequency, self.repeat_times, repeats_label_2]:
             self.repeats_layout.add_widget(widget)
