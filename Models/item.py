@@ -5,7 +5,8 @@
 
     Date Created: 10/21/2024
     Revisions: 
-        - None
+        - 11/18/2024 Magaly Camacho
+            Added relation to recurrence
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -30,7 +31,7 @@ from .base import Base # base model
 from .databaseEnums import ItemType # enum for types of item
 from .itemCategory import item_category_association # association table
 from typing import Optional, List
-from sqlalchemy import String
+from sqlalchemy import String, ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 
@@ -47,6 +48,8 @@ class Item(Base):
         i_created (datetime): date and time item was created
         i_last_updated (datetime): date and time item was last updated
         categories (list[Category]): categories associated with this item
+        recurrence_id (int): id of recurrence (optional)
+        recurrence (Recurrence): reccurence object (optional)
     """
     __tablename__ = "Item"
 
@@ -72,12 +75,21 @@ class Item(Base):
     )
 
 
-    # Many-to-Many relationship with Item
+    # Many-to-Many relationship with Category
     categories: Mapped[Optional[List["Category"]]] = relationship( # type: ignore
         secondary=item_category_association, # association table
         back_populates="items" # attribute in Category
     )
 
+
+    # Foreign Key to the Recurrence model
+    recurrence_id: Mapped[Optional[int]] = mapped_column(ForeignKey("Recurrence.id"))
+
+
+    # Many-to-One Relationship with Recurrence
+    reccurence: Mapped[Optional["Recurrence"]] = relationship( # type: ignore
+        back_populates="items" # attribute
+    )
 
     # Discriminator, for inheritance
     __mapper_args__ = {

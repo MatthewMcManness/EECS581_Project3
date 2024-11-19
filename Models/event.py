@@ -7,6 +7,8 @@
     Revisions: 
         - 11/01/2024 Magaly Camacho
             Added __repr__() method, and added superclass attributes to docstring
+        - 11/18/2024 Magaly Camacho
+            Removed relation to recurrence (moved up to Item model)
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -48,8 +50,6 @@ class Event_(Item):
         start_time (datetime): start date and time of event
         e_created (datetime): date and time event was created
         e_last_updated (datetime): date and time event was last updated
-        recurrence_id (int): id of associated recurrence, if any
-        recurence (Models.Recurrence): object of associated recurrence, if any
     """
     __tablename__ = "Event_"
 
@@ -82,16 +82,6 @@ class Event_(Item):
     }
 
 
-    # Foreign Key to the Recurrence model
-    recurrence_id: Mapped[Optional[int]] = mapped_column(ForeignKey("Recurrence.id"))
-
-
-    # Many-to-One Relationship with Recurrence
-    reccurence: Mapped[Optional["Recurrence"]] = relationship( # type: ignore
-        back_populates="events" # attribute
-    )
-
-
     def __repr__(self):
         """String representation of event instance"""
         string = "\nEvent("
@@ -100,7 +90,6 @@ class Event_(Item):
         string += f"\n\tnotes={self.notes}"
         string += f"\n\tplace={self.place}"
         string += f"\n\tstart_time={self.start_time}"
-        string += f"\n\trecurrence_id={self.reccurence}"
         string += "\n)\n"
 
         return string
