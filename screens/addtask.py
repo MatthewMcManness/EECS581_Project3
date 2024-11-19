@@ -10,6 +10,7 @@
 # - October 27, 2024: Updated to include proper comments (Matthew McManness)
 # - November 4, 2024: Added connection to database to save tasks (Magaly Camacho)
 # - November 10, 2024: Fixed bug where app crashed when there wasn't a due date. Added priority picker functionality (Magaly Camacho)
+# - November 18, 2024: Updated default frequency string (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -40,7 +41,7 @@ from screens.usefulwidgets import RepeatOptionsModal, PriorityOptionsModal, Cate
 from kivy.uix.label import Label  # Label widget for displaying text
 from kivy.app import App  # Ensure App is imported
 from Models import Task, Category # Task and Category classes
-from Models.databaseEnums import Priority # for tasl priorities
+from Models.databaseEnums import Priority, Frequency # for task priorities and frequency
 from database import get_database # to connect to database
 from sqlalchemy import select # to query database
 from datetime import datetime # for Task.due_date
@@ -86,7 +87,7 @@ class AddTaskModal(ModalView):
         layout.add_widget(deadline_layout)
 
         # Button to open the Repeat Options modal
-        self.repeat_button = Button(text="Does not repeat", on_release=self.open_repeat_window)
+        self.repeat_button = Button(text=Frequency.frequency_options()[0], on_release=self.open_repeat_window)
         layout.add_widget(self.repeat_button)
         
         # Button to open the Priority Options modal

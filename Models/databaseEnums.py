@@ -7,6 +7,8 @@
     Revisions: 
         - 11/04/2024 Magaly Camacho
             Added a static method to Priority to get string and color associated with a given priority
+        - 11/18/2024 Magaly Camacho
+            Added helpful methods to Frequency enum
 
     Preconditions: 
         - None
@@ -94,7 +96,39 @@ class Priority(Enum):
 
 class Frequency(Enum):
     """Enumeration for Recurrence.Frequency"""
-    DAILY = 0
-    WEEKLY = 1
-    MONTHLY = 2
-    YEARLY = 3
+    NO_REPEAT = 0
+    DAILY = 1
+    WEEKLY = 2
+    MONTHLY = 3
+    YEARLY = 4
+
+
+    @staticmethod
+    def frequency_options():
+        """Returns a list of stringified priority options"""
+        return ["Doesn't Repeat", "Daily", "Weekly", "Monthly", "Yearly"]
+    
+
+    @staticmethod
+    def is_no_repeat(frequency:"Frequency"):
+        """Returns whether or not the frequency is NO_REPEAT"""
+        return frequency.value == 0
+    
+
+    @classmethod
+    def enum2str(cls, frequency:"Frequency") -> str:
+        """Returns string representation of enum"""
+        return cls.frequency_options()[frequency.value]
+    
+
+    @classmethod
+    def str2enum(cls, frequency:str) -> "Frequency":
+        """Returns enum based on input string"""
+        str_list = cls.frequency_options()
+
+        # check to make sure its a valid frequency
+        if frequency not in str_list:
+            raise ValueError("Invalid Frequency value")
+        
+        # return valid enum
+        return Frequency(str_list.index(frequency))
