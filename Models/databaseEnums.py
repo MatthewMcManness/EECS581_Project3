@@ -26,6 +26,7 @@
 
 
 from enum import Enum
+from datetime import datetime, timedelta
 
 
 class ItemType(Enum):
@@ -132,3 +133,45 @@ class Frequency(Enum):
         
         # return valid enum
         return Frequency(str_list.index(frequency))
+    
+
+    def get_next_date(self, current_date:datetime, original_date:datetime) -> datetime:
+        """
+        Returns time delta for the given frequency
+        
+        Parameters:
+            current_date (datetime): the base date
+            original_date (datetime): for MONTHLY, to force the day (after exception on previous date)
+        """
+        if self == Frequency.DAILY:
+            return current_date + timedelta(days=1)
+        
+        elif self == Frequency.WEEKLY:
+            return current_date + timedelta(weeks=1)
+        
+        elif self == Frequency.MONTHLY:
+            # adjust month and year 
+            adjusted_year = current_date.year + current_date.month // 12
+            next_month = current_date.month % 12 + 1
+
+            try:
+                return current_date.replace(year=adjusted_year, month=next_month, day=original_date.day)
+            
+            # if next month has less days than current month, return last valid day
+            except ValueError:
+                next_next_month = next_month % 12 + 1 
+                next_next_month_year = adjusted_year + next_month // 12
+                next_next_first_day = current_date.replace(year=next_next_month_year, month=next_next_month, day=1)
+                return next_next_first_day - timedelta(days=1)
+        
+        elif self == Frequency.YEARLY:
+            next_year = current_date.year + 1
+
+            # Handle leap years
+            if current_date.month == 2 and current_date.day == 29:
+                return current_date.replace(year=next_year, month=2, day=28)
+            
+            # Normal
+            return current_date.replace(year=next_year)
+        
+    

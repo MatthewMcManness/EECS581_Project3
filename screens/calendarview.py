@@ -12,6 +12,7 @@
 #   - November 10, 2024: Updated what Manvir and Mariam added to make it stack events correctly - [Matthew McManness]
 #   - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
 #   - November 10, 2024: Group modified to ensure event button clicks open the edit modal - [Whole Group]
+#   - November 18, 2024: Implemented recurring events - [Magaly Camacho]
 #
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
@@ -176,7 +177,7 @@ class CalendarView(Screen):
         day_text = instance.parent.children[1].text  # Get the selected day number.
         print(f"You selected day: {day_text}")  # Print the selected day to the console.
 
-    def add_event(self, event_id, name, start_time, place=None):
+    def add_event(self, event_id, name, start_time, frequency=None, times=None, place=None):
         """
         Add a new event to the calendar with a colored button for each event.
 

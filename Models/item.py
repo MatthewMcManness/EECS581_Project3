@@ -87,7 +87,7 @@ class Item(Base):
 
 
     # Many-to-One Relationship with Recurrence
-    reccurence: Mapped[Optional["Recurrence"]] = relationship( # type: ignore
+    recurrence: Mapped[Optional["Recurrence"]] = relationship( # type: ignore
         back_populates="items" # attribute
     )
 

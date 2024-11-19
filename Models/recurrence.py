@@ -73,7 +73,7 @@ class Recurrence(Base):
 
     # One-to-Many Relationship With Items
     items: Mapped[Optional[List[Item]]] = relationship(
-        back_populates="reccurence", # attribute
+        back_populates="recurrence", # attribute
         cascade="all, delete-orphan" # delete recurrence if all of it's events are deleted
     )
 
