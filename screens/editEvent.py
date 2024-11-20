@@ -7,6 +7,7 @@
 # Revision History:
 # - November 8, 2024: Initial version created for editing events (Author: Shravya Matta)
 # - November 10, 2024: Group modified to ensure event button clicks open the edit modal (Author whole group)
+# - November 20, 2024: Implemented recurrence and fixed some bugs (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -29,73 +30,51 @@
 from kivy.uix.modalview import ModalView  # Modal for event editing
 from kivy.uix.boxlayout import BoxLayout  # Layout for organizing widgets
 from kivy.uix.textinput import TextInput  # Input fields for user text
-from kivy.uix.spinner import Spinner  # Dropdown-style component for categories
 from kivy.uix.button import Button  # Standard button widget
 from kivy.uix.label import Label  # Label widget for displaying text
-from kivy.app import App  # Ensure App is imported
-from Models import Event_, Category  # Event and Category classes
+from Models import Event_, Recurrence  # Event class
+from Models.databaseEnums import Frequency # For event frequency
 from database import get_database  # To connect to the database
 from sqlalchemy import select  # To query the database
+from sqlalchemy.orm import Session # for typing
 from datetime import datetime  # For event date and time
-from Models.event import Event_
 from screens.usefulwidgets import DatePicker # Date picker
-from screens.usefulwidgets import RepeatOptionsModal, PriorityOptionsModal, CategoryModal  # Additional modals
+from screens.usefulwidgets import RepeatOptionsModal  # Additional modals
 
 
-db = get_database()  # Get the database connection
+db = get_database(debug=True)  # Get the database connection
 
 
 class EditEventModal(ModalView):
     def __init__(self, event_id=None, refresh_callback=None, **kwargs):
         super().__init__(**kwargs)
         self.event_id = event_id  # Store the event ID for loading
-        self.size_hint = (0.9, 0.9)
+        self.size_hint = (0.8, 0.5)
         self.auto_dismiss = False
         self.refresh_callback = refresh_callback  # Store the refresh callback
-
-        # Load categories from the database
-        with db.get_session() as session, session.begin():
-            stmt = select(Category).where(True)
-            results = session.scalars(stmt).all()
-            self.categories = [result.name for result in results]
-            self.categories_ids = [result.id for result in results]
-
-        self.selected_categories = []
 
         # Create layout
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
         # Title input for event name
-        self.title_input = TextInput(hint_text="Event Title")
+        self.title_input = TextInput(hint_text="Event Title", multiline=False)
         layout.add_widget(self.title_input)
 
         # Date and time section
         date_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.date_label = Label(text="Pick a date & time", size_hint_x=0.8)
-        date_layout.add_widget(self.date_label)
+        self.event_date_label = Label(text="Pick a date & time", size_hint_x=0.8)
+        date_layout.add_widget(self.event_date_label)
         pick_date_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
         date_layout.add_widget(pick_date_button)
         layout.add_widget(date_layout)
 
+        # Button to open the Repeat Options modal
+        self.repeat_button = Button(text=Frequency.frequency_options()[0], on_release=self.open_repeat_window)
+        layout.add_widget(self.repeat_button)
+
         # Notes input for event description
         self.notes_input = TextInput(hint_text="Notes", multiline=True)
         layout.add_widget(self.notes_input)
-
-        # Category spinner for selecting event categories
-        category_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.category_spinner = Spinner(
-            text="Select Category",
-            values=self.categories + ["Add New Category"],
-            size_hint=(0.7, None),
-            height=44
-        )
-        self.category_spinner.bind(text=self.on_category_selected)
-        category_layout.add_widget(self.category_spinner)
-        layout.add_widget(category_layout)
-
-        # Display selected categories
-        self.applied_categories_layout = BoxLayout(orientation='vertical', spacing=5)
-        layout.add_widget(self.applied_categories_layout)
 
         # Action buttons (Save, Delete, Cancel)
         button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
@@ -118,10 +97,17 @@ class EditEventModal(ModalView):
                 self.title_input.text = event.name
                 self.notes_input.text = event.notes
                 # Format and display the event start time
-                self.date_label.text = f"Event on: {event.start_time.strftime('%Y-%m-%d %H:%M')}" if event.start_time else "Pick a date & time"
-                # Populate categories
-                self.selected_categories = [category.name for category in event.categories]
-                self.update_applied_categories()  # Update the display of selected categories
+                self.event_date_label.text = f"Event Date: {event.start_time.strftime('%Y-%m-%d %H:%M')}" if event.start_time else "Pick a date & time"
+                
+                # Get recurrence info
+                if event.recurrence_id:
+                    recurrence:Recurrence = event.recurrence
+                    self.repeat_button.text = Frequency.enum2str(recurrence.frequency) # add frequency part
+
+                    # add times part (except for NO_REPEAT)
+                    if not Frequency.is_no_repeat(recurrence.frequency):
+                        self.repeat_button.text += f" ({recurrence.times} times)"
+                    
 
     def save_event(self, *args):
         """Save the event, updating if it exists or creating a new one."""
@@ -132,34 +118,67 @@ class EditEventModal(ModalView):
         # Collect data from the modal
         name = self.title_input.text
         notes = self.notes_input.text
-        start_time = (" ").join(self.date_label.text.split(" ")[2:]) if "Event on:" in self.date_label.text else None
+        start_time = (" ").join(self.event_date_label.text.split(" ")[2:]) if "Event Date:" in self.event_date_label.text else None # remove "Event Date:"
         start_time = datetime.strptime(start_time, "%Y-%m-%d %H:%M") if start_time else None
+        repeat_info = self.repeat_button.text.split(" ")
+        frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[0]) # None if "Doesn't Repeat"
+        times = None if len(repeat_info) == 2 else int(repeat_info[1].split(" ")[0].replace("(", "")) # None if "Doesn't repeat"
 
-        # Retrieve selected category instances
-        selected_category_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
-
-        with db.get_session() as session:
+        with db.get_session() as session, session.begin():
             if self.event_id:
+                event = session.scalar(select(Event_).where(Event_.id == self.event_id)) # get event from database
                 # Update existing event
-                event = session.query(Event_).filter_by(id=self.event_id).first()
                 if event:
                     event.name = name
                     event.notes = notes
                     event.start_time = start_time
-                    event.categories = session.query(Category).filter(Category.id.in_(selected_category_ids)).all()
+
+                    make_new_recurrence = False # assume new recurrence isn't needed
+
+                    # New recurrence might be needed if times and frequency was given
+                    if times and frequency:
+                        # if event has recurrence, new recurrence is need if it doesn't match existing one
+                        if event.recurrence_id: 
+                            recurrence = event.recurrence
+                            if times != recurrence.times or frequency != recurrence.frequency:
+                                make_new_recurrence = True
+                    
+                        else: # if event doesn't have recurrence and recurrence info was given, make new recurrence
+                            make_new_recurrence = True
+                    
+                    # Make new recurrence if needed
+                    if make_new_recurrence:
+                        new_recurrence_id = self.save_recurrence(frequency, times, session=session)
+                        event.recurrence_id = new_recurrence_id
+
+                        # create other events
+                        current_date = start_time
+                        for _ in range(times - 1):
+                            new_date = frequency.get_next_date(current_date, start_time)
+
+                            # create event with same info as edited event
+                            event_i = Event_(
+                                name=name,
+                                notes=notes,
+                                start_time=new_date,
+                                recurrence_id=new_recurrence_id
+                            )
+                            print(event_i)
+
+                            current_date = new_date # save date to calculate next one
+                            session.add(event_i)
+
                 else:
                     print(f"No event found with ID {self.event_id}.")
             else:
                 # Create a new event only if no event_id was provided
                 event = Event_(name=name, notes=notes, start_time=start_time)
-                event.categories = session.query(Category).filter(Category.id.in_(selected_category_ids)).all()
                 session.add(event)
-
-            # Commit the session to save changes
-            session.commit()
+                session.commit()
 
         # Refresh the calendar after saving if callback is provided
         if self.refresh_callback:
+            print("Refreshing")
             self.refresh_callback()
 
         self.dismiss()
@@ -183,21 +202,23 @@ class EditEventModal(ModalView):
         """Open the DatePicker modal to select a date and time."""
         DatePicker(self).open()
 
-    def on_category_selected(self, spinner, text):
-        """Handle category selection from the spinner."""
-        if text == "Add New Category":
-            CategoryModal(self).open()  # Open modal to add a new category
-        elif text not in self.selected_categories:
-            self.selected_categories.append(text)  # Add the selected category
-            self.update_applied_categories()  # Refresh the display
+    def open_repeat_window(self, instance):
+        """Open the RepeatOptionsModal to choose a repeat option."""
+        RepeatOptionsModal(self).open()
 
-    def update_applied_categories(self):
-        """Update the layout displaying selected categories."""
-        self.applied_categories_layout.clear_widgets()  # Clear previous widgets
-        for category in self.selected_categories:
-            label = Label(text=category)
-            self.applied_categories_layout.add_widget(label)
+    def save_recurrence(self, frequency:Frequency, times:int, session:Session) -> int:
+        """
+        Adds the given recurrence to the given session and returns its id
+        
+        Parameters:
+            frequency (Frequency): the frequency of the recurrence (daily, weekly, monthly, yearly)
+            times (int): the number of times to repeat the event 
+            session (Session): the session to add the recurrence to
 
-    def update_category_spinner(self):
-        """Update the category spinner with the latest categories."""
-        self.category_spinner.values = self.categories + ["Add New Category"]
+        Returns:
+            int: the id of the new recurrence
+        """
+        recurrence = Recurrence(times=times, frequency=frequency)
+        session.add(recurrence) 
+        session.flush() # assigns id without needing to commiting (in case of a rollback)
+        return recurrence.id

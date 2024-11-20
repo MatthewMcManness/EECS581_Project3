@@ -9,6 +9,7 @@
 #   - November 9. 2024: Added connection to database to save events and show on the calendar - [Manvir Kaur]
 #   - November 10, 2024: Fixed start time not being saved correctly, added check to make sure date and time are picked - [Magaly Camacho]
 #   - November 18, 2024: Implemented recurring events - [Magaly Camacho]
+#   - November 20, 2024: Matched layout with editEvent layout - [Magaly Camacho]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - The `DatePicker` class must be implemented and correctly imported from `screens.usefulwidgets`.
@@ -66,20 +67,22 @@ class AddEventModal(ModalView):
         layout.add_widget(self.event_name_input)  # Add input field to the layout.
 
         # Label to display the selected event date and time.
+        date_layout = BoxLayout(orientation='horizontal', spacing=10)
         self.event_date_label = Label(text="Pick Event Date & Time")
-        layout.add_widget(self.event_date_label)  # Add label to the layout.
+        date_layout.add_widget(self.event_date_label)  # Add label to the layout.
 
         # Button to open the date picker modal.
         pick_date_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
-        layout.add_widget(pick_date_button)  # Add the button to the layout.
-
-        # Input field for additional task notes
-        self.notes_input = TextInput(hint_text="Notes", multiline=True)
-        layout.add_widget(self.notes_input)
+        date_layout.add_widget(pick_date_button)  # Add the button to the layout.
+        layout.add_widget(date_layout)
 
         # Button to open the Repeat Options modal
         self.repeat_button = Button(text=Frequency.frequency_options()[0], on_release=self.open_repeat_window)
         layout.add_widget(self.repeat_button)
+
+        # Input field for additional task notes
+        self.notes_input = TextInput(hint_text="Notes", multiline=True)
+        layout.add_widget(self.notes_input)
         
         # Layout for the action buttons (Cancel and Save).
         button_layout = BoxLayout(orientation='horizontal', spacing=10)
