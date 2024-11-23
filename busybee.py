@@ -85,6 +85,7 @@ class BusyBeeApp(App):
         # Add the CalendarView and ToDoListView screens to the manager
         self.screen_manager.add_widget(CalendarView(name="calendar"))
         self.screen_manager.add_widget(todo)
+        self.screen_manager.add_widget(DailyView(name="daily"))
 
         return self.screen_manager  # Return the configured ScreenManager
 
