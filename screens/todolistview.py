@@ -9,6 +9,7 @@
 #   - November 4, 2024: Updated add_task to connect to database, and added a method populate() that adds all tasks in the database - [Magaly Camacho]
 #   - November 10, 2024: Added def on_task_click(self, task_id), refresh_tasks(self), toggle_complete(self, checkbox, task_id, task_box), grey_out_task(self, task_box), reset_task_appearance(self, task_box)  - [Matthew McManness]
 #   - November 10, 2024: Fixed bug that crashed app when there's no due date. Added priority picker functionality - [Magaly Camacho]
+#   - November 23, 2024: updated the populate function to handle recurrence - [Matthew McManness]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -134,21 +135,26 @@ class ToDoListView(Screen):
         print(f"Added task: {task_id}")  # Log the task addition
 
     def populate(self):
-        """Adds all tasks in the database to the view, ordered by due date."""
-        with db.get_session() as session:  # connect to database through a session
-            stmt = select(Task).where(True).order_by(Task.due_date)  # SQL statement
-            tasks = session.scalars(stmt).all()  # Query database to get the tasks
+        """
+        Populates the ToDoListView with tasks from the database.
+
+        Postconditions:
+            - Retrieves all tasks, including those created through recurrence.
+            - Tasks are displayed in the to-do list, ordered by due date.
+        """
+        with db.get_session() as session:
+            # Fetch all tasks, ordered by due date
+            stmt = select(Task).order_by(Task.due_date)
+            tasks = session.scalars(stmt).all()
 
             for task in tasks:
-                # Stringify due date, if applicable
-                due_date = None
-                if task.due_date is not None:
-                    due_date = task.due_date.strftime("%Y-%m-%d %H:%M") 
+                # Format due date as a string, or set to "-" if None
+                due_date = task.due_date.strftime("%Y-%m-%d %H:%M") if task.due_date else "-"
 
-                # Stringify categories
-                categories = ", ".join([cat.name for cat in task.categories])
+                # Format categories as a comma-separated string, or set to "-" if none exist
+                categories = ", ".join([cat.name for cat in task.categories]) if task.categories else "-"
 
-                # Add task 
+                # Add the task to the view
                 self.add_task(task.id, task.name, task.priority, due_date, categories, complete=task.complete)
 
     def on_task_click(self, task_id):

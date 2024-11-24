@@ -8,6 +8,7 @@
 # Revision History:
 # - November 9, 2024: Initial version copied from addtask.py then added the nessecary functions to update or delete a task (Author: Matthew McManness)
 # - November 10, 2024: Added priority picker and functionality (Magaly Camacho)
+# - November 23, 2024: Modified the initilization, the load_task and save_task functions to handle recurrence (Matthew McManness)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -42,17 +43,34 @@ from Models.databaseEnums import Priority # for tasl priorities
 from database import get_database # to connect to database
 from sqlalchemy import select # to query database
 from datetime import datetime # for Task.due_date
+from Models import Recurrence  # Import the Recurrence model
 
 db = get_database() # get database
 
 class EditTaskModal(ModalView):
     def __init__(self, task_id=None, refresh_callback=None, **kwargs):
-        """Initialize the EditTaskModal with layout components, loading task data if editing."""
+        """
+        Initializes the EditTaskModal.
+
+        Args:
+            task_id (int): The ID of the task being edited (optional).
+            refresh_callback (function): A callback function to refresh the ToDoListView.
+            **kwargs: Additional arguments passed to the superclass.
+
+        Preconditions:
+            - If editing, a valid task_id must be provided.
+            - The database must be available and properly configured.
+
+        Postconditions:
+            - The modal is initialized with fields for editing or creating a task.
+            - If task_id is provided, the modal is pre-filled with task data.
+        """
         super().__init__(**kwargs)
         self.task_id = task_id  # Store task ID for editing
         self.size_hint = (0.9, 0.9)
         self.auto_dismiss = False
         self.refresh_callback = refresh_callback  # Store the refresh callback
+        self.recurrence = None  # Placeholder for recurrence information
 
         # Load categories
         with db.get_session() as session, session.begin():
@@ -120,7 +138,16 @@ class EditTaskModal(ModalView):
             self.load_task(task_id)
 
     def load_task(self, task_id):
-        """Load task data into fields for editing."""
+        """
+        Load task data into fields for editing.
+
+        Args:
+            task_id (int): The ID of the task to be loaded.
+
+        Postconditions:
+            - The task's details are pre-filled in the modal fields.
+            - If the task has recurrence, the recurrence details are loaded.
+        """
         with db.get_session() as session, session.begin():
             task = session.query(Task).filter_by(id=task_id).first()
             if task:
@@ -131,11 +158,27 @@ class EditTaskModal(ModalView):
                 self.selected_categories = [category.name for category in task.categories]
                 self.update_applied_categories()
 
-    def save_task(self, *args):
-        """Save the task, updating if it exists or creating a new one."""
+                # Load recurrence if it exists
+                if task.recurrence:
+                    self.recurrence = {
+                        "frequency": task.recurrence.frequency,
+                        "times": task.recurrence.times
+                    }
+                    self.repeat_button.text = f"{task.recurrence.frequency.name.capitalize()} ({task.recurrence.times} times)"
+                else:
+                    self.recurrence = None
 
+    def save_task(self, *args):
+        """
+        Save the task, updating if it exists or creating a new one.
+
+        Postconditions:
+            - Updates an existing task or creates a new one in the database.
+            - If recurrence is specified, updates or creates the recurrence details.
+            - Refreshes the to-do list view.
+        """
         if not self.title_input.text:
-            print("Task Title is required.")
+            print("Task Title is required.")  # Error message for missing title
             return
 
         # Collect data
@@ -156,22 +199,64 @@ class EditTaskModal(ModalView):
                 task.due_date = due_date
                 task.priority = priority
                 task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
+
+                # Update recurrence if it exists
+                if self.recurrence:
+                    if task.recurrence:
+                        task.recurrence.frequency = self.recurrence["frequency"]
+                        task.recurrence.times = self.recurrence["times"]
+                    else:
+                        recurrence = Recurrence(
+                            frequency=self.recurrence["frequency"],
+                            times=self.recurrence["times"]
+                        )
+                        session.add(recurrence)
+                        session.flush()  # Get recurrence ID
+                        task.recurrence_id = recurrence.id
+                else:
+                    task.recurrence = None  # Clear recurrence if none is selected
             else:
-                task = Task(name=name, notes=notes, due_date=due_date)
-                if priority is not None:
-                    task.priority = priority
+                task = Task(
+                    name=name,
+                    notes=notes,
+                    due_date=due_date,
+                    priority=priority
+                )
                 task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
                 session.add(task)
+                session.flush()  # Get task ID immediately
 
-            # Commit the session and capture the task ID before the session closes
+                # Add recurrence if specified
+                if self.recurrence:
+                    recurrence = Recurrence(
+                        frequency=self.recurrence["frequency"],
+                        times=self.recurrence["times"]
+                    )
+                    session.add(recurrence)
+                    session.flush()
+                    task.recurrence_id = recurrence.id
+
+            # Commit the session
             session.commit()
-            task_id = task.id  # Capture the ID before the session closes
 
         if self.refresh_callback:
             self.refresh_callback()
 
-        print(f"Task {'updated' if self.task_id else 'saved'} with ID: {task_id}")
+        print(f"Task {'updated' if self.task_id else 'saved'} with ID: {self.task_id or task.id}")
         self.dismiss()
+
+    def open_repeat_window(self, instance):
+        """
+        Open the RepeatOptionsModal to choose a repeat option.
+
+        Preconditions:
+            - The modal must be properly configured.
+
+        Postconditions:
+            - Opens the RepeatOptionsModal for user input.
+        """
+        RepeatOptionsModal(self).open()
+
 
     def delete_task(self, *args):
         """Delete the task from the database."""
