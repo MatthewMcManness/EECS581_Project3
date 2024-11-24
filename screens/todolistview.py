@@ -1,6 +1,6 @@
 # Prologue Comments:
 # Code Artifact: ToDoListView Class Definition
-# Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage 
+# Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage
 # tasks in a to-do list. It provides a method to add tasks dynamically based on input data.
 # Programmer: Matthew McManness (2210261), Magaly Camacho (3072618), Manvir Kaur (3064194)
 # Date Created: October 26, 2024
@@ -12,6 +12,7 @@
 #   - November 23, 2024: updated the populate function to handle recurrence - [Matthew McManness]
 #   - November 23, 2024: tasks are displayed sorted by due date automatically - [Manvir Kaur]
 #   - November 23, 2024: choosing a sorting option prints it to terminal instead of crashing - [Manvir Kaur]
+#   - November 23, 2024: updating populate function to correctly sort all tasks according to the option selected - [Manvir Kaur]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -45,6 +46,10 @@ from Models import Task  # task model class
 from Models.databaseEnums import Priority  # for Task.priority
 from kivy.app import App
 from kivy.uix.dropdown import DropDown
+from sqlalchemy.orm import aliased
+from sqlalchemy.sql import func
+from Models import Category  # Ensure the Category model is imported
+from sqlalchemy.sql import case
 
 db = get_database()  # get database
 
@@ -98,6 +103,7 @@ class ToDoListView(Screen):
         """Initialize the ToDoListView screen."""
         super().__init__(**kwargs)  # Initialize the superclass with provided arguments.
         self.sort_by_dropdown = DropDown()
+        self.current_sort = "Due Date"  # Default sorting criterion
 
     def add_task(self, task_id, name, priority=None, due_date=None, categories=None, complete=False):
         """Add a new task to the to-do list."""
@@ -112,9 +118,9 @@ class ToDoListView(Screen):
 
         # Check/update info to display None if needed
         if due_date is None:
-            due_date = "-" 
+            due_date = "-"
         if categories is None:
-            categories = "-" 
+            categories = "-"
         if priority is None:
             priority = "-"
             priority_color = (0,0,0,1)
@@ -140,17 +146,46 @@ class ToDoListView(Screen):
 
     def populate(self):
         """
-        Populates the ToDoListView with tasks from the database.
-
-        Postconditions:
-            - Retrieves all tasks, including those created through recurrence.
-            - Tasks are displayed in the to-do list, ordered by due date.
+        Populate the ToDoListView with tasks from the database, sorted based on the current_sort attribute.
         """
         with db.get_session() as session:
-            # Fetch all tasks, ordered by due date
-            stmt = select(Task).order_by(Task.due_date.asc())
+            stmt = None  # Initialize stmt to avoid UnboundLocalError
+
+            # Determine sorting order based on the selected option
+            if self.current_sort == "Priority":
+                # Define custom priority order: High (1), Medium (2), Low (3), None (-) as 4
+                priority_order = case(
+                    (Task.priority == 'HIGH', 1),
+                    (Task.priority == 'MEDIUM', 2),
+                    (Task.priority == 'LOW', 3),
+                    else_=4  # For tasks without a priority, assign the lowest order
+                )
+                stmt = select(Task).order_by(priority_order)
+            elif self.current_sort == "Due Date":
+                stmt = select(Task).order_by(Task.due_date.asc())
+            elif self.current_sort == "Category":
+                # Sort by the name of the first associated category
+                stmt = (
+                    select(Task)
+                    .outerjoin(Task.categories)  # Join tasks with categories
+                    .order_by(func.coalesce(Category.name, "").asc())  # Order by category name, null-safe
+                )
+            else:
+                # Default to sorting by Due Date
+                stmt = select(Task).order_by(Task.due_date.asc())
+
+            # Fetch tasks from the database
             tasks = session.scalars(stmt).all()
 
+            # Debugging: Print fetched tasks and their sort order
+            for task in tasks:
+                category_names = [cat.name for cat in task.categories] if task.categories else "-"
+                print(f"Task: {task.name}, Priority: {task.priority}, Due Date: {task.due_date}, Categories: {category_names}")
+
+            # Clear the current task list
+            self.ids.task_list.clear_widgets()
+
+            # Add each task to the list view
             for task in tasks:
                 # Format due date as a string, or set to "-" if None
                 due_date = task.due_date.strftime("%Y-%m-%d %H:%M") if task.due_date else "-"
@@ -221,14 +256,15 @@ class ToDoListView(Screen):
 
         # Bind update_rect on task_box to maintain the white background
         task_box.bind(size=task_box.update_rect, pos=task_box.update_rect)
-        
-        
-    def open_sort_by_dropdown(self):
-        """Open the sort by dropdown."""
-        self.sort_by_dropdown.open(self.root.ids.todo.ids.sort_by_button)
+
 
     def sort_tasks(self, sort_option):
-        """Sort tasks based on the selected sort option."""
+        """
+        Updates the sorting criteria based on the selected sort option and repopulates the list.
+
+        Args:
+            sort_option (str): The selected sorting option (e.g., "Priority", "Due Date", "Name").
+        """
         print(f"Sorting by: {sort_option}")
-        # Logic to sort tasks by Priority, Due Date, or Category goes here
-        self.sort_by_dropdown.dismiss()
+        self.current_sort = sort_option  # Update the current sorting option
+        self.refresh_tasks()  # Refresh the list to apply the new sorting
