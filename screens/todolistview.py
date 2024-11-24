@@ -2,7 +2,7 @@
 # Code Artifact: ToDoListView Class Definition
 # Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage 
 # tasks in a to-do list. It provides a method to add tasks dynamically based on input data.
-# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618)
+# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618), Manvir Kaur (3064194)
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of ToDoListView structure  (placeholder for navigation) - [Matthew McManness]
@@ -10,6 +10,8 @@
 #   - November 10, 2024: Added def on_task_click(self, task_id), refresh_tasks(self), toggle_complete(self, checkbox, task_id, task_box), grey_out_task(self, task_box), reset_task_appearance(self, task_box)  - [Matthew McManness]
 #   - November 10, 2024: Fixed bug that crashed app when there's no due date. Added priority picker functionality - [Magaly Camacho]
 #   - November 23, 2024: updated the populate function to handle recurrence - [Matthew McManness]
+#   - November 23, 2024: tasks are displayed sorted by due date automatically - [Manvir Kaur]
+#   - November 23, 2024: choosing a sorting option prints it to terminal instead of crashing - [Manvir Kaur]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -42,6 +44,7 @@ from sqlalchemy import select  # to query database
 from Models import Task  # task model class
 from Models.databaseEnums import Priority  # for Task.priority
 from kivy.app import App
+from kivy.uix.dropdown import DropDown
 
 db = get_database()  # get database
 
@@ -94,6 +97,7 @@ class ToDoListView(Screen):
     def __init__(self, **kwargs):
         """Initialize the ToDoListView screen."""
         super().__init__(**kwargs)  # Initialize the superclass with provided arguments.
+        self.sort_by_dropdown = DropDown()
 
     def add_task(self, task_id, name, priority=None, due_date=None, categories=None, complete=False):
         """Add a new task to the to-do list."""
@@ -144,7 +148,7 @@ class ToDoListView(Screen):
         """
         with db.get_session() as session:
             # Fetch all tasks, ordered by due date
-            stmt = select(Task).order_by(Task.due_date)
+            stmt = select(Task).order_by(Task.due_date.asc())
             tasks = session.scalars(stmt).all()
 
             for task in tasks:
@@ -217,3 +221,14 @@ class ToDoListView(Screen):
 
         # Bind update_rect on task_box to maintain the white background
         task_box.bind(size=task_box.update_rect, pos=task_box.update_rect)
+        
+        
+    def open_sort_by_dropdown(self):
+        """Open the sort by dropdown."""
+        self.sort_by_dropdown.open(self.root.ids.todo.ids.sort_by_button)
+
+    def sort_tasks(self, sort_option):
+        """Sort tasks based on the selected sort option."""
+        print(f"Sorting by: {sort_option}")
+        # Logic to sort tasks by Priority, Due Date, or Category goes here
+        self.sort_by_dropdown.dismiss()
