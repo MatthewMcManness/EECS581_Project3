@@ -1,5 +1,9 @@
-
-
+#
+#
+#
+# - November 24, 2024, changed the code to make DailyView inherit from Screen (to work with the Screen Manager) (Updated by: Matthew McManness)
+#
+#
 from kivy.uix.screenmanager import Screen  # Change inheritance from BoxLayout to Screen
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout

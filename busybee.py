@@ -10,6 +10,7 @@
 # - October 27, 2024: Current version created (added comments). (Updated by: Matthew McManness)
 # - November 4, 2024: Added call to To Do list view so that tasks already in the database are populated (Updated by: Magaly Camacho)
 # - November 11, 2024: Added open_edit_task_modal(self, task_id) (Updated by: Matthew McManness)
+# - November 24, 2024: Added switch_to_daily_view_today to facilitate seeing the daily view (Matthew McManness)
 #
 # Preconditions:
 # - Kivy must be installed and properly configured in the Python environment.
@@ -57,6 +58,7 @@ from screens.edittask import EditTaskModal  # Import the edit modal
 from screens.editEvent import EditEventModal # Import the edit event modal
 from kivy.uix.screenmanager import ScreenManager
 from screens.dailyview import DailyView # Import the daily view class
+from datetime import datetime
 
 # -----------------------------------------------------------------------------
 # Main Application Class: BusyBeeApp
@@ -175,6 +177,14 @@ class BusyBeeApp(App):
         # Create the EditTaskModal and pass the task ID and refresh callback
         edit_task_modal = EditTaskModal(task_id=task_id, refresh_callback=todo_screen.refresh_tasks)
         edit_task_modal.open()
+
+    def switch_to_daily_view_today(self):
+        """Switch to the DailyView screen and set it to the current day."""
+        daily_view = self.screen_manager.get_screen("daily")  # Get the Daily View screen
+        daily_view.current_date = datetime.now()  # Set to today's date
+        daily_view.update_date_label()  # Update the date label
+        daily_view.populate_events()  # Populate today's events
+        self.screen_manager.current = "daily"  # Switch to the Daily View screen
 
 def open_edit_event_modal(self, event_id):
     edit_event_modal = EditEventModal(event_id=event_id, refresh_callback=self.populate)
