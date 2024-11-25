@@ -49,12 +49,13 @@ from kivy.app import App  # Main class for running Kivy applications
 from kivy.uix.screenmanager import ScreenManager, NoTransition  # Manage screens and transitions
 
 # Import screen classes from the screens directory
-from screens.calendarview import CalendarView
-from screens.todolistview import ToDoListView
-from screens.addevent import AddEventModal
-from screens.addtask import AddTaskModal
+from screens.calendarview import CalendarView # Import the Calendar View class
+from screens.todolistview import ToDoListView # Import the TodoListView class
+from screens.addevent import AddEventModal # Import the add event modal
+from screens.addtask import AddTaskModal # Import the add task modal
 from screens.edittask import EditTaskModal  # Import the edit modal
 from screens.editEvent import EditEventModal # Import the edit event modal
+from screens.dailyview import DailyView # Import the daily view class
 
 # -----------------------------------------------------------------------------
 # Main Application Class: BusyBeeApp

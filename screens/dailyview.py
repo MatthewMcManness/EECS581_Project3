@@ -1,13 +1,14 @@
-from kivy.uix.screenmanager import Screen
+
+
+from kivy.uix.screenmanager import Screen  # Change inheritance from BoxLayout to Screen
 from kivy.app import App
 from kivy.uix.boxlayout import BoxLayout
 from kivy.lang import Builder
 from datetime import datetime, timedelta
 from kivy.clock import Clock
 from kivy.uix.label import Label
-from kivy.uix.boxlayout import BoxLayout
 
-class DailyView(BoxLayout):
+class DailyView(Screen):  # Change inheritance to Screen
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         self.current_date = datetime.now()
