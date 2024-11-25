@@ -11,6 +11,7 @@
 # - November 4, 2024: Added connection to database to save tasks (Magaly Camacho)
 # - November 10, 2024: Fixed bug where app crashed when there wasn't a due date. Added priority picker functionality (Magaly Camacho)
 # - November 18, 2024: Updated default frequency string (Magaly Camacho)
+# - November 23, 2024: Updated the save_task function to handle recurrence (Matthew McManness)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -45,6 +46,7 @@ from Models.databaseEnums import Priority, Frequency # for task priorities and f
 from database import get_database # to connect to database
 from sqlalchemy import select # to query database
 from datetime import datetime # for Task.due_date
+from Models import Recurrence  # Import the Recurrence model
 
 db = get_database() # get database
 
@@ -57,11 +59,23 @@ class AddTaskModal(ModalView):
         selected_categories (list): List of user-selected categories for the task.
     """
 
-    def __init__(self, **kwargs):
-        """Initialize the AddTaskModal with layout components."""
+    def __init__(self, refresh_callback=None, **kwargs):
+        """
+        Initialize the AddTaskModal with layout components.
+
+        Args:
+            refresh_callback (function, optional): A callback function to refresh the ToDoListView.
+            **kwargs: Additional arguments passed to the superclass.
+
+        Preconditions:
+            - The `refresh_callback` should be a callable function or None.
+        """
         super().__init__(**kwargs)
+        self.refresh_callback = refresh_callback  # Store the refresh callback
         self.size_hint = (0.9, 0.9)  # Set modal size
         self.auto_dismiss = False  # Prevent accidental dismissal
+
+        self.recurrence = None  # Initialize recurrence as None
 
         # Initialize categories and the selected category list
         with db.get_session() as session, session.begin():
@@ -160,77 +174,90 @@ class AddTaskModal(ModalView):
         self.category_spinner.values = self.categories + ["Add New Category"]
 
     def save_task(self, *args):
-        """Save the task and add it to the To-Do List screen.
+        """
+        Save the new task to the database.
 
-        Preconditions:
-            - The task title must not be empty.
+        Args:
+            *args: Additional arguments passed by the event handler.
 
         Postconditions:
-            - If valid, the task is added to the To-Do List screen.
-
-        Error Conditions:
-            - If the task title is empty, an error message is logged.
+            - A new task is created and added to the database.
+            - Additional tasks are created based on the recurrence if specified.
+            - Refreshes the to-do list view after saving the task.
         """
-
-        # Check for task title
         if not self.title_input.text:
-            print("Task Title is required.")
-            return  # Stop execution if title is missing
+            print("Task Title is required.")  # Error message for missing title
+            return
 
-        # Get task info from inputs
-        name=self.title_input.text
-        notes=self.notes_input.text
-        priority=None # assume no priority 
-        if self.priority_button.text != "Pick Priority": # if there's a priority convert it to an enum
-            priority = Priority.str2enum(self.priority_button.text)
-        due_date = self.deadline_label.text
-        categories=None # initially assume no categories
-        if len(self.selected_categories) > 0: # if there's categories, make a string
-            categories=", ".join(self.selected_categories)
+        # Collect data
+        name = self.title_input.text
+        notes = self.notes_input.text
+        due_date = self.deadline_label.text.split(" ", 1)[1] if "Deadline" in self.deadline_label.text else None
 
-        # connect to database with a session
+        # Ensure a valid due_date is provided if recurrence is specified
+        if self.recurrence and not due_date:
+            print("Due date is required for recurring tasks.")  # Debugging message
+            return
+
+        # Convert due_date to a datetime object
+        due_date = datetime.strptime(due_date, "%Y-%m-%d %H:%M") if due_date else None
+        priority = Priority.str2enum(self.priority_button.text) if "Pick Priority" != self.priority_button.text else None
+
+        # Ensure self.recurrence is None if "Does not Repeat" is selected or untouched
+        if self.recurrence is None or self.repeat_button.text == Frequency.frequency_options()[0]:
+            self.recurrence = None
+
+        # Retrieve category instances
+        selected_categories_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
+
         with db.get_session() as session:
-            with session.begin(): # start a transaction, auto commits before exiting context
-                # Get instances for selected categories
-                selected_categories_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
-                selected_categories_instances = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
+            # Create the main task
+            task = Task(
+                name=name,
+                notes=notes,
+                due_date=due_date,
+                priority=priority
+            )
+            task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
+            session.add(task)
+            session.flush()  # Get task ID immediately
 
-                # Collect task data
-                new_task = Task(
-                    name=name,
-                    notes=notes,
-                    priority=priority
+            # Add recurrence if specified
+            if self.recurrence:
+                recurrence = Recurrence(
+                    frequency=self.recurrence["frequency"],
+                    times=self.recurrence["times"]
                 )
+                session.add(recurrence)
+                session.flush()
+                task.recurrence_id = recurrence.id
 
-                # Add due date, if applicable
-                if due_date == "Pick a deadline":
-                    due_date = None
-                else:
-                    due_date = (" ").join(due_date.split(" ")[1:]) # get rid of "Deadline: " in label
-                    new_task.due_date = datetime.strptime(due_date, "%Y-%m-%d %H:%M") # add due date to task
+                # Create repeated tasks based on recurrence
+                next_date = due_date
+                for _ in range(self.recurrence["times"] - 1):  # Subtract 1 because the first task is already created
+                    next_date = recurrence.frequency.get_next_date(next_date, due_date)
+                    if not next_date:  # Debugging check for invalid dates
+                        print("Error: next_date calculation returned None.")
+                        break
+                    repeated_task = Task(
+                        name=name,
+                        notes=notes,
+                        due_date=next_date,
+                        priority=priority,
+                        recurrence_id=recurrence.id
+                    )
+                    repeated_task.categories = task.categories
+                    session.add(repeated_task)
 
-                # Add priority, if applicable
-                if priority is not None:
-                    new_task.priority = priority
+             # Capture the task ID before the session is closed
+            task_id = task.id
 
-                # Log message
-                print(f"Saving task: {new_task}")
+            # Commit all changes
+            session.commit()
 
-                # Create relationship between task and categories, note this can't be done in the constructor Task()
-                new_task.categories = selected_categories_instances 
+        # Refresh the to-do list view if a callback is provided
+        if self.refresh_callback:
+            self.refresh_callback()
 
-                # add task to session
-                session.add(new_task)
-
-            task_id = new_task.id # get new_task id
-
-        # Access the running app instance
-        app = App.get_running_app()  # Correctly fetch the app instance
-        todo_screen = app.screen_manager.get_screen('todo')  # Get the To-Do List screen
-
-        # Add the task to the To-Do List screen
-        todo_screen.add_task(task_id, name, priority, due_date, categories)
-
-        # Log the task addition and close the modal
         print(f"Task saved with ID: {task_id}")
         self.dismiss()
