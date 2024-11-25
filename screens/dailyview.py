@@ -1,6 +1,6 @@
 #
 #
-#
+# - November 18, 224, created the .py file to implement the Daily View (created by: Mariam Oraby)
 # - November 24, 2024, changed the code to make DailyView inherit from Screen (to work with the Screen Manager) (Updated by: Matthew McManness)
 #
 #
