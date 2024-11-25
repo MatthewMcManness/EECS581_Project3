@@ -12,6 +12,7 @@
 #   - November 23, 2024: updated the populate function to handle recurrence - [Matthew McManness]
 #   - November 23, 2024: tasks are displayed sorted by due date automatically - [Manvir Kaur]
 #   - November 23, 2024: choosing a sorting option prints it to terminal instead of crashing - [Manvir Kaur]
+#   - November 23, 2024: updating populate function to correctly sort all tasks according to the option selected - [Manvir Kaur]
 #   - November 24, 2024: Implemented the filter_tasks fuction - [Matthew McManness]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
