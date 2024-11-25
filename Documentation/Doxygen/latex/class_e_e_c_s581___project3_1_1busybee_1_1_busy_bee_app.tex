@@ -16,12 +16,15 @@ Inheritance diagram for EECS581\+\_\+\+Project3.\+busybee.\+Busy\+Bee\+App\+:\be
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a7fb8ed4d3428acf45d7bd9df5815b114}{open\+\_\+add\+\_\+event\+\_\+modal}} (self)
 \item 
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a10116a76a5951d079fa5730d53a9245b}{switch\+\_\+to\+\_\+screen}} (self, screen\+\_\+name)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_afeb62db2741f09c2be6b86c6dcf3924a}{open\+\_\+edit\+\_\+task\+\_\+modal}} (self, task\+\_\+id)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a92efcb9f560594beccceebcfe6a4ef48}{switch\+\_\+to\+\_\+daily\+\_\+view\+\_\+today}} (self)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a010dfc6d1c7c84d7f79d9e04eb72186b}\label{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a010dfc6d1c7c84d7f79d9e04eb72186b} 
-{\bfseries screen\+\_\+manager} = Screen\+Manager(transition=No\+Transition())
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a010dfc6d1c7c84d7f79d9e04eb72186b}{screen\+\_\+manager}} = Screen\+Manager(transition=No\+Transition())
 \end{DoxyCompactItemize}
 
 
@@ -76,23 +79,39 @@ Return:
 {\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_ab614de788b4ddd50c34a3bb653898592} 
 EECS581\+\_\+\+Project3.\+busybee.\+Busy\+Bee\+App.\+open\+\_\+add\+\_\+task\+\_\+modal (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Open the Add Task modal.
+\begin{DoxyVerb}Open the AddTaskModal for creating a new task.
 
 Preconditions:
-- AddTaskModal must be properly imported.
+- The ToDoListView screen must be accessible from the ScreenManager.
 
 Postconditions:
-- The Add Task modal will open.
-
-Side Effects:
-- Opens the Add Task modal view.
-
-Errors:
-- ImportError: If AddTaskModal is not found.
-
-Return:
-- None.
+- Displays the AddTaskModal for user input.
+- Passes the refresh_tasks callback from ToDoListView to the AddTaskModal.
 \end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_afeb62db2741f09c2be6b86c6dcf3924a}\index{EECS581\_Project3.busybee.BusyBeeApp@{EECS581\_Project3.busybee.BusyBeeApp}!open\_edit\_task\_modal@{open\_edit\_task\_modal}}
+\index{open\_edit\_task\_modal@{open\_edit\_task\_modal}!EECS581\_Project3.busybee.BusyBeeApp@{EECS581\_Project3.busybee.BusyBeeApp}}
+\doxysubsubsection{\texorpdfstring{open\_edit\_task\_modal()}{open\_edit\_task\_modal()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_afeb62db2741f09c2be6b86c6dcf3924a} 
+EECS581\+\_\+\+Project3.\+busybee.\+Busy\+Bee\+App.\+open\+\_\+edit\+\_\+task\+\_\+modal (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{task\+\_\+id}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Open the Edit Task modal for a specific task.
+
+Args:
+- task_id (int): ID of the task to edit.
+
+Postconditions:
+- The Edit Task modal will open with the task data preloaded.
+\end{DoxyVerb}
+
+
+\begin{DoxyVerb}Open the Edit Task modal for a specific task.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a92efcb9f560594beccceebcfe6a4ef48}\index{EECS581\_Project3.busybee.BusyBeeApp@{EECS581\_Project3.busybee.BusyBeeApp}!switch\_to\_daily\_view\_today@{switch\_to\_daily\_view\_today}}
+\index{switch\_to\_daily\_view\_today@{switch\_to\_daily\_view\_today}!EECS581\_Project3.busybee.BusyBeeApp@{EECS581\_Project3.busybee.BusyBeeApp}}
+\doxysubsubsection{\texorpdfstring{switch\_to\_daily\_view\_today()}{switch\_to\_daily\_view\_today()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a92efcb9f560594beccceebcfe6a4ef48} 
+EECS581\+\_\+\+Project3.\+busybee.\+Busy\+Bee\+App.\+switch\+\_\+to\+\_\+daily\+\_\+view\+\_\+today (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Switch to the DailyView screen and set it to the current day.\end{DoxyVerb}
  \Hypertarget{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a10116a76a5951d079fa5730d53a9245b}\index{EECS581\_Project3.busybee.BusyBeeApp@{EECS581\_Project3.busybee.BusyBeeApp}!switch\_to\_screen@{switch\_to\_screen}}
 \index{switch\_to\_screen@{switch\_to\_screen}!EECS581\_Project3.busybee.BusyBeeApp@{EECS581\_Project3.busybee.BusyBeeApp}}
 \doxysubsubsection{\texorpdfstring{switch\_to\_screen()}{switch\_to\_screen()}}
@@ -121,6 +140,15 @@ Return:
 \end{DoxyVerb}
  
 
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a010dfc6d1c7c84d7f79d9e04eb72186b}\index{EECS581\_Project3.busybee.BusyBeeApp@{EECS581\_Project3.busybee.BusyBeeApp}!screen\_manager@{screen\_manager}}
+\index{screen\_manager@{screen\_manager}!EECS581\_Project3.busybee.BusyBeeApp@{EECS581\_Project3.busybee.BusyBeeApp}}
+\doxysubsubsection{\texorpdfstring{screen\_manager}{screen\_manager}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app_a010dfc6d1c7c84d7f79d9e04eb72186b} 
+EECS581\+\_\+\+Project3.\+busybee.\+Busy\+Bee\+App.\+screen\+\_\+manager = Screen\+Manager(transition=No\+Transition())}
+
+
+
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-busybee.\+py\end{DoxyCompactItemize}
+\mbox{\hyperlink{busybee_8py}{busybee.\+py}}\end{DoxyCompactItemize}

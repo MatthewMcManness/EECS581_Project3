@@ -1,6 +1,6 @@
 var class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal =
 [
-    [ "__init__", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#adb96a91fd1098170e4299b9ca289060a", null ],
+    [ "__init__", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#a98f1d16e4e924377c6f66007908d4733", null ],
     [ "on_category_selected", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#ae2443ea6375a9273cca0e274d298b94c", null ],
     [ "open_date_picker", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#aaa68ab38a2cccca6456cd5b36c4d51cd", null ],
     [ "open_priority_window", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#a34fc8a862dd6c97d526ae95152f6a7fe", null ],
@@ -16,6 +16,9 @@ var class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal =
     [ "deadline_label", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#a27940f0ad31772c2af5244bc1747bc0c", null ],
     [ "notes_input", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#a9e6188a0bf72fa5bbc5243822db21f21", null ],
     [ "priority_button", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#a3b5a06bc9721b6188a49cd3f44b5b0ad", null ],
+    [ "recurrence", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#ad5ea273735ad268989e4589c0252522c", null ],
+    [ "recurrence", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#ac86fdd4f23050804aee3b27b08f7e312", null ],
+    [ "refresh_callback", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#aa130d9b98c8b76097cf9faebbfeb89c7", null ],
     [ "repeat_button", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#aba8bee438ab4ad314020d403958c223f", null ],
     [ "selected_categories", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#a8d662623989457ff6ed6013cfaf4044f", null ],
     [ "size_hint", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html#a403509a2e58d5377dc9f2e67da0c5d05", null ],

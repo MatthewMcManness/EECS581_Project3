@@ -123,6 +123,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a10116a76a5951d079fa5730d53a9245b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afeb62db2741f09c2be6b86c6dcf3924a" id="r_afeb62db2741f09c2be6b86c6dcf3924a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afeb62db2741f09c2be6b86c6dcf3924a">open_edit_task_modal</a> (self, task_id)</td></tr>
 <tr class="separator:afeb62db2741f09c2be6b86c6dcf3924a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a92efcb9f560594beccceebcfe6a4ef48" id="r_a92efcb9f560594beccceebcfe6a4ef48"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a92efcb9f560594beccceebcfe6a4ef48">switch_to_daily_view_today</a> (self)</td></tr>
+<tr class="separator:a92efcb9f560594beccceebcfe6a4ef48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -205,22 +207,14 @@ Return:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Open the Add Task modal.
+<pre class="fragment">Open the AddTaskModal for creating a new task.
 
 Preconditions:
-- AddTaskModal must be properly imported.
+- The ToDoListView screen must be accessible from the ScreenManager.
 
 Postconditions:
-- The Add Task modal will open.
-
-Side Effects:
-- Opens the Add Task modal view.
-
-Errors:
-- ImportError: If AddTaskModal is not found.
-
-Return:
-- None.
+- Displays the AddTaskModal for user input.
+- Passes the refresh_tasks callback from ToDoListView to the AddTaskModal.
 </pre> 
 </div>
 </div>
@@ -250,6 +244,23 @@ Args:
 Postconditions:
 - The Edit Task modal will open with the task data preloaded.
 </pre><pre class="fragment">Open the Edit Task modal for a specific task.</pre> 
+</div>
+</div>
+<a id="a92efcb9f560594beccceebcfe6a4ef48" name="a92efcb9f560594beccceebcfe6a4ef48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a92efcb9f560594beccceebcfe6a4ef48">&#9670;&#160;</a></span>switch_to_daily_view_today()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.busybee.BusyBeeApp.switch_to_daily_view_today </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Switch to the DailyView screen and set it to the current day.</pre> 
 </div>
 </div>
 <a id="a10116a76a5951d079fa5730d53a9245b" name="a10116a76a5951d079fa5730d53a9245b"></a>

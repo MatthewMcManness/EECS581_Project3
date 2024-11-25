@@ -131,6 +131,10 @@ Static Public Attributes</h2></td></tr>
 <tr class="separator:a6c9e7f36efe5416bc13b6b23fcc0e6f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8bbbaa340001cee70c5af180f2a20470" id="r_a8bbbaa340001cee70c5af180f2a20470"><td class="memItemLeft" align="right" valign="top">Mapped&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a8bbbaa340001cee70c5af180f2a20470">categories</a></td></tr>
 <tr class="separator:a8bbbaa340001cee70c5af180f2a20470"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afe52745082903d6071439a2cd6e93a9e" id="r_afe52745082903d6071439a2cd6e93a9e"><td class="memItemLeft" align="right" valign="top">Mapped&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afe52745082903d6071439a2cd6e93a9e">recurrence_id</a> = mapped_column(ForeignKey(&quot;Recurrence.id&quot;))</td></tr>
+<tr class="separator:afe52745082903d6071439a2cd6e93a9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4f1af75885b33e89bec506e535d0128" id="r_af4f1af75885b33e89bec506e535d0128"><td class="memItemLeft" align="right" valign="top">Mapped&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af4f1af75885b33e89bec506e535d0128">recurrence</a></td></tr>
+<tr class="separator:af4f1af75885b33e89bec506e535d0128"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">Item Model for records in the Item Table
@@ -144,6 +148,8 @@ Attributes:
     i_created (datetime): date and time item was created
     i_last_updated (datetime): date and time item was last updated
     categories (list[Category]): categories associated with this item
+    recurrence_id (int): id of recurrence (optional)
+    recurrence (Recurrence): reccurence object (optional)
 </pre> </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a8bbbaa340001cee70c5af180f2a20470" name="a8bbbaa340001cee70c5af180f2a20470"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8bbbaa340001cee70c5af180f2a20470">&#9670;&#160;</a></span>categories</h2>
@@ -280,6 +286,53 @@ Attributes:
       <table class="memname">
         <tr>
           <td class="memname">Mapped EECS581_Project3.Models.item.Item.notes = mapped_column(String(255))</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af4f1af75885b33e89bec506e535d0128" name="af4f1af75885b33e89bec506e535d0128"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af4f1af75885b33e89bec506e535d0128">&#9670;&#160;</a></span>recurrence</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Mapped EECS581_Project3.Models.item.Item.recurrence</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=  relationship( <span class="comment"># type: ignore</span></div>
+<div class="line">        back_populates=<span class="stringliteral">&quot;items&quot;</span> <span class="comment"># attribute</span></div>
+<div class="line">    )</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="afe52745082903d6071439a2cd6e93a9e" name="afe52745082903d6071439a2cd6e93a9e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afe52745082903d6071439a2cd6e93a9e">&#9670;&#160;</a></span>recurrence_id</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Mapped EECS581_Project3.Models.item.Item.recurrence_id = mapped_column(ForeignKey(&quot;Recurrence.id&quot;))</td>
         </tr>
       </table>
   </td>

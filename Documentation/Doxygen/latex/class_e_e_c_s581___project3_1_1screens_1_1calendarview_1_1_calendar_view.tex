@@ -20,24 +20,30 @@ Inheritance diagram for EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calen
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a614fbfa175f71ed4a6049345d8d1b308}{populate\+\_\+calendar}} (self)
 \item 
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a03be2fdf98d2d8ea25fbbfa5f5d85808}{on\+\_\+day\+\_\+press}} (self, instance)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_afcfead7858083ffb556918f880922fa0}{add\+\_\+event}} (self, event\+\_\+id, name, start\+\_\+time, frequency=None, times=None, place=None)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ae5b867884c1807206891833406b36b79}{get\+\_\+cell\+\_\+widget}} (self, date\+\_\+obj)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a03a765c246bb014879c1fb1520397639}{refresh\+\_\+calendar}} (self)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_af1ec75c42f350dc1dd8cea3bfa8d5a2f}{populate}} (self)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a5ba4a32e98094b9deb79c5b0e8c24044}{open\+\_\+edit\+\_\+event\+\_\+modal}} (self, event\+\_\+id)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ae18b368fefc99b9c1e01ed05c77eebc6}\label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ae18b368fefc99b9c1e01ed05c77eebc6} 
-{\bfseries current\+\_\+year} = now.\+year
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ae18b368fefc99b9c1e01ed05c77eebc6}{current\+\_\+year}} = now.\+year
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ab2e9d46c6f9adbcd2b12926e212f43c2}\label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ab2e9d46c6f9adbcd2b12926e212f43c2} 
-int {\bfseries current\+\_\+month} = now.\+month
+int \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ab2e9d46c6f9adbcd2b12926e212f43c2}{current\+\_\+month}} = now.\+month
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_accb4221a6dcd70533d44d373018db3d0}\label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_accb4221a6dcd70533d44d373018db3d0} 
-\# Check if the grid is defined in the KV file. {\bfseries ids}
+\# Check if the grid is defined in the KV file. \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_accb4221a6dcd70533d44d373018db3d0}{ids}}
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Static Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a106d4d536b63ea1920df7e8713b26c8a}\label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a106d4d536b63ea1920df7e8713b26c8a} 
-{\bfseries month\+\_\+year\+\_\+text} = String\+Property()
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a106d4d536b63ea1920df7e8713b26c8a}{month\+\_\+year\+\_\+text}} = String\+Property()
 \end{DoxyCompactItemize}
 
 
@@ -56,13 +62,34 @@ EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+\_\+\+\_\+in
  
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_af501d3c5acad4affc9953b85aa01272e}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!change\_month@{change\_month}}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_afcfead7858083ffb556918f880922fa0}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!add\_event@{add\_event}}
+\index{add\_event@{add\_event}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{add\_event()}{add\_event()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_afcfead7858083ffb556918f880922fa0} 
+EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+add\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{event\+\_\+id}{, }\item[{}]{name}{, }\item[{}]{start\+\_\+time}{, }\item[{}]{frequency}{ = {\ttfamily None}, }\item[{}]{times}{ = {\ttfamily None}, }\item[{}]{place}{ = {\ttfamily None}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Add a new event to the calendar with a colored button for each event.
+
+Parameters:
+    event_id (int): The ID of the event.
+    name (str): The name of the event.
+    start_time (datetime or str): The start date and time of the event.
+    place (Optional[str]): The location of the event (if available).
+\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_af501d3c5acad4affc9953b85aa01272e}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!change\_month@{change\_month}}
 \index{change\_month@{change\_month}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
 \doxysubsubsection{\texorpdfstring{change\_month()}{change\_month()}}
 {\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_af501d3c5acad4affc9953b85aa01272e} 
 EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+change\+\_\+month (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{increment}{}\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}Change the month based on the given increment and repopulate the calendar.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ae5b867884c1807206891833406b36b79}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!get\_cell\_widget@{get\_cell\_widget}}
+\index{get\_cell\_widget@{get\_cell\_widget}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{get\_cell\_widget()}{get\_cell\_widget()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ae5b867884c1807206891833406b36b79} 
+EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+get\+\_\+cell\+\_\+widget (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{date\+\_\+obj}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Retrieve the widget for the specified date.\end{DoxyVerb}
  \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a03be2fdf98d2d8ea25fbbfa5f5d85808}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!on\_day\_press@{on\_day\_press}}
 \index{on\_day\_press@{on\_day\_press}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
 \doxysubsubsection{\texorpdfstring{on\_day\_press()}{on\_day\_press()}}
@@ -77,6 +104,20 @@ EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+on\+\_\+day\
 EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+on\+\_\+kv\+\_\+post (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{base\+\_\+widget}{}\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}Populate the calendar after the KV file has loaded.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a5ba4a32e98094b9deb79c5b0e8c24044}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!open\_edit\_event\_modal@{open\_edit\_event\_modal}}
+\index{open\_edit\_event\_modal@{open\_edit\_event\_modal}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{open\_edit\_event\_modal()}{open\_edit\_event\_modal()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a5ba4a32e98094b9deb79c5b0e8c24044} 
+EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+open\+\_\+edit\+\_\+event\+\_\+modal (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{event\+\_\+id}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Open the Edit Event modal for a specific event ID and refresh calendar upon save.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_af1ec75c42f350dc1dd8cea3bfa8d5a2f}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!populate@{populate}}
+\index{populate@{populate}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{populate()}{populate()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_af1ec75c42f350dc1dd8cea3bfa8d5a2f} 
+EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+populate (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Retrieve and display events for the current month.\end{DoxyVerb}
  \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a614fbfa175f71ed4a6049345d8d1b308}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!populate\_calendar@{populate\_calendar}}
 \index{populate\_calendar@{populate\_calendar}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
 \doxysubsubsection{\texorpdfstring{populate\_calendar()}{populate\_calendar()}}
@@ -84,7 +125,13 @@ EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+on\+\_\+kv\+
 EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+populate\+\_\+calendar (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}Generate the calendar grid with day buttons.\end{DoxyVerb}
- \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a285ceb404bd6f7db394498aa4f39bf5b}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!update\_month\_year\_text@{update\_month\_year\_text}}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a03a765c246bb014879c1fb1520397639}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!refresh\_calendar@{refresh\_calendar}}
+\index{refresh\_calendar@{refresh\_calendar}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{refresh\_calendar()}{refresh\_calendar()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a03a765c246bb014879c1fb1520397639} 
+EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+refresh\+\_\+calendar (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a285ceb404bd6f7db394498aa4f39bf5b}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!update\_month\_year\_text@{update\_month\_year\_text}}
 \index{update\_month\_year\_text@{update\_month\_year\_text}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
 \doxysubsubsection{\texorpdfstring{update\_month\_year\_text()}{update\_month\_year\_text()}}
 {\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a285ceb404bd6f7db394498aa4f39bf5b} 
@@ -93,6 +140,33 @@ EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+update\+\_\+
 \begin{DoxyVerb}Update the label to show the current month and year.\end{DoxyVerb}
  
 
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ab2e9d46c6f9adbcd2b12926e212f43c2}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!current\_month@{current\_month}}
+\index{current\_month@{current\_month}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{current\_month}{current\_month}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ab2e9d46c6f9adbcd2b12926e212f43c2} 
+int EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+current\+\_\+month = now.\+month}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ae18b368fefc99b9c1e01ed05c77eebc6}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!current\_year@{current\_year}}
+\index{current\_year@{current\_year}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{current\_year}{current\_year}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_ae18b368fefc99b9c1e01ed05c77eebc6} 
+EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+current\+\_\+year = now.\+year}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_accb4221a6dcd70533d44d373018db3d0}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!ids@{ids}}
+\index{ids@{ids}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{ids}{ids}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_accb4221a6dcd70533d44d373018db3d0} 
+\# Check if the grid is defined in the KV file. EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+ids}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a106d4d536b63ea1920df7e8713b26c8a}\index{EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}!month\_year\_text@{month\_year\_text}}
+\index{month\_year\_text@{month\_year\_text}!EECS581\_Project3.screens.calendarview.CalendarView@{EECS581\_Project3.screens.calendarview.CalendarView}}
+\doxysubsubsection{\texorpdfstring{month\_year\_text}{month\_year\_text}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view_a106d4d536b63ea1920df7e8713b26c8a} 
+EECS581\+\_\+\+Project3.\+screens.\+calendarview.\+Calendar\+View.\+month\+\_\+year\+\_\+text = String\+Property()\hspace{0.3cm}{\ttfamily [static]}}
+
+
+
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-screens/calendarview.\+py\end{DoxyCompactItemize}
+screens/\mbox{\hyperlink{calendarview_8py}{calendarview.\+py}}\end{DoxyCompactItemize}

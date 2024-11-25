@@ -49,6 +49,7 @@ var hierarchy =
       [ "EECS581_Project3.original.CalendarView", "class_e_e_c_s581___project3_1_1original_1_1_calendar_view.html", null ],
       [ "EECS581_Project3.original.ToDoListView", "class_e_e_c_s581___project3_1_1original_1_1_to_do_list_view.html", null ],
       [ "EECS581_Project3.screens.calendarview.CalendarView", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view.html", null ],
+      [ "EECS581_Project3.screens.dailyview.DailyView", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_daily_view.html", null ],
       [ "EECS581_Project3.screens.todolistview.ToDoListView", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html", null ]
     ] ]
 ];

@@ -4,10 +4,11 @@ var searchData=
   ['i_5flast_5fupdated_1',['i_last_updated',['../class_e_e_c_s581___project3_1_1_models_1_1item_1_1_item.html#a6c9e7f36efe5416bc13b6b23fcc0e6f7',1,'EECS581_Project3::Models::item::Item']]],
   ['id_2',['id',['../class_e_e_c_s581___project3_1_1_models_1_1category_1_1_category.html#a3cc3c768f4fb1066d887c47020d56cf8',1,'EECS581_Project3.Models.category.Category.id'],['../class_e_e_c_s581___project3_1_1_models_1_1event_1_1_event__.html#a88d8a6dd313bff9facecf7e3a6975444',1,'EECS581_Project3.Models.event.Event_.id'],['../class_e_e_c_s581___project3_1_1_models_1_1item_1_1_item.html#a94977ab1d9078a634124da672a8e5d46',1,'EECS581_Project3.Models.item.Item.id'],['../class_e_e_c_s581___project3_1_1_models_1_1recurrence_1_1_recurrence.html#adaf8f583426df4bad02da212821dac23',1,'EECS581_Project3.Models.recurrence.Recurrence.id'],['../class_e_e_c_s581___project3_1_1_models_1_1task_1_1_task.html#a4f1bfab7c321d1428e582f2aa72e3da0',1,'EECS581_Project3.Models.task.Task.id']]],
   ['ids_3',['ids',['../class_e_e_c_s581___project3_1_1original_1_1_calendar_view.html#a926cc41d911fb0f23633e6a279dfcb96',1,'EECS581_Project3.original.CalendarView.ids'],['../class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view.html#accb4221a6dcd70533d44d373018db3d0',1,'EECS581_Project3.screens.calendarview.CalendarView.ids']]],
-  ['item_4',['Item',['../class_e_e_c_s581___project3_1_1_models_1_1item_1_1_item.html',1,'EECS581_Project3::Models::item']]],
-  ['item_2epy_5',['item.py',['../item_8py.html',1,'']]],
-  ['item_5fcategory_5fassociation_6',['item_category_association',['../namespace_e_e_c_s581___project3_1_1_models_1_1item_category.html#a2895b0aabb3de241e0d293fcfd32465b',1,'EECS581_Project3::Models::itemCategory']]],
-  ['itemcategory_2epy_7',['itemCategory.py',['../item_category_8py.html',1,'']]],
-  ['items_8',['items',['../class_e_e_c_s581___project3_1_1_models_1_1category_1_1_category.html#a81190a9281ee9b956378ae3db1fb7c96',1,'EECS581_Project3::Models::category::Category']]],
-  ['itemtype_9',['ItemType',['../class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_item_type.html',1,'EECS581_Project3::Models::databaseEnums']]]
+  ['is_5fno_5frepeat_4',['is_no_repeat',['../class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency.html#ab525057d71a5311aef5d866f07357f2d',1,'EECS581_Project3::Models::databaseEnums::Frequency']]],
+  ['item_5',['Item',['../class_e_e_c_s581___project3_1_1_models_1_1item_1_1_item.html',1,'EECS581_Project3::Models::item']]],
+  ['item_2epy_6',['item.py',['../item_8py.html',1,'']]],
+  ['item_5fcategory_5fassociation_7',['item_category_association',['../namespace_e_e_c_s581___project3_1_1_models_1_1item_category.html#a2895b0aabb3de241e0d293fcfd32465b',1,'EECS581_Project3::Models::itemCategory']]],
+  ['itemcategory_2epy_8',['itemCategory.py',['../item_category_8py.html',1,'']]],
+  ['items_9',['items',['../class_e_e_c_s581___project3_1_1_models_1_1category_1_1_category.html#a81190a9281ee9b956378ae3db1fb7c96',1,'EECS581_Project3::Models::category::Category']]],
+  ['itemtype_10',['ItemType',['../class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_item_type.html',1,'EECS581_Project3::Models::databaseEnums']]]
 ];

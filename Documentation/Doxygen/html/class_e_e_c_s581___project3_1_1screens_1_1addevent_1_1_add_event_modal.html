@@ -117,8 +117,12 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a9ddde2a2e3e45a0ec4fae5bd7be65ddf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aae116140fdd914a879af52730434a2fc" id="r_aae116140fdd914a879af52730434a2fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aae116140fdd914a879af52730434a2fc">open_date_picker</a> (self, instance)</td></tr>
 <tr class="separator:aae116140fdd914a879af52730434a2fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa21c9da1cbcda3d0cf404d0bfe3b89bc" id="r_aa21c9da1cbcda3d0cf404d0bfe3b89bc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa21c9da1cbcda3d0cf404d0bfe3b89bc">open_repeat_window</a> (self, instance)</td></tr>
+<tr class="separator:aa21c9da1cbcda3d0cf404d0bfe3b89bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d95c34335799637428af07a4315bbf9" id="r_a6d95c34335799637428af07a4315bbf9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6d95c34335799637428af07a4315bbf9">save_event</a> (self, *args)</td></tr>
 <tr class="separator:a6d95c34335799637428af07a4315bbf9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa461fdf060e3a9ee0494347d9561d85b" id="r_aa461fdf060e3a9ee0494347d9561d85b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa461fdf060e3a9ee0494347d9561d85b">save_recurrence</a> (self, <a class="el" href="class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency.html">Frequency</a> frequency, int times)</td></tr>
+<tr class="separator:aa461fdf060e3a9ee0494347d9561d85b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -130,6 +134,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a4de1ed46c8f701972397dab95e043bc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae996dd3a29801ea62d4c6bbe435fa4c3" id="r_ae996dd3a29801ea62d4c6bbe435fa4c3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae996dd3a29801ea62d4c6bbe435fa4c3">event_date_label</a> = Label(text=&quot;Pick Event Date &amp; Time&quot;)</td></tr>
 <tr class="separator:ae996dd3a29801ea62d4c6bbe435fa4c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a31bc4b95de78f3a0a29feb73901e9ee9" id="r_a31bc4b95de78f3a0a29feb73901e9ee9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a31bc4b95de78f3a0a29feb73901e9ee9">repeat_button</a> = Button(text=<a class="el" href="class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency.html#a7547883f2da7113f9d4ac7671fc8ceb3">Frequency.frequency_options</a>()[0], on_release=self.open_repeat_window)</td></tr>
+<tr class="separator:a31bc4b95de78f3a0a29feb73901e9ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67ce9c8b6f271945bdcc52b5fc534446" id="r_a67ce9c8b6f271945bdcc52b5fc534446"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67ce9c8b6f271945bdcc52b5fc534446">notes_input</a> = TextInput(hint_text=&quot;Notes&quot;, multiline=True)</td></tr>
 <tr class="separator:a67ce9c8b6f271945bdcc52b5fc534446"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -178,6 +184,27 @@ Public Attributes</h2></td></tr>
 <pre class="fragment">Open the DatePicker modal to select the event date and time.</pre> 
 </div>
 </div>
+<a id="aa21c9da1cbcda3d0cf404d0bfe3b89bc" name="aa21c9da1cbcda3d0cf404d0bfe3b89bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa21c9da1cbcda3d0cf404d0bfe3b89bc">&#9670;&#160;</a></span>open_repeat_window()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.addevent.AddEventModal.open_repeat_window </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>instance</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Open the RepeatOptionsModal to choose a repeat option.</pre> 
+</div>
+</div>
 <a id="a6d95c34335799637428af07a4315bbf9" name="a6d95c34335799637428af07a4315bbf9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6d95c34335799637428af07a4315bbf9">&#9670;&#160;</a></span>save_event()</h2>
 
@@ -197,6 +224,32 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Save the event details and validate input.</pre> 
+</div>
+</div>
+<a id="aa461fdf060e3a9ee0494347d9561d85b" name="aa461fdf060e3a9ee0494347d9561d85b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa461fdf060e3a9ee0494347d9561d85b">&#9670;&#160;</a></span>save_recurrence()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"> int EECS581_Project3.screens.addevent.AddEventModal.save_recurrence </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency.html">Frequency</a></td>          <td class="paramname"><span class="paramname"><em>frequency</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>times</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Saves the given recurrence and returns its id</pre> 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -250,6 +303,20 @@ Public Attributes</h2></td></tr>
       <table class="memname">
         <tr>
           <td class="memname">EECS581_Project3.screens.addevent.AddEventModal.notes_input = TextInput(hint_text=&quot;Notes&quot;, multiline=True)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a31bc4b95de78f3a0a29feb73901e9ee9" name="a31bc4b95de78f3a0a29feb73901e9ee9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a31bc4b95de78f3a0a29feb73901e9ee9">&#9670;&#160;</a></span>repeat_button</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.addevent.AddEventModal.repeat_button = Button(text=<a class="el" href="class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency.html#a7547883f2da7113f9d4ac7671fc8ceb3">Frequency.frequency_options</a>()[0], on_release=self.open_repeat_window)</td>
         </tr>
       </table>
 </div><div class="memdoc">

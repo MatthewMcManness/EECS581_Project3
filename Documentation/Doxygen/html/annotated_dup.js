@@ -15,7 +15,7 @@ var annotated_dup =
           [ "Category", "class_e_e_c_s581___project3_1_1_models_1_1category_1_1_category.html", "class_e_e_c_s581___project3_1_1_models_1_1category_1_1_category" ]
         ] ],
         [ "databaseEnums", "namespace_e_e_c_s581___project3_1_1_models_1_1database_enums.html", [
-          [ "Frequency", "class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency.html", null ],
+          [ "Frequency", "class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency.html", "class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency" ],
           [ "ItemType", "class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_item_type.html", null ],
           [ "Priority", "class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_priority.html", "class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_priority" ]
         ] ],
@@ -55,6 +55,9 @@ var annotated_dup =
         [ "calendarview", "namespace_e_e_c_s581___project3_1_1screens_1_1calendarview.html", [
           [ "CalendarView", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view.html", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view" ],
           [ "EventBox", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_event_box.html", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_event_box" ]
+        ] ],
+        [ "dailyview", "namespace_e_e_c_s581___project3_1_1screens_1_1dailyview.html", [
+          [ "DailyView", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_daily_view.html", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_daily_view" ]
         ] ],
         [ "editEvent", "namespace_e_e_c_s581___project3_1_1screens_1_1edit_event.html", [
           [ "EditEventModal", "class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal" ]

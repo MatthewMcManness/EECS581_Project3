@@ -119,6 +119,8 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:ad306b4db1f67e6b5dfd751a8e990a92c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab75b7846d7a41d70caf04422d3f87c79" id="r_ab75b7846d7a41d70caf04422d3f87c79"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab75b7846d7a41d70caf04422d3f87c79">save_task</a> (self, *args)</td></tr>
 <tr class="separator:ab75b7846d7a41d70caf04422d3f87c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab50447594fa8357e306ac5099b202b3d" id="r_ab50447594fa8357e306ac5099b202b3d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab50447594fa8357e306ac5099b202b3d">open_repeat_window</a> (self, instance)</td></tr>
+<tr class="separator:ab50447594fa8357e306ac5099b202b3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a18eb86651b7c0bb5c050cd056408a2dd" id="r_a18eb86651b7c0bb5c050cd056408a2dd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18eb86651b7c0bb5c050cd056408a2dd">delete_task</a> (self, *args)</td></tr>
 <tr class="separator:a18eb86651b7c0bb5c050cd056408a2dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acca5031e24d4dd4ffa05281e7d505376" id="r_acca5031e24d4dd4ffa05281e7d505376"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acca5031e24d4dd4ffa05281e7d505376">open_date_picker</a> (self, instance)</td></tr>
@@ -144,6 +146,8 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a1e653d72ad658c917bb3f73334bf3459"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6c405ee561ce26d301afcf0ce7c834f" id="r_aa6c405ee561ce26d301afcf0ce7c834f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6c405ee561ce26d301afcf0ce7c834f">refresh_callback</a> = refresh_callback</td></tr>
 <tr class="separator:aa6c405ee561ce26d301afcf0ce7c834f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0801a68f4978564c184f59c141f70ec" id="r_af0801a68f4978564c184f59c141f70ec"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0801a68f4978564c184f59c141f70ec">recurrence</a> = None</td></tr>
+<tr class="separator:af0801a68f4978564c184f59c141f70ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6eb2c1d9920b66f2f8556de638c73b9" id="r_ad6eb2c1d9920b66f2f8556de638c73b9"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6eb2c1d9920b66f2f8556de638c73b9">categories</a> = [result.name for result in results]</td></tr>
 <tr class="separator:ad6eb2c1d9920b66f2f8556de638c73b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa7822fa327541eaf30bcc6e409f31fb" id="r_afa7822fa327541eaf30bcc6e409f31fb"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa7822fa327541eaf30bcc6e409f31fb">categories_ids</a> = [result.id for result in results]</td></tr>
@@ -194,7 +198,21 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Initialize the EditTaskModal with layout components, loading task data if editing.</pre> 
+<pre class="fragment">Initializes the EditTaskModal.
+
+Args:
+    task_id (int): The ID of the task being edited (optional).
+    refresh_callback (function): A callback function to refresh the ToDoListView.
+    **kwargs: Additional arguments passed to the superclass.
+
+Preconditions:
+    - If editing, a valid task_id must be provided.
+    - The database must be available and properly configured.
+
+Postconditions:
+    - The modal is initialized with fields for editing or creating a task.
+    - If task_id is provided, the modal is pre-filled with task data.
+</pre> 
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -237,7 +255,15 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Load task data into fields for editing.</pre> 
+<pre class="fragment">Load task data into fields for editing.
+
+Args:
+    task_id (int): The ID of the task to be loaded.
+
+Postconditions:
+    - The task's details are pre-filled in the modal fields.
+    - If the task has recurrence, the recurrence details are loaded.
+</pre> 
 </div>
 </div>
 <a id="a7a60480ef7a6d3dd4b1956c617b632eb" name="a7a60480ef7a6d3dd4b1956c617b632eb"></a>
@@ -314,7 +340,35 @@ Args:
 </div>
 </div>
 <a id="ab50447594fa8357e306ac5099b202b3d" name="ab50447594fa8357e306ac5099b202b3d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab50447594fa8357e306ac5099b202b3d">&#9670;&#160;</a></span>open_repeat_window()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#ab50447594fa8357e306ac5099b202b3d">&#9670;&#160;</a></span>open_repeat_window() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.open_repeat_window </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>instance</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Open the RepeatOptionsModal to choose a repeat option.
+
+Preconditions:
+    - The modal must be properly configured.
+
+Postconditions:
+    - Opens the RepeatOptionsModal for user input.
+</pre> 
+</div>
+</div>
+<a id="ab50447594fa8357e306ac5099b202b3d" name="ab50447594fa8357e306ac5099b202b3d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab50447594fa8357e306ac5099b202b3d">&#9670;&#160;</a></span>open_repeat_window() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -352,7 +406,13 @@ Args:
         </tr>
       </table>
 </div><div class="memdoc">
-<pre class="fragment">Save the task, updating if it exists or creating a new one.</pre> 
+<pre class="fragment">Save the task, updating if it exists or creating a new one.
+
+Postconditions:
+    - Updates an existing task or creates a new one in the database.
+    - If recurrence is specified, updates or creates the recurrence details.
+    - Refreshes the to-do list view.
+</pre> 
 </div>
 </div>
 <a id="aeae9b549b8bb27f1c16c1a2ccfeb16dc" name="aeae9b549b8bb27f1c16c1a2ccfeb16dc"></a>
@@ -502,6 +562,20 @@ Args:
       <table class="memname">
         <tr>
           <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.priority_button = Button(text=&quot;Pick Priority&quot;, on_release=self.open_priority_window)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af0801a68f4978564c184f59c141f70ec" name="af0801a68f4978564c184f59c141f70ec"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0801a68f4978564c184f59c141f70ec">&#9670;&#160;</a></span>recurrence</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">dict EECS581_Project3.screens.edittask.EditTaskModal.recurrence = None</td>
         </tr>
       </table>
 </div><div class="memdoc">

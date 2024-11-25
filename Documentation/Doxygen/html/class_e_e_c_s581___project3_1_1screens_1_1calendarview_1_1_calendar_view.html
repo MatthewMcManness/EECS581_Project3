@@ -126,12 +126,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a614fbfa175f71ed4a6049345d8d1b308"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a03be2fdf98d2d8ea25fbbfa5f5d85808" id="r_a03be2fdf98d2d8ea25fbbfa5f5d85808"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03be2fdf98d2d8ea25fbbfa5f5d85808">on_day_press</a> (self, instance)</td></tr>
 <tr class="separator:a03be2fdf98d2d8ea25fbbfa5f5d85808"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aed0257ce11b114fa723e3bf074e53764" id="r_aed0257ce11b114fa723e3bf074e53764"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed0257ce11b114fa723e3bf074e53764">add_event</a> (self, event_id, name, start_time, place=None)</td></tr>
-<tr class="separator:aed0257ce11b114fa723e3bf074e53764"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcfead7858083ffb556918f880922fa0" id="r_afcfead7858083ffb556918f880922fa0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afcfead7858083ffb556918f880922fa0">add_event</a> (self, event_id, name, start_time, frequency=None, times=None, place=None)</td></tr>
+<tr class="separator:afcfead7858083ffb556918f880922fa0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae5b867884c1807206891833406b36b79" id="r_ae5b867884c1807206891833406b36b79"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5b867884c1807206891833406b36b79">get_cell_widget</a> (self, date_obj)</td></tr>
 <tr class="separator:ae5b867884c1807206891833406b36b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03a765c246bb014879c1fb1520397639" id="r_a03a765c246bb014879c1fb1520397639"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a03a765c246bb014879c1fb1520397639">refresh_calendar</a> (self)</td></tr>
+<tr class="separator:a03a765c246bb014879c1fb1520397639"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1ec75c42f350dc1dd8cea3bfa8d5a2f" id="r_af1ec75c42f350dc1dd8cea3bfa8d5a2f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af1ec75c42f350dc1dd8cea3bfa8d5a2f">populate</a> (self)</td></tr>
 <tr class="separator:af1ec75c42f350dc1dd8cea3bfa8d5a2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ba4a32e98094b9deb79c5b0e8c24044" id="r_a5ba4a32e98094b9deb79c5b0e8c24044"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5ba4a32e98094b9deb79c5b0e8c24044">open_edit_event_modal</a> (self, event_id)</td></tr>
+<tr class="separator:a5ba4a32e98094b9deb79c5b0e8c24044"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -171,8 +175,8 @@ Static Public Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aed0257ce11b114fa723e3bf074e53764" name="aed0257ce11b114fa723e3bf074e53764"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aed0257ce11b114fa723e3bf074e53764">&#9670;&#160;</a></span>add_event()</h2>
+<a id="afcfead7858083ffb556918f880922fa0" name="afcfead7858083ffb556918f880922fa0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcfead7858083ffb556918f880922fa0">&#9670;&#160;</a></span>add_event()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -196,6 +200,16 @@ Static Public Attributes</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>start_time</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>frequency</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>times</em></span><span class="paramdefsep"> = </span><span class="paramdefval">None</span>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -298,6 +312,27 @@ Parameters:
 <pre class="fragment">Populate the calendar after the KV file has loaded.</pre> 
 </div>
 </div>
+<a id="a5ba4a32e98094b9deb79c5b0e8c24044" name="a5ba4a32e98094b9deb79c5b0e8c24044"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5ba4a32e98094b9deb79c5b0e8c24044">&#9670;&#160;</a></span>open_edit_event_modal()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.calendarview.CalendarView.open_edit_event_modal </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>event_id</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Open the Edit Event modal for a specific event ID and refresh calendar upon save.</pre> 
+</div>
+</div>
 <a id="af1ec75c42f350dc1dd8cea3bfa8d5a2f" name="af1ec75c42f350dc1dd8cea3bfa8d5a2f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af1ec75c42f350dc1dd8cea3bfa8d5a2f">&#9670;&#160;</a></span>populate()</h2>
 
@@ -330,6 +365,23 @@ Parameters:
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Generate the calendar grid with day buttons.</pre> 
+</div>
+</div>
+<a id="a03a765c246bb014879c1fb1520397639" name="a03a765c246bb014879c1fb1520397639"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a03a765c246bb014879c1fb1520397639">&#9670;&#160;</a></span>refresh_calendar()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.calendarview.CalendarView.refresh_calendar </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
 </div>
 </div>
 <a id="a285ceb404bd6f7db394498aa4f39bf5b" name="a285ceb404bd6f7db394498aa4f39bf5b"></a>

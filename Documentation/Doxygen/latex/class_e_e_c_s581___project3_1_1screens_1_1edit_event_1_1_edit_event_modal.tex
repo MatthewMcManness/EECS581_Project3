@@ -1,0 +1,163 @@
+\doxysection{EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal Class Reference}
+\hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal}{}\label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+Inheritance diagram for EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal}
+\end{center}
+\end{figure}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a39aa14617c9dcfa66046dca858de33f9}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a0027027655de718a01ccba99834e11a2}{event\+\_\+id}}=None, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_adea44d8f67c48b898d686882c974fa1b}{refresh\+\_\+callback}}=None, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a6d6b6fe0002440493389ee224019ffb5}{load\+\_\+event}} (self, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a0027027655de718a01ccba99834e11a2}{event\+\_\+id}})
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a621d144844761b79f986c8e88a4ff23e}{save\+\_\+event}} (self, \texorpdfstring{$\ast$}{*}args)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a1750a4189864f6ff84d254e0d1fceb27}{delete\+\_\+event}} (self, \texorpdfstring{$\ast$}{*}args)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a05a7e79280c5830e1242f349e3ce404f}{open\+\_\+date\+\_\+picker}} (self, instance)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a54775e933c39d22b698168244aa904d2}{open\+\_\+repeat\+\_\+window}} (self, instance)
+\item 
+int \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a78fdd00581c72f8d153c500a8efb24fe}{save\+\_\+recurrence}} (self, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency}{Frequency}} frequency, int times, Session session)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a0027027655de718a01ccba99834e11a2}{event\+\_\+id}} = event\+\_\+id
+\item 
+tuple \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_acc2ac3d450ebbdf232254a776f7e352c}{size\+\_\+hint}} = (0.\+8, 0.\+5)
+\item 
+bool \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_ade3a6566d69fddb8b18f7fa6bb64ae3f}{auto\+\_\+dismiss}} = False
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_adea44d8f67c48b898d686882c974fa1b}{refresh\+\_\+callback}} = refresh\+\_\+callback
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a17c2309d94fe5601e73bf01666d09fa1}{title\+\_\+input}} = Text\+Input(hint\+\_\+text="{}Event Title"{}, multiline=False)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a58e95fbeba06b4cf6bef327df5faaee8}{event\+\_\+date\+\_\+label}} = Label(text="{}Pick a date \& time"{}, size\+\_\+hint\+\_\+x=0.\+8)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a73a52750f2b9f0a1c9e85dd780730650}{repeat\+\_\+button}} = Button(text=\mbox{\hyperlink{class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency_a7547883f2da7113f9d4ac7671fc8ceb3}{Frequency.\+frequency\+\_\+options}}()\mbox{[}0\mbox{]}, on\+\_\+release=self.\+open\+\_\+repeat\+\_\+window)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a2041060d4f5744982c876a518cf00c6c}{notes\+\_\+input}} = Text\+Input(hint\+\_\+text="{}Notes"{}, multiline=True)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a39aa14617c9dcfa66046dca858de33f9}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a39aa14617c9dcfa66046dca858de33f9} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{event\+\_\+id}{ = {\ttfamily None}, }\item[{}]{refresh\+\_\+callback}{ = {\ttfamily None}, }\item[{\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{kwargs}{}\end{DoxyParamCaption})}
+
+
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a1750a4189864f6ff84d254e0d1fceb27}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!delete\_event@{delete\_event}}
+\index{delete\_event@{delete\_event}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{delete\_event()}{delete\_event()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a1750a4189864f6ff84d254e0d1fceb27} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+delete\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{\texorpdfstring{$\ast$}{*}}]{args}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Delete the event from the database.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a6d6b6fe0002440493389ee224019ffb5}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!load\_event@{load\_event}}
+\index{load\_event@{load\_event}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{load\_event()}{load\_event()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a6d6b6fe0002440493389ee224019ffb5} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+load\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{event\+\_\+id}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Load event data into fields for editing.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a05a7e79280c5830e1242f349e3ce404f}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!open\_date\_picker@{open\_date\_picker}}
+\index{open\_date\_picker@{open\_date\_picker}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{open\_date\_picker()}{open\_date\_picker()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a05a7e79280c5830e1242f349e3ce404f} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+open\+\_\+date\+\_\+picker (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Open the DatePicker modal to select a date and time.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a54775e933c39d22b698168244aa904d2}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!open\_repeat\_window@{open\_repeat\_window}}
+\index{open\_repeat\_window@{open\_repeat\_window}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{open\_repeat\_window()}{open\_repeat\_window()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a54775e933c39d22b698168244aa904d2} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+open\+\_\+repeat\+\_\+window (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Open the RepeatOptionsModal to choose a repeat option.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a621d144844761b79f986c8e88a4ff23e}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!save\_event@{save\_event}}
+\index{save\_event@{save\_event}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{save\_event()}{save\_event()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a621d144844761b79f986c8e88a4ff23e} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+save\+\_\+event (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{\texorpdfstring{$\ast$}{*}}]{args}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Save the event, updating if it exists or creating a new one.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a78fdd00581c72f8d153c500a8efb24fe}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!save\_recurrence@{save\_recurrence}}
+\index{save\_recurrence@{save\_recurrence}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{save\_recurrence()}{save\_recurrence()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a78fdd00581c72f8d153c500a8efb24fe} 
+ int EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+save\+\_\+recurrence (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{\mbox{\hyperlink{class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency}{Frequency}}}]{frequency}{, }\item[{int}]{times}{, }\item[{Session}]{session}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Adds the given recurrence to the given session and returns its id
+
+Parameters:
+    frequency (Frequency): the frequency of the recurrence (daily, weekly, monthly, yearly)
+    times (int): the number of times to repeat the event 
+    session (Session): the session to add the recurrence to
+
+Returns:
+    int: the id of the new recurrence
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_ade3a6566d69fddb8b18f7fa6bb64ae3f}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!auto\_dismiss@{auto\_dismiss}}
+\index{auto\_dismiss@{auto\_dismiss}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{auto\_dismiss}{auto\_dismiss}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_ade3a6566d69fddb8b18f7fa6bb64ae3f} 
+bool EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+auto\+\_\+dismiss = False}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a58e95fbeba06b4cf6bef327df5faaee8}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!event\_date\_label@{event\_date\_label}}
+\index{event\_date\_label@{event\_date\_label}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{event\_date\_label}{event\_date\_label}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a58e95fbeba06b4cf6bef327df5faaee8} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+event\+\_\+date\+\_\+label = Label(text="{}Pick a date \& time"{}, size\+\_\+hint\+\_\+x=0.\+8)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a0027027655de718a01ccba99834e11a2}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!event\_id@{event\_id}}
+\index{event\_id@{event\_id}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{event\_id}{event\_id}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a0027027655de718a01ccba99834e11a2} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+event\+\_\+id = event\+\_\+id}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a2041060d4f5744982c876a518cf00c6c}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!notes\_input@{notes\_input}}
+\index{notes\_input@{notes\_input}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{notes\_input}{notes\_input}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a2041060d4f5744982c876a518cf00c6c} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+notes\+\_\+input = Text\+Input(hint\+\_\+text="{}Notes"{}, multiline=True)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_adea44d8f67c48b898d686882c974fa1b}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!refresh\_callback@{refresh\_callback}}
+\index{refresh\_callback@{refresh\_callback}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{refresh\_callback}{refresh\_callback}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_adea44d8f67c48b898d686882c974fa1b} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+refresh\+\_\+callback = refresh\+\_\+callback}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a73a52750f2b9f0a1c9e85dd780730650}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!repeat\_button@{repeat\_button}}
+\index{repeat\_button@{repeat\_button}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{repeat\_button}{repeat\_button}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a73a52750f2b9f0a1c9e85dd780730650} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+repeat\+\_\+button = Button(text=\mbox{\hyperlink{class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency_a7547883f2da7113f9d4ac7671fc8ceb3}{Frequency.\+frequency\+\_\+options}}()\mbox{[}0\mbox{]}, on\+\_\+release=self.\+open\+\_\+repeat\+\_\+window)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_acc2ac3d450ebbdf232254a776f7e352c}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!size\_hint@{size\_hint}}
+\index{size\_hint@{size\_hint}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{size\_hint}{size\_hint}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_acc2ac3d450ebbdf232254a776f7e352c} 
+tuple EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+size\+\_\+hint = (0.\+8, 0.\+5)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a17c2309d94fe5601e73bf01666d09fa1}\index{EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}!title\_input@{title\_input}}
+\index{title\_input@{title\_input}!EECS581\_Project3.screens.editEvent.EditEventModal@{EECS581\_Project3.screens.editEvent.EditEventModal}}
+\doxysubsubsection{\texorpdfstring{title\_input}{title\_input}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal_a17c2309d94fe5601e73bf01666d09fa1} 
+EECS581\+\_\+\+Project3.\+screens.\+edit\+Event.\+Edit\+Event\+Modal.\+title\+\_\+input = Text\+Input(hint\+\_\+text="{}Event Title"{}, multiline=False)}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+screens/\mbox{\hyperlink{edit_event_8py}{edit\+Event.\+py}}\end{DoxyCompactItemize}

@@ -11,7 +11,32 @@ Inheritance diagram for EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+D
 \item 
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_ad1706810dd7874a79e5592d3f2418e26}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
 \item 
-\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_afb2b07fac418050340d9b6cce6832a43}{add\+\_\+task}} (self, task\+\_\+data)
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a828ba94c3e2720812b050f89350461f9}{add\+\_\+task}} (self, task\+\_\+id, name, priority=None, due\+\_\+date=None, categories=None, complete=False)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a590d57fdc5cbb27dd11c89f9dd9dc1f2}{populate}} (self)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_ae6615a60a71c53c30a1b324f0e4adee1}{on\+\_\+task\+\_\+click}} (self, task\+\_\+id)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_ae08f577dde9378bd9d472cff2585c375}{refresh\+\_\+tasks}} (self)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aa110e01a65750ca429c79cf68257e57f}{toggle\+\_\+complete}} (self, checkbox, task\+\_\+id, task\+\_\+box)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aecaf06f67724bbc9a0977de58691654a}{grey\+\_\+out\+\_\+task}} (self, task\+\_\+box)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_af4d164a99dd2dca22fa8d9a79898cfe7}{reset\+\_\+task\+\_\+appearance}} (self, task\+\_\+box)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a3c78bc01c589c3be7b27a21d1f49097a}{sort\+\_\+tasks}} (self, sort\+\_\+option)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aa3de05f97efb243ddb72216569b245d8}{filter\+\_\+tasks}} (self, priority\+\_\+filter)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a136f9287b0085380480f0dfafc8f6041}{sort\+\_\+by\+\_\+dropdown}} = Drop\+Down()
+\item 
+str \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_afa9355807113d5f7ab1ada0bac3a9e16}{current\+\_\+sort}} = "{}Due Date"{}
+\item 
+tuple \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a5761f1182f440c188f4cfa295ca3adad}{current\+\_\+sort}}
 \end{DoxyCompactItemize}
 
 
@@ -30,38 +55,110 @@ EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+\_\+\+\_
  
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_afb2b07fac418050340d9b6cce6832a43}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!add\_task@{add\_task}}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a828ba94c3e2720812b050f89350461f9}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!add\_task@{add\_task}}
 \index{add\_task@{add\_task}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
 \doxysubsubsection{\texorpdfstring{add\_task()}{add\_task()}}
-{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_afb2b07fac418050340d9b6cce6832a43} 
-EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+add\+\_\+task (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{task\+\_\+data}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a828ba94c3e2720812b050f89350461f9} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+add\+\_\+task (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{task\+\_\+id}{, }\item[{}]{name}{, }\item[{}]{priority}{ = {\ttfamily None}, }\item[{}]{due\+\_\+date}{ = {\ttfamily None}, }\item[{}]{categories}{ = {\ttfamily None}, }\item[{}]{complete}{ = {\ttfamily False}}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Add a new task to the to-do list.
+\begin{DoxyVerb}Add a new task to the to-do list.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aa3de05f97efb243ddb72216569b245d8}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!filter\_tasks@{filter\_tasks}}
+\index{filter\_tasks@{filter\_tasks}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{filter\_tasks()}{filter\_tasks()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aa3de05f97efb243ddb72216569b245d8} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+filter\+\_\+tasks (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{priority\+\_\+filter}{}\end{DoxyParamCaption})}
 
-Preconditions:
-    - `task_data` must be a dictionary containing valid task information.
-Postconditions:
-    - Logs the task addition to the console.
+\begin{DoxyVerb}Filter tasks based on the selected priority level.
 
 Args:
-    task_data (dict): A dictionary containing details about the task to be added.
+    priority_filter (str): The selected priority filter (e.g., "High", "Medium", "Low", "-", "All").
+\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aecaf06f67724bbc9a0977de58691654a}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!grey\_out\_task@{grey\_out\_task}}
+\index{grey\_out\_task@{grey\_out\_task}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{grey\_out\_task()}{grey\_out\_task()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aecaf06f67724bbc9a0977de58691654a} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+grey\+\_\+out\+\_\+task (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{task\+\_\+box}{}\end{DoxyParamCaption})}
 
-Side Effects:
-    - Prints a message to the console with the task details.
+\begin{DoxyVerb}Grey out the task's appearance.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_ae6615a60a71c53c30a1b324f0e4adee1}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!on\_task\_click@{on\_task\_click}}
+\index{on\_task\_click@{on\_task\_click}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{on\_task\_click()}{on\_task\_click()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_ae6615a60a71c53c30a1b324f0e4adee1} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+on\+\_\+task\+\_\+click (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{task\+\_\+id}{}\end{DoxyParamCaption})}
 
-Example:
-    task_data = {
-        "title": "Complete Assignment",
-        "deadline": "2024-11-01",
-        "priority": "High"
-    }
-    self.add_task(task_data)
+\begin{DoxyVerb}Open the EditTaskModal for the clicked task.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a590d57fdc5cbb27dd11c89f9dd9dc1f2}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!populate@{populate}}
+\index{populate@{populate}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{populate()}{populate()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a590d57fdc5cbb27dd11c89f9dd9dc1f2} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+populate (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
 
-Error Conditions:
-    - If `task_data` is not provided or is invalid, the function will print 
-      an incorrect log message but will not crash.\end{DoxyVerb}
+\begin{DoxyVerb}Populate the ToDoListView with tasks from the database, sorted based on the current_sort attribute.
+\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_ae08f577dde9378bd9d472cff2585c375}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!refresh\_tasks@{refresh\_tasks}}
+\index{refresh\_tasks@{refresh\_tasks}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{refresh\_tasks()}{refresh\_tasks()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_ae08f577dde9378bd9d472cff2585c375} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+refresh\+\_\+tasks (\begin{DoxyParamCaption}\item[{}]{self}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Refresh the list of tasks by reloading from the database.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_af4d164a99dd2dca22fa8d9a79898cfe7}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!reset\_task\_appearance@{reset\_task\_appearance}}
+\index{reset\_task\_appearance@{reset\_task\_appearance}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{reset\_task\_appearance()}{reset\_task\_appearance()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_af4d164a99dd2dca22fa8d9a79898cfe7} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+reset\+\_\+task\+\_\+appearance (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{task\+\_\+box}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reset the task's appearance to its original color.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a3c78bc01c589c3be7b27a21d1f49097a}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!sort\_tasks@{sort\_tasks}}
+\index{sort\_tasks@{sort\_tasks}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{sort\_tasks()}{sort\_tasks()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a3c78bc01c589c3be7b27a21d1f49097a} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+sort\+\_\+tasks (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{sort\+\_\+option}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Updates the sorting criteria based on the selected sort option and repopulates the list.
+
+Args:
+    sort_option (str): The selected sorting option (e.g., "Priority", "Due Date", "Name").
+\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aa110e01a65750ca429c79cf68257e57f}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!toggle\_complete@{toggle\_complete}}
+\index{toggle\_complete@{toggle\_complete}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{toggle\_complete()}{toggle\_complete()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_aa110e01a65750ca429c79cf68257e57f} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+toggle\+\_\+complete (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{checkbox}{, }\item[{}]{task\+\_\+id}{, }\item[{}]{task\+\_\+box}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Toggle the completion status of a task.\end{DoxyVerb}
  
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_afa9355807113d5f7ab1ada0bac3a9e16}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!current\_sort@{current\_sort}}
+\index{current\_sort@{current\_sort}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{current\_sort}{current\_sort}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_afa9355807113d5f7ab1ada0bac3a9e16} 
+str EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+current\+\_\+sort = "{}Due Date"{}}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a5761f1182f440c188f4cfa295ca3adad}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!current\_sort@{current\_sort}}
+\index{current\_sort@{current\_sort}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{current\_sort}{current\_sort}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a5761f1182f440c188f4cfa295ca3adad} 
+tuple EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+current\+\_\+sort}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ (}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ select(Task)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .outerjoin(Task.categories)\ \ \textcolor{comment}{\#\ Join\ tasks\ with\ categories}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ .order\_by(func.coalesce(Category.name,\ \textcolor{stringliteral}{"{}"{}}).asc())\ \ \textcolor{comment}{\#\ Order\ by\ category\ name,\ null-\/safe}}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a136f9287b0085380480f0dfafc8f6041}\index{EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}!sort\_by\_dropdown@{sort\_by\_dropdown}}
+\index{sort\_by\_dropdown@{sort\_by\_dropdown}!EECS581\_Project3.screens.todolistview.ToDoListView@{EECS581\_Project3.screens.todolistview.ToDoListView}}
+\doxysubsubsection{\texorpdfstring{sort\_by\_dropdown}{sort\_by\_dropdown}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view_a136f9287b0085380480f0dfafc8f6041} 
+EECS581\+\_\+\+Project3.\+screens.\+todolistview.\+To\+Do\+List\+View.\+sort\+\_\+by\+\_\+dropdown = Drop\+Down()}
+
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-screens/todolistview.\+py\end{DoxyCompactItemize}
+screens/\mbox{\hyperlink{todolistview_8py}{todolistview.\+py}}\end{DoxyCompactItemize}

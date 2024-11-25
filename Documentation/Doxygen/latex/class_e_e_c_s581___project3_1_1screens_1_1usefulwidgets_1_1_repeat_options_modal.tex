@@ -9,26 +9,31 @@ Inheritance diagram for EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repe
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_aa4714c32c4e8b207c307c91554958148}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, task\+\_\+modal, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_aa4714c32c4e8b207c307c91554958148}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_aac91859addd3dd5cf56ef64c2d35459e}{task\+\_\+modal}}, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
 \item 
-\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a1bc3176b381d56ed7c69cdfa6566844e}{set\+\_\+repeat\+\_\+option}} (self, instance)
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a32250bae45a11e90f3b84f0e5dc38c66}{set\+\_\+repeat\+\_\+frequency}} (self, instance)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a2f2d818c3e3d91db627eda56801872fc}{save}} (self, instance)
 \end{DoxyCompactItemize}
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df} 
-tuple {\bfseries size\+\_\+hint} = (0.\+6, 0.\+4)
+tuple \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df}{size\+\_\+hint}} = (0.\+6, 0.\+6)
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a834dfe5a46ec54ecfde1f175c0f7313b}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a834dfe5a46ec54ecfde1f175c0f7313b} 
-bool {\bfseries auto\+\_\+dismiss} = False
+bool \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a834dfe5a46ec54ecfde1f175c0f7313b}{auto\+\_\+dismiss}} = False
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_aac91859addd3dd5cf56ef64c2d35459e}\label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_aac91859addd3dd5cf56ef64c2d35459e} 
-{\bfseries task\+\_\+modal} = task\+\_\+modal
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_aac91859addd3dd5cf56ef64c2d35459e}{task\+\_\+modal}} = task\+\_\+modal
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_af1a6004f5af6874a3d5e85d9eab1b1da}{repeats\+\_\+layout}} = Box\+Layout(orientation="{}horizontal"{}, spacing=10, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df}{size\+\_\+hint}}=(1, None), height=50)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_ae2a5c9c8af13d53a374c982f21295782}{repeats\+\_\+frequency}} = Label(text=old\+\_\+frequency, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df}{size\+\_\+hint}}=(0.\+4, 1))
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a58cec171bb493898d9a5c3d36441c350}{repeat\+\_\+times}}
 \end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
-\begin{DoxyVerb}A modal that provides options for repeating tasks: Does not repeat, Daily, Weekly, Monthly.\end{DoxyVerb}
+\begin{DoxyVerb}A modal that provides options for repeating tasks: Does not repeat, Daily, Weekly, Monthly, Yearly.\end{DoxyVerb}
  
 
 \doxysubsection{Constructor \& Destructor Documentation}
@@ -53,22 +58,89 @@ Postconditions:
  
 
 \doxysubsection{Member Function Documentation}
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a1bc3176b381d56ed7c69cdfa6566844e}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!set\_repeat\_option@{set\_repeat\_option}}
-\index{set\_repeat\_option@{set\_repeat\_option}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
-\doxysubsubsection{\texorpdfstring{set\_repeat\_option()}{set\_repeat\_option()}}
-{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a1bc3176b381d56ed7c69cdfa6566844e} 
-EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+set\+\_\+repeat\+\_\+option (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a2f2d818c3e3d91db627eda56801872fc}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!save@{save}}
+\index{save@{save}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
+\doxysubsubsection{\texorpdfstring{save()}{save()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a2f2d818c3e3d91db627eda56801872fc} 
+EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+save (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Sets the selected repeat option and updates the task modal.
+\begin{DoxyVerb}Saves the selected repeat frequency and dismisses the modal.
 
 Args:
-    instance (Button): The button representing the selected repeat option.
+    instance (Button): The button instance that was pressed.
+
+Preconditions:
+    - A valid frequency and repeat count must be selected.
 
 Postconditions:
-    - The repeat button in the task modal reflects the selected option.
+    - Updates the parent modal with the repeat option and count.
+    - If 'Doesn't Repeat' is selected, sets recurrence to None.
+\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a32250bae45a11e90f3b84f0e5dc38c66}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!set\_repeat\_frequency@{set\_repeat\_frequency}}
+\index{set\_repeat\_frequency@{set\_repeat\_frequency}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
+\doxysubsubsection{\texorpdfstring{set\_repeat\_frequency()}{set\_repeat\_frequency()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a32250bae45a11e90f3b84f0e5dc38c66} 
+EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+set\+\_\+repeat\+\_\+frequency (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Handles the selection of a repeat frequency.
+
+Args:
+    instance (Button): The button instance that was pressed.
+
+Preconditions:
+    - The button text matches one of the valid frequency options.
+
+Postconditions:
+    - Updates the `self.repeats_frequency` label to the selected frequency.
 \end{DoxyVerb}
  
 
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a834dfe5a46ec54ecfde1f175c0f7313b}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!auto\_dismiss@{auto\_dismiss}}
+\index{auto\_dismiss@{auto\_dismiss}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
+\doxysubsubsection{\texorpdfstring{auto\_dismiss}{auto\_dismiss}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a834dfe5a46ec54ecfde1f175c0f7313b} 
+bool EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+auto\+\_\+dismiss = False}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a58cec171bb493898d9a5c3d36441c350}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!repeat\_times@{repeat\_times}}
+\index{repeat\_times@{repeat\_times}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
+\doxysubsubsection{\texorpdfstring{repeat\_times}{repeat\_times}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a58cec171bb493898d9a5c3d36441c350} 
+EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+repeat\+\_\+times}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{=\ \ TextInput(}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ \ \ \ \ hint\_text=old\_times,\ multiline=\textcolor{keyword}{False},\ size\_hint=(0.2,\ 1)}
+\DoxyCodeLine{\ \ \ \ \ \ \ \ )}
+
+\end{DoxyCode}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_ae2a5c9c8af13d53a374c982f21295782}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!repeats\_frequency@{repeats\_frequency}}
+\index{repeats\_frequency@{repeats\_frequency}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
+\doxysubsubsection{\texorpdfstring{repeats\_frequency}{repeats\_frequency}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_ae2a5c9c8af13d53a374c982f21295782} 
+EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+repeats\+\_\+frequency = Label(text=old\+\_\+frequency, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df}{size\+\_\+hint}}=(0.\+4, 1))}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_af1a6004f5af6874a3d5e85d9eab1b1da}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!repeats\_layout@{repeats\_layout}}
+\index{repeats\_layout@{repeats\_layout}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
+\doxysubsubsection{\texorpdfstring{repeats\_layout}{repeats\_layout}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_af1a6004f5af6874a3d5e85d9eab1b1da} 
+EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+repeats\+\_\+layout = Box\+Layout(orientation="{}horizontal"{}, spacing=10, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df}{size\+\_\+hint}}=(1, None), height=50)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!size\_hint@{size\_hint}}
+\index{size\_hint@{size\_hint}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
+\doxysubsubsection{\texorpdfstring{size\_hint}{size\_hint}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_a0aa4fd5b104c28ba6fa2e2b62275d3df} 
+tuple EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+size\+\_\+hint = (0.\+6, 0.\+6)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_aac91859addd3dd5cf56ef64c2d35459e}\index{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}!task\_modal@{task\_modal}}
+\index{task\_modal@{task\_modal}!EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal@{EECS581\_Project3.screens.usefulwidgets.RepeatOptionsModal}}
+\doxysubsubsection{\texorpdfstring{task\_modal}{task\_modal}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal_aac91859addd3dd5cf56ef64c2d35459e} 
+EECS581\+\_\+\+Project3.\+screens.\+usefulwidgets.\+Repeat\+Options\+Modal.\+task\+\_\+modal = task\+\_\+modal}
+
+
+
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-screens/usefulwidgets.\+py\end{DoxyCompactItemize}
+screens/\mbox{\hyperlink{usefulwidgets_8py}{usefulwidgets.\+py}}\end{DoxyCompactItemize}

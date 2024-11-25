@@ -52,8 +52,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py.html",
-"class_e_e_c_s581___project3_1_1screens_1_1addevent_1_1_add_event_modal.html#a67ce9c8b6f271945bdcc52b5fc534446",
-"class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_date_picker.html#a93155854f1907a56fa051c036ed0f1de"
+"class_e_e_c_s581___project3_1_1original_1_1_to_do_list_view.html#ae301c30af740e9dc8264924c35921913",
+"class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html#ae6615a60a71c53c30a1b324f0e4adee1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

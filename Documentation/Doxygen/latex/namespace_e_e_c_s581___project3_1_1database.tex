@@ -5,6 +5,11 @@
 \item 
 class \mbox{\hyperlink{class_e_e_c_s581___project3_1_1database_1_1_database}{Database}}
 \end{DoxyCompactItemize}
+\doxysubsubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespace_e_e_c_s581___project3_1_1database_ac811bd2a95c3824d44cd7825a2bb3448}{get\+\_\+database}} (bool test=False, bool debug=False)
+\end{DoxyCompactItemize}
 
 
 \doxysubsection{Detailed Description}
@@ -14,7 +19,10 @@ class \mbox{\hyperlink{class_e_e_c_s581___project3_1_1database_1_1_database}{Dat
 
     Date Created: 10/20/2024
     Revisions: 
-        - None
+        - 11/01/2024 Magaly Camacho
+            Added method to get database session
+        - 11/04/2024 Magaly Camacho
+            Added method default db for testing (Tests/Output/test_db.db)
 
     Preconditions: 
         - SQLAlchemy must be installed and configured in the environment
@@ -31,5 +39,23 @@ class \mbox{\hyperlink{class_e_e_c_s581___project3_1_1database_1_1_database}{Dat
         - The database schema will be consistent with the defined models
     Known Faults: 
         - None
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Function Documentation}
+\Hypertarget{namespace_e_e_c_s581___project3_1_1database_ac811bd2a95c3824d44cd7825a2bb3448}\index{EECS581\_Project3.database@{EECS581\_Project3.database}!get\_database@{get\_database}}
+\index{get\_database@{get\_database}!EECS581\_Project3.database@{EECS581\_Project3.database}}
+\doxysubsubsection{\texorpdfstring{get\_database()}{get\_database()}}
+{\footnotesize\ttfamily \label{namespace_e_e_c_s581___project3_1_1database_ac811bd2a95c3824d44cd7825a2bb3448} 
+EECS581\+\_\+\+Project3.\+database.\+get\+\_\+database (\begin{DoxyParamCaption}\item[{bool}]{test}{ = {\ttfamily False}, }\item[{bool}]{debug}{ = {\ttfamily False}}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Returns database object for busybee
+
+Parameters:
+    test (bool): whether to connect to test the database (default in Database)
+    debug (bool): whether to print logs or not
+
+Returns:
+    Database: database object
 \end{DoxyVerb}
  

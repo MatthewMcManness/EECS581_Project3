@@ -18,8 +18,9 @@ var searchData=
   ['eecs581_5fproject3_3a_3ascreens_3a_3aaddevent_15',['addevent',['../namespace_e_e_c_s581___project3_1_1screens_1_1addevent.html',1,'EECS581_Project3::screens']]],
   ['eecs581_5fproject3_3a_3ascreens_3a_3aaddtask_16',['addtask',['../namespace_e_e_c_s581___project3_1_1screens_1_1addtask.html',1,'EECS581_Project3::screens']]],
   ['eecs581_5fproject3_3a_3ascreens_3a_3acalendarview_17',['calendarview',['../namespace_e_e_c_s581___project3_1_1screens_1_1calendarview.html',1,'EECS581_Project3::screens']]],
-  ['eecs581_5fproject3_3a_3ascreens_3a_3aeditevent_18',['editEvent',['../namespace_e_e_c_s581___project3_1_1screens_1_1edit_event.html',1,'EECS581_Project3::screens']]],
-  ['eecs581_5fproject3_3a_3ascreens_3a_3aedittask_19',['edittask',['../namespace_e_e_c_s581___project3_1_1screens_1_1edittask.html',1,'EECS581_Project3::screens']]],
-  ['eecs581_5fproject3_3a_3ascreens_3a_3atodolistview_20',['todolistview',['../namespace_e_e_c_s581___project3_1_1screens_1_1todolistview.html',1,'EECS581_Project3::screens']]],
-  ['eecs581_5fproject3_3a_3ascreens_3a_3ausefulwidgets_21',['usefulwidgets',['../namespace_e_e_c_s581___project3_1_1screens_1_1usefulwidgets.html',1,'EECS581_Project3::screens']]]
+  ['eecs581_5fproject3_3a_3ascreens_3a_3adailyview_18',['dailyview',['../namespace_e_e_c_s581___project3_1_1screens_1_1dailyview.html',1,'EECS581_Project3::screens']]],
+  ['eecs581_5fproject3_3a_3ascreens_3a_3aeditevent_19',['editEvent',['../namespace_e_e_c_s581___project3_1_1screens_1_1edit_event.html',1,'EECS581_Project3::screens']]],
+  ['eecs581_5fproject3_3a_3ascreens_3a_3aedittask_20',['edittask',['../namespace_e_e_c_s581___project3_1_1screens_1_1edittask.html',1,'EECS581_Project3::screens']]],
+  ['eecs581_5fproject3_3a_3ascreens_3a_3atodolistview_21',['todolistview',['../namespace_e_e_c_s581___project3_1_1screens_1_1todolistview.html',1,'EECS581_Project3::screens']]],
+  ['eecs581_5fproject3_3a_3ascreens_3a_3ausefulwidgets_22',['usefulwidgets',['../namespace_e_e_c_s581___project3_1_1screens_1_1usefulwidgets.html',1,'EECS581_Project3::screens']]]
 ];

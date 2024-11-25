@@ -9,11 +9,13 @@ Inheritance diagram for EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\
 \doxysubsubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_adb96a91fd1098170e4299b9ca289060a}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a98f1d16e4e924377c6f66007908d4733}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aa130d9b98c8b76097cf9faebbfeb89c7}{refresh\+\_\+callback}}=None, \texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}kwargs)
 \item 
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aaa68ab38a2cccca6456cd5b36c4d51cd}{open\+\_\+date\+\_\+picker}} (self, instance)
 \item 
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a7b59feeec3a952267bbaa8c52b51dcda}{open\+\_\+repeat\+\_\+window}} (self, instance)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a34fc8a862dd6c97d526ae95152f6a7fe}{open\+\_\+priority\+\_\+window}} (self, instance)
 \item 
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ae2443ea6375a9273cca0e274d298b94c}{on\+\_\+category\+\_\+selected}} (self, spinner, text)
 \item 
@@ -26,34 +28,35 @@ Inheritance diagram for EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\
 \doxysubsubsection*{Public Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a403509a2e58d5377dc9f2e67da0c5d05}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a403509a2e58d5377dc9f2e67da0c5d05} 
-tuple {\bfseries size\+\_\+hint} = (0.\+9, 0.\+9)
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aa130d9b98c8b76097cf9faebbfeb89c7}{refresh\+\_\+callback}} = refresh\+\_\+callback
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a80420aa3a27cbc42d7d44c0567398c19}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a80420aa3a27cbc42d7d44c0567398c19} 
-bool {\bfseries auto\+\_\+dismiss} = False
+tuple \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a403509a2e58d5377dc9f2e67da0c5d05}{size\+\_\+hint}} = (0.\+9, 0.\+9)
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a766049646c9f7ddcaba769358827e223}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a766049646c9f7ddcaba769358827e223} 
-list {\bfseries categories} = \mbox{[}"{}Work"{}, "{}Personal"{}, "{}School"{}\mbox{]}
+bool \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a80420aa3a27cbc42d7d44c0567398c19}{auto\+\_\+dismiss}} = False
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a8d662623989457ff6ed6013cfaf4044f}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a8d662623989457ff6ed6013cfaf4044f} 
-list {\bfseries selected\+\_\+categories} = \mbox{[}$\,$\mbox{]}
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ad5ea273735ad268989e4589c0252522c}{recurrence}} = None
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a29e27416f43c1192db7f90b101583358}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a29e27416f43c1192db7f90b101583358} 
-{\bfseries title\+\_\+input} = Text\+Input(hint\+\_\+text="{}Task Title"{})
+list \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a766049646c9f7ddcaba769358827e223}{categories}} = \mbox{[}result.\+name for result in results\mbox{]}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a27940f0ad31772c2af5244bc1747bc0c}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a27940f0ad31772c2af5244bc1747bc0c} 
-{\bfseries deadline\+\_\+label} = Label(text="{}Pick a deadline"{}, size\+\_\+hint\+\_\+x=0.\+8)
+list \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ac3ce50b677cfb7b59ecdddaca15587af}{categories\+\_\+ids}} = \mbox{[}result.\+id for result in results\mbox{]}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aba8bee438ab4ad314020d403958c223f}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aba8bee438ab4ad314020d403958c223f} 
-{\bfseries repeat\+\_\+button} = Button(text="{}Does not repeat"{}, on\+\_\+release=self.\+open\+\_\+repeat\+\_\+window)
+list \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a8d662623989457ff6ed6013cfaf4044f}{selected\+\_\+categories}} = \mbox{[}$\,$\mbox{]}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a9e6188a0bf72fa5bbc5243822db21f21}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a9e6188a0bf72fa5bbc5243822db21f21} 
-{\bfseries notes\+\_\+input} = Text\+Input(hint\+\_\+text="{}Notes"{}, multiline=True)
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a29e27416f43c1192db7f90b101583358}{title\+\_\+input}} = Text\+Input(hint\+\_\+text="{}Task Title"{})
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a27940f0ad31772c2af5244bc1747bc0c}{deadline\+\_\+label}} = Label(text="{}Pick a deadline"{}, size\+\_\+hint\+\_\+x=0.\+8)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aba8bee438ab4ad314020d403958c223f}{repeat\+\_\+button}} = Button(text=\mbox{\hyperlink{class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency_a7547883f2da7113f9d4ac7671fc8ceb3}{Frequency.\+frequency\+\_\+options}}()\mbox{[}0\mbox{]}, on\+\_\+release=self.\+open\+\_\+repeat\+\_\+window)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a3b5a06bc9721b6188a49cd3f44b5b0ad}{priority\+\_\+button}} = Button(text="{}Pick Priority"{}, on\+\_\+release=self.\+open\+\_\+priority\+\_\+window)
+\item 
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a9e6188a0bf72fa5bbc5243822db21f21}{notes\+\_\+input}} = Text\+Input(hint\+\_\+text="{}Notes"{}, multiline=True)
 \item 
 \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ad5ea1f386a4ca101121ecad367c916cd}{category\+\_\+spinner}}
 \item 
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aea620b8af7e72de2b7bf2a52ee31c6c4}\label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aea620b8af7e72de2b7bf2a52ee31c6c4} 
-{\bfseries applied\+\_\+categories\+\_\+layout} = Box\+Layout(orientation=\textquotesingle{}vertical\textquotesingle{}, spacing=5)
+\mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aea620b8af7e72de2b7bf2a52ee31c6c4}{applied\+\_\+categories\+\_\+layout}} = Box\+Layout(orientation=\textquotesingle{}vertical\textquotesingle{}, spacing=5)
+\item 
+list \mbox{\hyperlink{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ac86fdd4f23050804aee3b27b08f7e312}{recurrence}} = \mbox{[}cat\+\_\+id for cat\+\_\+id, cat in zip(self.\+categories\+\_\+ids, self.\+categories) if cat in self.\+selected\+\_\+categories\mbox{]}
 \end{DoxyCompactItemize}
 
 
@@ -67,13 +70,21 @@ Attributes:
  
 
 \doxysubsection{Constructor \& Destructor Documentation}
-\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_adb96a91fd1098170e4299b9ca289060a}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!\_\_init\_\_@{\_\_init\_\_}}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a98f1d16e4e924377c6f66007908d4733}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!\_\_init\_\_@{\_\_init\_\_}}
 \index{\_\_init\_\_@{\_\_init\_\_}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
 \doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
-{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_adb96a91fd1098170e4299b9ca289060a} 
-EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{kwargs}{}\end{DoxyParamCaption})}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a98f1d16e4e924377c6f66007908d4733} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{refresh\+\_\+callback}{ = {\ttfamily None}, }\item[{\texorpdfstring{$\ast$}{*}\texorpdfstring{$\ast$}{*}}]{kwargs}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Initialize the AddTaskModal with layout components.\end{DoxyVerb}
+\begin{DoxyVerb}Initialize the AddTaskModal with layout components.
+
+Args:
+    refresh_callback (function, optional): A callback function to refresh the ToDoListView.
+    **kwargs: Additional arguments passed to the superclass.
+
+Preconditions:
+    - The `refresh_callback` should be a callable function or None.
+\end{DoxyVerb}
  
 
 \doxysubsection{Member Function Documentation}
@@ -96,6 +107,13 @@ Args:
 EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+open\+\_\+date\+\_\+picker (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
 
 \begin{DoxyVerb}Open the DatePicker modal to select a deadline.\end{DoxyVerb}
+ \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a34fc8a862dd6c97d526ae95152f6a7fe}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!open\_priority\_window@{open\_priority\_window}}
+\index{open\_priority\_window@{open\_priority\_window}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{open\_priority\_window()}{open\_priority\_window()}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a34fc8a862dd6c97d526ae95152f6a7fe} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+open\+\_\+priority\+\_\+window (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{}]{instance}{}\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Open the RepeatOptionsModal to choose a repeat option.\end{DoxyVerb}
  \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a7b59feeec3a952267bbaa8c52b51dcda}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!open\_repeat\_window@{open\_repeat\_window}}
 \index{open\_repeat\_window@{open\_repeat\_window}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
 \doxysubsubsection{\texorpdfstring{open\_repeat\_window()}{open\_repeat\_window()}}
@@ -109,16 +127,15 @@ EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+open\+\_\+repea
 {\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a084b397ca567f915cd9294c2983f852f} 
 EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+save\+\_\+task (\begin{DoxyParamCaption}\item[{}]{self}{, }\item[{\texorpdfstring{$\ast$}{*}}]{args}{}\end{DoxyParamCaption})}
 
-\begin{DoxyVerb}Save the task and add it to the To-Do List screen.
+\begin{DoxyVerb}Save the new task to the database.
 
-Preconditions:
-    - The task title must not be empty.
+Args:
+    *args: Additional arguments passed by the event handler.
 
 Postconditions:
-    - If valid, the task is added to the To-Do List screen.
-
-Error Conditions:
-    - If the task title is empty, an error message is logged.
+    - A new task is created and added to the database.
+    - Additional tasks are created based on the recurrence if specified.
+    - Refreshes the to-do list view after saving the task.
 \end{DoxyVerb}
  \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_af663293ecdc25bc5f04c9beeb1eba1c6}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!update\_applied\_categories@{update\_applied\_categories}}
 \index{update\_applied\_categories@{update\_applied\_categories}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
@@ -137,6 +154,30 @@ EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+update\+\_\+cat
  
 
 \doxysubsection{Member Data Documentation}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aea620b8af7e72de2b7bf2a52ee31c6c4}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!applied\_categories\_layout@{applied\_categories\_layout}}
+\index{applied\_categories\_layout@{applied\_categories\_layout}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{applied\_categories\_layout}{applied\_categories\_layout}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aea620b8af7e72de2b7bf2a52ee31c6c4} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+applied\+\_\+categories\+\_\+layout = Box\+Layout(orientation=\textquotesingle{}vertical\textquotesingle{}, spacing=5)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a80420aa3a27cbc42d7d44c0567398c19}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!auto\_dismiss@{auto\_dismiss}}
+\index{auto\_dismiss@{auto\_dismiss}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{auto\_dismiss}{auto\_dismiss}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a80420aa3a27cbc42d7d44c0567398c19} 
+bool EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+auto\+\_\+dismiss = False}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a766049646c9f7ddcaba769358827e223}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!categories@{categories}}
+\index{categories@{categories}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{categories}{categories}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a766049646c9f7ddcaba769358827e223} 
+list EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+categories = \mbox{[}result.\+name for result in results\mbox{]}}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ac3ce50b677cfb7b59ecdddaca15587af}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!categories\_ids@{categories\_ids}}
+\index{categories\_ids@{categories\_ids}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{categories\_ids}{categories\_ids}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ac3ce50b677cfb7b59ecdddaca15587af} 
+list EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+categories\+\_\+ids = \mbox{[}result.\+id for result in results\mbox{]}}
+
 \Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ad5ea1f386a4ca101121ecad367c916cd}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!category\_spinner@{category\_spinner}}
 \index{category\_spinner@{category\_spinner}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
 \doxysubsubsection{\texorpdfstring{category\_spinner}{category\_spinner}}
@@ -153,8 +194,68 @@ EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+category\+\_\+s
 \DoxyCodeLine{\ \ \ \ \ \ \ \ )}
 
 \end{DoxyCode}
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a27940f0ad31772c2af5244bc1747bc0c}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!deadline\_label@{deadline\_label}}
+\index{deadline\_label@{deadline\_label}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{deadline\_label}{deadline\_label}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a27940f0ad31772c2af5244bc1747bc0c} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+deadline\+\_\+label = Label(text="{}Pick a deadline"{}, size\+\_\+hint\+\_\+x=0.\+8)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a9e6188a0bf72fa5bbc5243822db21f21}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!notes\_input@{notes\_input}}
+\index{notes\_input@{notes\_input}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{notes\_input}{notes\_input}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a9e6188a0bf72fa5bbc5243822db21f21} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+notes\+\_\+input = Text\+Input(hint\+\_\+text="{}Notes"{}, multiline=True)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a3b5a06bc9721b6188a49cd3f44b5b0ad}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!priority\_button@{priority\_button}}
+\index{priority\_button@{priority\_button}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{priority\_button}{priority\_button}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a3b5a06bc9721b6188a49cd3f44b5b0ad} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+priority\+\_\+button = Button(text="{}Pick Priority"{}, on\+\_\+release=self.\+open\+\_\+priority\+\_\+window)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ad5ea273735ad268989e4589c0252522c}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!recurrence@{recurrence}}
+\index{recurrence@{recurrence}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{recurrence}{recurrence}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ad5ea273735ad268989e4589c0252522c} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+recurrence = None}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ac86fdd4f23050804aee3b27b08f7e312}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!recurrence@{recurrence}}
+\index{recurrence@{recurrence}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{recurrence}{recurrence}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_ac86fdd4f23050804aee3b27b08f7e312} 
+list EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+recurrence = \mbox{[}cat\+\_\+id for cat\+\_\+id, cat in zip(self.\+categories\+\_\+ids, self.\+categories) if cat in self.\+selected\+\_\+categories\mbox{]}}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aa130d9b98c8b76097cf9faebbfeb89c7}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!refresh\_callback@{refresh\_callback}}
+\index{refresh\_callback@{refresh\_callback}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{refresh\_callback}{refresh\_callback}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aa130d9b98c8b76097cf9faebbfeb89c7} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+refresh\+\_\+callback = refresh\+\_\+callback}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aba8bee438ab4ad314020d403958c223f}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!repeat\_button@{repeat\_button}}
+\index{repeat\_button@{repeat\_button}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{repeat\_button}{repeat\_button}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_aba8bee438ab4ad314020d403958c223f} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+repeat\+\_\+button = Button(text=\mbox{\hyperlink{class_e_e_c_s581___project3_1_1_models_1_1database_enums_1_1_frequency_a7547883f2da7113f9d4ac7671fc8ceb3}{Frequency.\+frequency\+\_\+options}}()\mbox{[}0\mbox{]}, on\+\_\+release=self.\+open\+\_\+repeat\+\_\+window)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a8d662623989457ff6ed6013cfaf4044f}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!selected\_categories@{selected\_categories}}
+\index{selected\_categories@{selected\_categories}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{selected\_categories}{selected\_categories}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a8d662623989457ff6ed6013cfaf4044f} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+selected\+\_\+categories = \mbox{[}$\,$\mbox{]}}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a403509a2e58d5377dc9f2e67da0c5d05}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!size\_hint@{size\_hint}}
+\index{size\_hint@{size\_hint}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{size\_hint}{size\_hint}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a403509a2e58d5377dc9f2e67da0c5d05} 
+tuple EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+size\+\_\+hint = (0.\+9, 0.\+9)}
+
+\Hypertarget{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a29e27416f43c1192db7f90b101583358}\index{EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}!title\_input@{title\_input}}
+\index{title\_input@{title\_input}!EECS581\_Project3.screens.addtask.AddTaskModal@{EECS581\_Project3.screens.addtask.AddTaskModal}}
+\doxysubsubsection{\texorpdfstring{title\_input}{title\_input}}
+{\footnotesize\ttfamily \label{class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal_a29e27416f43c1192db7f90b101583358} 
+EECS581\+\_\+\+Project3.\+screens.\+addtask.\+Add\+Task\+Modal.\+title\+\_\+input = Text\+Input(hint\+\_\+text="{}Task Title"{})}
+
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-screens/addtask.\+py\end{DoxyCompactItemize}
+screens/\mbox{\hyperlink{addtask_8py}{addtask.\+py}}\end{DoxyCompactItemize}
