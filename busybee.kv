@@ -11,6 +11,8 @@
 #   - October 27, 2024: Provided proper comments - [Matthew McManness]
 #   - November 4, 2024: Removed example tasks - [Magaly Camacho]
 #   - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
+#   - November 24,2024: changed the first add task button to create a filter spinner instead - Matthew McManness
+#
 # Preconditions: 
 #   - Kivy must be installed and correctly configured.
 #   - This layout expects methods like `open_add_task_modal()`, `switch_to_screen()`, 
@@ -119,13 +121,10 @@ ScreenManager:
             Button:
                 text: "Add Event"  # Opens a popup for adding tasks.
                 on_release: app.open_add_event_modal()  # Calls the add event modal.
-
-        # Button to switch to the To-Do List screen.
-        BoxLayout:
-            size_hint_y: 0.2  # Adjusts the height.
             Button:
                 text: "To-Do List"  # Button to switch screens.
                 on_release: app.switch_to_screen("todo")  # Switches to the To-Do List.
+
 
 <ToDoListView>:
     name: "todo"
@@ -149,11 +148,14 @@ ScreenManager:
             padding: "10dp"
             spacing: "10dp"
 
-            Button:
-                text: "Add Task"
-                on_release: app.open_add_task_modal()
+            Spinner:
+                id: filter_spinner
+                text: "Filter by Priority"
+                values: ["All", "High", "Medium", "Low", "-"]
+                on_text: root.filter_tasks(self.text)  # Call the filter method on selection
 
             Spinner:
+                id: sort_spinner
                 text: "Sort by"
                 values: ["Priority", "Due Date", "Category"]
                 on_text: root.sort_tasks(self.text)
@@ -214,6 +216,12 @@ ScreenManager:
         BoxLayout:
             size_hint_y: None
             height: dp(50)
+        # Button to switch to the To-Do List screen.
+        BoxLayout:
+            size_hint_y: 0.2  # Adjusts the height.
+            Button:
+                text: "Calendar View"
+                on_release: app.switch_to_screen("calendar")
             Button:
                 text: "Add Task"
                 on_release: app.open_add_task_modal()

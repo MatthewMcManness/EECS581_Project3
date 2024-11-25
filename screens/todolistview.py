@@ -1,6 +1,6 @@
 # Prologue Comments:
 # Code Artifact: ToDoListView Class Definition
-# Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage
+# Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage 
 # tasks in a to-do list. It provides a method to add tasks dynamically based on input data.
 # Programmer: Matthew McManness (2210261), Magaly Camacho (3072618), Manvir Kaur (3064194)
 # Date Created: October 26, 2024
@@ -12,7 +12,7 @@
 #   - November 23, 2024: updated the populate function to handle recurrence - [Matthew McManness]
 #   - November 23, 2024: tasks are displayed sorted by due date automatically - [Manvir Kaur]
 #   - November 23, 2024: choosing a sorting option prints it to terminal instead of crashing - [Manvir Kaur]
-#   - November 23, 2024: updating populate function to correctly sort all tasks according to the option selected - [Manvir Kaur]
+#   - November 24, 2024: Implemented the filter_tasks fuction - [Matthew McManness]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -105,6 +105,7 @@ class ToDoListView(Screen):
         self.sort_by_dropdown = DropDown()
         self.current_sort = "Due Date"  # Default sorting criterion
 
+
     def add_task(self, task_id, name, priority=None, due_date=None, categories=None, complete=False):
         """Add a new task to the to-do list."""
         # Create a TaskBox and pass `on_task_click` as the click callback
@@ -118,9 +119,9 @@ class ToDoListView(Screen):
 
         # Check/update info to display None if needed
         if due_date is None:
-            due_date = "-"
+            due_date = "-" 
         if categories is None:
-            categories = "-"
+            categories = "-" 
         if priority is None:
             priority = "-"
             priority_color = (0,0,0,1)
@@ -178,6 +179,7 @@ class ToDoListView(Screen):
             tasks = session.scalars(stmt).all()
 
             # Debugging: Print fetched tasks and their sort order
+            print(f"Sorting by: {self.current_sort}")
             for task in tasks:
                 category_names = [cat.name for cat in task.categories] if task.categories else "-"
                 print(f"Task: {task.name}, Priority: {task.priority}, Due Date: {task.due_date}, Categories: {category_names}")
@@ -257,7 +259,6 @@ class ToDoListView(Screen):
         # Bind update_rect on task_box to maintain the white background
         task_box.bind(size=task_box.update_rect, pos=task_box.update_rect)
 
-
     def sort_tasks(self, sort_option):
         """
         Updates the sorting criteria based on the selected sort option and repopulates the list.
@@ -268,3 +269,31 @@ class ToDoListView(Screen):
         print(f"Sorting by: {sort_option}")
         self.current_sort = sort_option  # Update the current sorting option
         self.refresh_tasks()  # Refresh the list to apply the new sorting
+
+    def filter_tasks(self, priority_filter):
+        """
+        Filter tasks based on the selected priority level.
+
+        Args:
+            priority_filter (str): The priority level to filter by ("High", "Medium", "Low", or "-").
+        """
+        with db.get_session() as session:
+            # Handle filter logic
+            if priority_filter == "All":
+                stmt = select(Task)  # No filter applied
+            else:
+                priority_enum = Priority.str2enum(priority_filter)
+                stmt = select(Task).where(Task.priority == priority_enum)
+
+            tasks = session.scalars(stmt).all()
+
+            # Clear the current task list
+            self.ids.task_list.clear_widgets()
+
+            # Add filtered tasks to the view
+            for task in tasks:
+                due_date = task.due_date.strftime("%Y-%m-%d %H:%M") if task.due_date else "-"
+                categories = ", ".join([cat.name for cat in task.categories]) if task.categories else "-"
+                self.add_task(task.id, task.name, task.priority, due_date, categories, complete=task.complete)
+
+            print(f"Filtered tasks by priority: {priority_filter}")
