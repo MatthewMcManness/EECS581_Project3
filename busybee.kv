@@ -38,6 +38,7 @@ ScreenManager:
     id: screen_manager  # Identifier for the screen manager to facilitate screen transitions.
     CalendarView:  # Adds the CalendarView screen to the manager.
     ToDoListView:  # Adds the ToDoListView screen to the manager.
+    DailyView: # Add the DailyView screen to the manager.
 
 <CalendarView>:
     name: "calendar"  # Assigns a unique name to the CalendarView for navigation purposes.
@@ -54,9 +55,10 @@ ScreenManager:
                 font_size: dp(20)  # Sets the title font size.
                 size_hint_x: 1  # Expands the label to fill the available space.
             Button:
-                text: "Menu"  # Button text to open the menu.
-                size_hint_x: 0.2  # Occupies a fixed portion of the horizontal space.
-                on_press: app.open_menu()  # Calls the open_menu method in the app.
+                text: "Daily View"
+                size_hint_x: 0.2
+                on_release: app.switch_to_daily_view_today()  # Call the Python method
+
 
         # Month navigation with Previous and Next buttons.
         BoxLayout:
@@ -215,3 +217,43 @@ ScreenManager:
             Button:
                 text: "Add Task"
                 on_release: app.open_add_task_modal()
+                
+<DailyView>:
+    name: "daily"  # Unique name for DailyView screen.
+    BoxLayout:
+        orientation: 'vertical'
+
+        # Header with date navigation
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            Button:
+                text: "Back"  # Navigate back to the calendar view.
+                on_press: app.switch_to_screen("calendar")  # Switch back to the calendar.
+            Label:
+                id: date_label
+                text: "Date"
+                font_size: dp(18)
+                size_hint_x: 1
+            Button:
+                text: "Previous"
+                on_press: root.navigate_previous_day()  # Go to the previous day.
+            Button:
+                text: "Next"
+                on_press: root.navigate_next_day()  # Go to the next day.
+
+        # Scrollable event list
+        ScrollView:
+            GridLayout:
+                id: event_list
+                cols: 1
+                spacing: "10dp"
+                size_hint_y: None
+                height: self.minimum_height
+
+        # Add Event Button
+        BoxLayout:
+            size_hint_y: 0.2
+            Button:
+                text: "Add Event"
+                on_release: root.add_event()

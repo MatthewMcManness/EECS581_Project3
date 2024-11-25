@@ -10,6 +10,7 @@
 # - October 27, 2024: Current version created (added comments). (Updated by: Matthew McManness)
 # - November 4, 2024: Added call to To Do list view so that tasks already in the database are populated (Updated by: Magaly Camacho)
 # - November 11, 2024: Added open_edit_task_modal(self, task_id) (Updated by: Matthew McManness)
+# - November 24, 2024: Added switch_to_daily_view_today to facilitate seeing the daily view (Matthew McManness)
 #
 # Preconditions:
 # - Kivy must be installed and properly configured in the Python environment.
@@ -49,14 +50,15 @@ from kivy.app import App  # Main class for running Kivy applications
 from kivy.uix.screenmanager import ScreenManager, NoTransition  # Manage screens and transitions
 
 # Import screen classes from the screens directory
-from screens.calendarview import CalendarView
-from screens.todolistview import ToDoListView
-from screens.addevent import AddEventModal
-from screens.addtask import AddTaskModal
+from screens.calendarview import CalendarView # Import the Calendar View class
+from screens.todolistview import ToDoListView # Import the TodoListView class
+from screens.addevent import AddEventModal # Import the add event modal
+from screens.addtask import AddTaskModal # Import the add task modal
 from screens.edittask import EditTaskModal  # Import the edit modal
 from screens.editEvent import EditEventModal # Import the edit event modal
 from kivy.uix.screenmanager import ScreenManager
-
+from screens.dailyview import DailyView # Import the daily view class
+from datetime import datetime
 
 # -----------------------------------------------------------------------------
 # Main Application Class: BusyBeeApp
@@ -87,19 +89,20 @@ class BusyBeeApp(App):
         # Add the CalendarView and ToDoListView screens to the manager
         self.screen_manager.add_widget(CalendarView(name="calendar"))
         self.screen_manager.add_widget(todo)
+        self.screen_manager.add_widget(DailyView(name="daily"))
 
         return self.screen_manager  # Return the configured ScreenManager
 
     def open_add_task_modal(self):
         """
-        Opens the AddTaskModal for creating a new task.
+        Open the AddTaskModal for creating a new task.
 
         Preconditions:
-            - The ToDoListView screen must be accessible from the ScreenManager.
+        - The ToDoListView screen must be accessible from the ScreenManager.
 
         Postconditions:
-            - Displays the AddTaskModal for user input.
-            - Passes the refresh_tasks callback from ToDoListView to the AddTaskModal.
+        - Displays the AddTaskModal for user input.
+        - Passes the refresh_tasks callback from ToDoListView to the AddTaskModal.
         """
         # Use the correct screen name ('todo' as defined in build)
         todo_list_view = self.root.get_screen('todo')
@@ -174,6 +177,14 @@ class BusyBeeApp(App):
         # Create the EditTaskModal and pass the task ID and refresh callback
         edit_task_modal = EditTaskModal(task_id=task_id, refresh_callback=todo_screen.refresh_tasks)
         edit_task_modal.open()
+
+    def switch_to_daily_view_today(self):
+        """Switch to the DailyView screen and set it to the current day."""
+        daily_view = self.screen_manager.get_screen("daily")  # Get the Daily View screen
+        daily_view.current_date = datetime.now()  # Set to today's date
+        daily_view.update_date_label()  # Update the date label
+        daily_view.populate_events()  # Populate today's events
+        self.screen_manager.current = "daily"  # Switch to the Daily View screen
 
 def open_edit_event_modal(self, event_id):
     edit_event_modal = EditEventModal(event_id=event_id, refresh_callback=self.populate)
