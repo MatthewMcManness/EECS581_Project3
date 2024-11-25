@@ -155,7 +155,7 @@ ScreenManager:
             Spinner:
                 text: "Sort by"
                 values: ["Priority", "Due Date", "Category"]
-                on_text: root.sort_tasks(self.text.lower())
+                on_text: root.sort_tasks(self.text)
 
             Button:
                 text: "Calendar View"
@@ -216,6 +216,7 @@ ScreenManager:
             Button:
                 text: "Add Task"
                 on_release: app.open_add_task_modal()
+                
 <DailyView>:
     name: "daily"  # Unique name for DailyView screen.
     BoxLayout:

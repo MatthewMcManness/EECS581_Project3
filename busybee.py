@@ -55,6 +55,7 @@ from screens.addevent import AddEventModal # Import the add event modal
 from screens.addtask import AddTaskModal # Import the add task modal
 from screens.edittask import EditTaskModal  # Import the edit modal
 from screens.editEvent import EditEventModal # Import the edit event modal
+from kivy.uix.screenmanager import ScreenManager
 from screens.dailyview import DailyView # Import the daily view class
 
 # -----------------------------------------------------------------------------
@@ -92,25 +93,24 @@ class BusyBeeApp(App):
 
     def open_add_task_modal(self):
         """
-        Open the Add Task modal.
+        Open the AddTaskModal for creating a new task.
 
         Preconditions:
-        - AddTaskModal must be properly imported.
+        - The ToDoListView screen must be accessible from the ScreenManager.
 
         Postconditions:
-        - The Add Task modal will open.
-
-        Side Effects:
-        - Opens the Add Task modal view.
-
-        Errors:
-        - ImportError: If AddTaskModal is not found.
-
-        Return:
-        - None.
+        - Displays the AddTaskModal for user input.
+        - Passes the refresh_tasks callback from ToDoListView to the AddTaskModal.
         """
-        add_task_modal = AddTaskModal()  # Create an instance of AddTaskModal
-        add_task_modal.open()  # Open the modal
+        # Use the correct screen name ('todo' as defined in build)
+        todo_list_view = self.root.get_screen('todo')
+
+        if hasattr(todo_list_view, 'refresh_tasks'):  # Ensure the callback exists
+            # Pass refresh_tasks to the AddTaskModal
+            add_task_modal = AddTaskModal(refresh_callback=todo_list_view.refresh_tasks)
+            add_task_modal.open()
+        else:
+            print("Error: ToDoListView does not have a refresh_tasks method.")
 
     def open_add_event_modal(self):
         """
