@@ -276,25 +276,53 @@ class ToDoListView(Screen):
         Filter tasks based on the selected priority level.
 
         Args:
-            priority_filter (str): The priority level to filter by ("High", "Medium", "Low", or "-").
+            priority_filter (str): The selected priority filter (e.g., "High", "Medium", "Low", "-", "All").
         """
+        if priority_filter == "All":
+            print("Displaying all tasks.")
+            self.populate()  # Reset and show all tasks
+            return
+
+        # Handle the "-" option to display tasks with no priority
+        if priority_filter == "-":
+            print("Displaying tasks with no priority.")
+            with db.get_session() as session:
+                tasks = session.query(Task).filter(Task.priority == None).all()  # Fetch tasks with NULL priority
+
+                # Debugging: Log tasks with no priority
+                print(f"Tasks with no priority:")
+                for task in tasks:
+                    print(f"Task: {task.name}, Priority: {task.priority}")
+
+                # Clear the current task list and add filtered tasks
+                self.ids.task_list.clear_widgets()
+                for task in tasks:
+                    due_date = task.due_date.strftime("%Y-%m-%d %H:%M") if task.due_date else "-"
+                    categories = ", ".join([cat.name for cat in task.categories]) if task.categories else "-"
+                    self.add_task(task.id, task.name, task.priority, due_date, categories, complete=task.complete)
+
+            return  # Exit the method after handling "-"
+
+        try:
+            # Convert the priority filter to the appropriate enum
+            priority_enum = Priority.str2enum(priority_filter)
+        except ValueError:
+            print(f"Invalid Priority value: {priority_filter}")
+            return
+
+        # Query tasks filtered by the selected priority
         with db.get_session() as session:
-            # Handle filter logic
-            if priority_filter == "All":
-                stmt = select(Task)  # No filter applied
-            else:
-                priority_enum = Priority.str2enum(priority_filter)
-                stmt = select(Task).where(Task.priority == priority_enum)
+            tasks = session.query(Task).filter_by(priority=priority_enum).all()
 
-            tasks = session.scalars(stmt).all()
+            # Debugging: Log tasks for the selected priority
+            print(f"Filtering tasks by priority: {priority_filter}")
+            for task in tasks:
+                print(f"Task: {task.name}, Priority: {task.priority}")
 
-            # Clear the current task list
+            # Clear the current task list and add filtered tasks
             self.ids.task_list.clear_widgets()
-
-            # Add filtered tasks to the view
             for task in tasks:
                 due_date = task.due_date.strftime("%Y-%m-%d %H:%M") if task.due_date else "-"
                 categories = ", ".join([cat.name for cat in task.categories]) if task.categories else "-"
                 self.add_task(task.id, task.name, task.priority, due_date, categories, complete=task.complete)
 
-            print(f"Filtered tasks by priority: {priority_filter}")
