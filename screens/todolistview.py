@@ -65,6 +65,10 @@ class TaskBox(BoxLayout):
         self.on_click_callback = on_click_callback  # Set the callback attribute
         self.check_box = None  # Placeholder for checkbox reference
 
+        # Attributes for drag-and-drop
+        self.is_dragging = False
+        self.initial_touch_pos = None
+        
         # Initialize the size and background color of the TaskBox
         with self.canvas.before:
             Color(1, 1, 1, 1)
@@ -89,14 +93,57 @@ class TaskBox(BoxLayout):
         if self.check_box and self.check_box.collide_point(*touch.pos):
             # If clicking on the checkbox, do not trigger the task click callback
             return super().on_touch_down(touch)
-
+            
         # Otherwise, proceed with the task box click event
         if self.collide_point(*touch.pos):
             if self.on_click_callback:
                 self.on_click_callback(self.task_id)
+                self.is_dragging = True
+                self.initial_touch_pos = touch.y
             return True
         return super().on_touch_down(touch)
+   
+    def on_touch_move(self, touch):
+        if self.is_dragging:
+            self.y += touch.dy  # Move the task box with the touch
+            return True
+        return super().on_touch_move(touch)
 
+    def on_touch_up(self, touch):
+        if self.is_dragging:
+            self.is_dragging = False
+
+            # Check where the task was dropped
+            task_list = self.parent
+            siblings = [child for child in task_list.children if isinstance(child, TaskBox)]
+
+            # Find the new position based on Y coordinates
+            siblings.sort(key=lambda child: child.center_y, reverse=True)
+
+            # Reorder the tasks in the UI
+            task_list.clear_widgets()
+            for sibling in siblings:
+                task_list.add_widget(sibling)
+
+            # Update the task order in the database (optional)
+            self.update_task_order()
+
+            return True
+        return super().on_touch_up(touch)
+
+    def update_task_order(self):
+        """Update task order in the database based on the current UI order."""
+        task_list = self.parent
+        task_ids = [child.task_id for child in task_list.children if isinstance(child, TaskBox)]
+        print(f"New task order: {task_ids}")
+
+        with db.get_session() as session:
+            for index, task_id in enumerate(reversed(task_ids), start=1):
+                task = session.query(Task).filter_by(id=task_id).first()
+                if task:
+                    task.order_index = index  # Assuming an `order_index` column exists
+            session.commit()
+            
 class ToDoListView(Screen):
     """A screen for displaying the To-Do List."""
 
