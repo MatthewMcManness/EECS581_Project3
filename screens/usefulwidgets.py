@@ -13,6 +13,7 @@
 # - November 10, 2024: Added PriorityOptionsModal (Magaly Camacho)
 # - November 18, 2024: Updated RepeatOptionsModal to include how many times to repeat, made it so it pulls info from task modal (Magaly Camacho)
 # - November 23, 2024: Updated RepeatOptionsModal and created set_repeat_frequency modal to match the layout with our requirements, modified the save function to handle the recurrence info (Matthew McManness)
+# - December 5, 2024: Updated the logic and UI for the RepeatOptionsModal to match what the group decided (Matthew McManness)
 #
 # Preconditions:
 # - Kivy framework must be installed and functional.
@@ -45,6 +46,8 @@ from Models import Category # Category model
 from Models.databaseEnums import Priority, Frequency # priorities for tasks, frequency for recurrence
 from database import get_database # class to interact with database
 import calendar  # Import calendar for setting first day of the week
+from kivy.metrics import dp
+from kivy.properties import NumericProperty
 
 # Set the first day of the week to Sunday
 calendar.setfirstweekday(calendar.SUNDAY)
@@ -264,7 +267,7 @@ class TimePicker(ModalView):
 
 ############################   Recurrence Modal ########################################################
 class RepeatOptionsModal(ModalView):
-    """A modal that provides options for repeating tasks: Does not repeat, Daily, Weekly, Monthly, Yearly."""
+    """A modal that provides options for repeating tasks with a streamlined interface."""
 
     def __init__(self, task_modal, **kwargs):
         """
@@ -278,113 +281,98 @@ class RepeatOptionsModal(ModalView):
             - A valid task_modal must be provided.
 
         Postconditions:
-            - A modal with buttons to select repeat options is displayed.
+            - A modal with options to select repeat frequency and times is displayed.
         """
         super().__init__(**kwargs)
-        self.size_hint = (0.6, 0.6)  # Adjusted modal size to better fit the design
+        self.size_hint = (0.6, 0.3)  # Compact modal size
         self.auto_dismiss = False  # Prevent accidental dismissal
-        self.task_modal = task_modal  # Store reference to the task modal
+        self.task_modal = task_modal  # Reference to the parent task modal
 
-        # Create the main layout for repeat options
-        layout = BoxLayout(orientation='vertical', padding=10, spacing=15)
+        # Create the main layout
+        layout = BoxLayout(orientation="vertical", padding=10, spacing=15)
 
-        # Add buttons for each repeat option using strings from Frequency.frequency_options()
-        options = Frequency.frequency_options()  # Ensure consistency with the enum
-        for option in options:
-            button = Button(
-                text=option, size_hint=(1, None), height=50
-            )  # Uniform button size
-            button.bind(on_release=self.set_repeat_frequency)  # Bind selection to handler
-            layout.add_widget(button)
+        # Create a BoxLayout for the repeat options
+        repeat_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(1, None), height=50)
 
-        # Get existing inputs
-        old_input = self.task_modal.repeat_button.text.split(" ")
-        old_frequency = (" ").join(old_input[0:2]) if len(old_input) == 2 else old_input[0]
-        old_times = "#" if len(old_input) == 2 else old_input[1].split(" ")[0].replace("(", "")
+        # "Repeats" label
+        self.repeats_label = Label(text="Repeats", size_hint=(0.2, 1))
 
-        # Create a layout for repeat inputs (Repeat [#] times.)
-        self.repeats_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(1, None), height=50)
-        repeats_label_1 = Label(text="Repeat:", size_hint=(0.3, 1))
-        self.repeats_frequency = Label(text=old_frequency, size_hint=(0.4, 1))
-        self.repeat_times = TextInput(
-            hint_text=old_times, multiline=False, size_hint=(0.2, 1)
-        )  # Added width adjustment for input box
-        repeats_label_2 = Label(text="times.", size_hint=(0.1, 1))
-        for widget in [repeats_label_1, self.repeats_frequency, self.repeat_times, repeats_label_2]:
-            self.repeats_layout.add_widget(widget)
-        layout.add_widget(self.repeats_layout)  # Add repeat input layout to main layout
+        # Spinner for repeat frequency
+        self.repeats_spinner = Spinner(
+            text="Never Repeats",
+            values=["Never Repeats", "Daily", "Weekly", "Monthly", "Yearly"],
+            size_hint=(0.4, 1),
+        )
+        self.repeats_spinner.bind(text=self.update_visibility)
 
-        # Add save and cancel buttons as a horizontal layout
+        # Counter widgets for repeat times
+        self.minus_button = Button(text="-", size_hint=(0.1, 1))
+        self.times_input = Label(text="1", size_hint=(0.1, 1), halign="center", valign="middle")
+        self.plus_button = Button(text="+", size_hint=(0.1, 1))
+        self.times_label = Label(text="times", size_hint=(0.2, 1))  # Label for "times"
+
+        # Increment and decrement logic for the counter
+        self.minus_button.bind(on_press=self.decrement_times)
+        self.plus_button.bind(on_press=self.increment_times)
+
+        # Add widgets to the repeat layout
+        repeat_layout.add_widget(self.repeats_label)
+        repeat_layout.add_widget(self.repeats_spinner)
+        repeat_layout.add_widget(self.minus_button)
+        repeat_layout.add_widget(self.times_input)
+        repeat_layout.add_widget(self.plus_button)
+        repeat_layout.add_widget(self.times_label)
+
+        # Add repeat layout to the modal
+        layout.add_widget(repeat_layout)
+
+        # Add save and cancel buttons
         save_cancel_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(1, None), height=50)
-        cancel_button = Button(
-            text="Cancel", size_hint=(0.5, 1), on_release=self.dismiss
-        )  # Cancel button dismisses modal
-        save_button = Button(
-            text="Save", size_hint=(0.5, 1), on_release=self.save
-        )  # Save button triggers save function
-        save_cancel_layout.add_widget(cancel_button)
-        save_cancel_layout.add_widget(save_button)
+        save_cancel_layout.add_widget(Button(text="Cancel", size_hint=(0.5, 1), on_release=self.dismiss))
+        save_cancel_layout.add_widget(Button(text="Save", size_hint=(0.5, 1), on_release=self.save))
         layout.add_widget(save_cancel_layout)
 
         # Add the layout to the modal
         self.add_widget(layout)
 
-    def set_repeat_frequency(self, instance):
-        """
-        Handles the selection of a repeat frequency.
+        # Set initial visibility based on the default spinner value
+        self.update_visibility(None, "Never Repeats")
 
-        Args:
-            instance (Button): The button instance that was pressed.
+    def update_visibility(self, instance, value):
+        """Update the visibility of the counter and label based on spinner value."""
+        is_repeating = value != "Never Repeats"
+        self.repeats_label.text = "Repeats" if is_repeating else ""
+        self.minus_button.opacity = 1 if is_repeating else 0
+        self.minus_button.disabled = not is_repeating
+        self.times_input.opacity = 1 if is_repeating else 0
+        self.plus_button.opacity = 1 if is_repeating else 0
+        self.plus_button.disabled = not is_repeating
+        self.times_label.opacity = 1 if is_repeating else 0  # Show "times" only if repeating
 
-        Preconditions:
-            - The button text matches one of the valid frequency options.
+    def increment_times(self, instance):
+        """Increment the repeat times value."""
+        current_value = int(self.times_input.text)
+        self.times_input.text = str(current_value + 1)
 
-        Postconditions:
-            - Updates the `self.repeats_frequency` label to the selected frequency.
-        """
-        self.repeats_frequency.text = instance.text
+    def decrement_times(self, instance):
+        """Decrement the repeat times value."""
+        current_value = int(self.times_input.text)
+        if current_value > 1:
+            self.times_input.text = str(current_value - 1)
 
     def save(self, instance):
-        """
-        Saves the selected repeat frequency and dismisses the modal.
+        """Save the repeat settings and update the parent modal."""
+        repeat_text = self.repeats_spinner.text
+        times_text = self.times_input.text
 
-        Args:
-            instance (Button): The button instance that was pressed.
+        if repeat_text == "Never Repeats":
+            self.task_modal.repeat_button.text = "Never Repeats"
+        else:
+            self.task_modal.repeat_button.text = f"Repeats {repeat_text} {times_text} times"
 
-        Preconditions:
-            - A valid frequency and repeat count must be selected.
+        self.dismiss()
 
-        Postconditions:
-            - Updates the parent modal with the repeat option and count.
-            - If 'Doesn't Repeat' is selected, sets recurrence to None.
-        """
-        repeat_option_str = self.repeats_frequency.text
-        repeat_option = Frequency.str2enum(repeat_option_str)  # Convert string to enum
-        repeat_times = self.repeat_times.text.strip()
 
-        # Handle 'Doesn't Repeat' option
-        if Frequency.is_no_repeat(repeat_option):
-            self.task_modal.repeat_button.text = repeat_option_str  # Update parent modal
-            self.task_modal.recurrence = None  # No recurrence
-            self.dismiss()  # Close modal
-            return
-
-        # Ensure repeat_times is a valid integer
-        if not repeat_times.isdigit() or int(repeat_times) < 2:
-            print("Invalid repeat count. Must be a number greater than 1.")  # Error message
-            return
-
-        repeat_times = int(repeat_times)
-
-        # Save recurrence data to the task modal
-        self.task_modal.recurrence = {
-            "frequency": repeat_option,
-            "times": repeat_times
-        }
-        self.task_modal.repeat_button.text = f"{repeat_option_str} ({repeat_times} times)"
-        self.dismiss()  # Close modal
-
-        
 ####################### Priority Options Modal ###########################
 class PriorityOptionsModal(ModalView):
     """A modal that provides options for task priority: Low, Medium, High."""

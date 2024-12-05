@@ -107,7 +107,7 @@ class Frequency(Enum):
     @staticmethod
     def frequency_options():
         """Returns a list of stringified priority options"""
-        return ["Doesn't Repeat", "Daily", "Weekly", "Monthly", "Yearly"]
+        return ["Never Repeat", "Daily", "Weekly", "Monthly", "Yearly"]
     
 
     @staticmethod
