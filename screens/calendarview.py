@@ -13,6 +13,7 @@
 #   - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
 #   - November 10, 2024: Group modified to ensure event button clicks open the edit modal - [Whole Group]
 #   - November 18, 2024: Implemented recurring events - [Magaly Camacho]
+#   - December 5, 2024: Redid the add_event() to truncate names that were too long and added a hover feature to display the full name and time of events [Matthew McManness]
 #
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
@@ -62,6 +63,8 @@ from kivy.uix.anchorlayout import AnchorLayout  # Import for anchoring widgets
 from kivy.graphics import Color, Rectangle, RoundedRectangle  # Import for rounded rectangle backgrounds
 import calendar  # Import calendar for setting first day of the week
 from screens.editEvent import EditEventModal  # Adjust the path if the file is located elsewhere
+from kivy.core.window import Window
+
 
 # Set the first day of the week to Sunday
 calendar.setfirstweekday(calendar.SUNDAY)
@@ -177,9 +180,12 @@ class CalendarView(Screen):
         day_text = instance.parent.children[1].text  # Get the selected day number.
         print(f"You selected day: {day_text}")  # Print the selected day to the console.
 
+
+
+
     def add_event(self, event_id, name, start_time, frequency=None, times=None, place=None):
         """
-        Add a new event to the calendar with a colored button for each event.
+        Add a new event to the calendar with a styled hoverable modal for details.
 
         Parameters:
             event_id (int): The ID of the event.
@@ -187,22 +193,65 @@ class CalendarView(Screen):
             start_time (datetime or str): The start date and time of the event.
             place (Optional[str]): The location of the event (if available).
         """
-        # Convert start_time to datetime if it’s a string
-        if isinstance(start_time, str):
-            try:
-                start_time = datetime.strptime(start_time, '%Y-%m-%d %H:%M')
-            except ValueError:
-                print(f"Error: Incorrect date format for event '{name}'. Expected '%Y-%m-%d %H:%M'.")
-                return  # Exit the function if date format is incorrect
+        # Define a character limit for truncation
+        char_limit = 15  # Adjust this value as needed
 
+        # Truncate the event name if it exceeds the character limit
+        display_name = name if len(name) <= char_limit else f"{name[:char_limit]}..."
+
+        # Ensure start_time is a datetime object
+        if isinstance(start_time, str):
+            start_time = datetime.strptime(start_time, '%Y-%m-%d %H:%M')
+
+        # Create the event button
         event_button = Button(
-            text=f"{name} ({start_time.strftime('%H:%M')})",
+            text=display_name,
             size_hint_y=None,
             height=dp(15),
             background_normal="",
             background_color=(0.7, 0.3, 0.3, 1),
             on_press=lambda instance, event_id=event_id: self.open_edit_event_modal(event_id)  # Pass event ID to the method
         )
+
+        # Create a styled hover modal
+        modal = ModalView(size_hint=(None, None), size=(200, 100), auto_dismiss=True)
+
+        # Remove the default modal background
+        modal.background = ""
+        modal.background_color = (0, 0, 0, 0)
+        
+        # Add a custom background to the modal
+        with modal.canvas.before:
+            Color(0.7, 0.3, 0.3, 1)  # Match the event box color
+            modal.rect = RoundedRectangle(size=modal.size, pos=modal.pos, radius=[dp(10), dp(10)])
+        modal.bind(size=lambda instance, value: setattr(modal.rect, 'size', value))
+        modal.bind(pos=lambda instance, value: setattr(modal.rect, 'pos', value))
+
+        # Add a Label to display the full name and time, centered
+        modal_layout = BoxLayout(orientation="vertical", padding=10, spacing=5)
+        event_details = Label(
+            text=f"{name}\n{start_time.strftime('%H:%M')}",
+            color=(1, 1, 1, 1),  # White text
+            halign="center",  # Center text horizontally
+            valign="middle",  # Center text vertically
+            size_hint=(1, 1)
+        )
+        event_details.bind(size=event_details.setter('text_size'))  # Make text wrap inside the box
+        modal_layout.add_widget(event_details)
+        modal.add_widget(modal_layout)
+
+        # Add hover detection
+        def on_mouse_move(window, pos):
+            """Check if the mouse is over the button."""
+            if event_button.collide_point(*event_button.to_widget(*pos)):
+                if not modal.parent:
+                    modal.open()
+            else:
+                if modal.parent:
+                    modal.dismiss()
+
+        # Bind mouse motion to hover detection
+        Window.bind(mouse_pos=on_mouse_move)
 
         # Use canvas instructions to round the button's corners
         with event_button.canvas.before:
@@ -234,40 +283,9 @@ class CalendarView(Screen):
             # Add the new event button to the layout
             events_layout.add_widget(event_button)
 
-            # Sort events within the layout by start time after all events are added
-            sorted_events = []
-            for btn in events_layout.children:
-                time_str = btn.text.split("(")[-1].strip(")")
-                try:
-                    event_time = datetime.strptime(time_str, '%H:%M')
-                    sorted_events.append((event_time, btn))
-                except ValueError:
-                    print(f"Skipping button with invalid time format: {btn.text}")
-                    continue
+            print(f"Added event: {event_id} - {display_name} on {start_time}")
 
-            # Sort events by time and only keep the first 2
-            sorted_events = sorted(sorted_events, key=lambda x: x[0])
-            display_events = sorted_events[:2]
 
-            # Clear and re-add only the top 2 events at the top
-            events_layout.clear_widgets()
-            for _, sorted_event in display_events:
-                events_layout.add_widget(sorted_event)
-
-            # If there are more than 2 events, add a "More..." label
-            if len(sorted_events) > 2:
-                more_label = Label(
-                    text="More...",
-                    size_hint_y=None,
-                    height=dp(15),  # Reduced height for the "More..." label as well
-                    color=(0.5, 0.5, 0.5, 1)  # Grey color for the "More..." label
-                )
-                events_layout.add_widget(more_label)
-
-            print(f"Added event: {event_id} - {name} on {start_time}")
-            
-
-    
     def get_cell_widget(self, date_obj):
         """Retrieve the widget for the specified date."""
         # Parse the date string into a datetime object
