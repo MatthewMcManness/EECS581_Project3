@@ -1,269 +1,268 @@
 # Prologue Comments:
-# Code Artifact: Calendar and To-Do List UI Definition (Kivy Layout)
-# Brief Description: This code defines the layout and structure of a Kivy app that provides a navigable Calendar view 
-# and a To-Do List view. It includes buttons to switch between the views, options to add tasks or events, 
-# and functionality for displaying and interacting with tasks and dates.
-# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618), Mariam Oraby (3127776) ADD YOUR Name and add your revisions to the revision list
-# Date Created: October 26, 2024
+# Code Artifact: Calendar, To-Do List, and Daily View UI Definition (Kivy Layout)
+# Brief Description: This KV file defines the layout and structure of the app, including the Calendar, 
+# To-Do List, and Daily View screens. It ensures visual consistency and functionality across the screens.
+# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618), Mariam Oraby (3127776)
 # Dates Revised:
-#   - October 26, 2024: Initial implementation and basic structure - [Matthew McManness]
-#   - [Insert Further Revisions]: [Briefly describe changes or improvements] - [Your Name]
-#   - October 27, 2024: Provided proper comments - [Matthew McManness]
-#   - November 4, 2024: Removed example tasks - [Magaly Camacho]
-#   - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
-#   - November 18, 2024: Added the daily view section - [Mariam Oraby]
-#   - November 24,2024: changed the first add task button to create a filter spinner instead - Matthew McManness
-#   - November 24,2024: Resolved conflicts to merch testing-1 branch with main - Maagaly Camacho
-#
-# Preconditions: 
-#   - Kivy must be installed and correctly configured.
-#   - This layout expects methods like `open_add_task_modal()`, `switch_to_screen()`, 
-#     and `mark_task_complete()` to be defined in the main app.
-# Acceptable Input: 
-#   - Input is provided through user interactions with buttons and fields.
-#   - Expected interactions include navigation between views, adding tasks, marking tasks as complete, and sorting tasks.
-# Unacceptable Input:
-#   - Unexpected or unhandled actions (e.g., undefined button handlers) could result in runtime errors.
-# Postconditions:
-#   - Tasks and calendar entries are dynamically displayed and modifiable through the interface.
-# Return Values:
-#   - No direct return values, as this layout functions within the Kivy app framework.
-# Error and Exception Conditions:
-#   - If necessary handlers are not defined (e.g., `app.open_add_task_modal()`), the app will raise an exception.
-# Side Effects:
-#   - Switching between views resets the task list or calendar display.
-#   - User interactions update the visual state of the UI (e.g., task status).
-# Invariants:
-#   - The layout structure should remain consistent regardless of view changes.
-# Known Faults:
-#   - None identified; ensure all handlers are implemented correctly to avoid runtime errors.
+#   - October 26, 2024: Initial structure - [Matthew McManness]
+#   - November 18, 2024: Added Daily View - [Mariam Oraby]
+#   - December 6, 2024: Updated styles, colors, and spacing - [Matthew McManness]
 
 ScreenManager:
-    id: screen_manager  # Identifier for the screen manager to facilitate screen transitions.
-    CalendarView:  # Adds the CalendarView screen to the manager.
-    ToDoListView:  # Adds the ToDoListView screen to the manager.
-    DailyView: # Add the DailyView screen to the manager.
+    id: screen_manager
+    CalendarView:
+    ToDoListView:
+    DailyView:
 
 <CalendarView>:
-    name: "calendar"  # Assigns a unique name to the CalendarView for navigation purposes.
+    name: "calendar"
 
     BoxLayout:
-        orientation: 'vertical'  # Organizes the child widgets vertically.
+        orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)  # Add vertical spacing between elements
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)  # White background
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
-        # Header with calendar title and menu button.
+        # Header with calendar title
         BoxLayout:
-            size_hint_y: None  # Fixes the height for the header layout.
-            height: dp(50)  # Height in density-independent pixels.
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
             Label:
-                text: "Calendar"  # Displays the screen title.
-                font_size: dp(20)  # Sets the title font size.
-                size_hint_x: 1  # Expands the label to fill the available space.
-            Button:
-                text: "Daily View"
-                size_hint_x: 0.2
-                on_release: app.switch_to_daily_view_today()  # Call the Python method
+                text: "Calendar"
+                font_size: dp(20)
+                color: (0, 0, 0, 1)  # Black text
+                size_hint_x: 1
 
-
-        # Month navigation with Previous and Next buttons.
+        # Month navigation buttons
         BoxLayout:
-            size_hint_y: None  # Fixed height for the navigation bar.
-            height: dp(40)  # Height of the navigation bar.
-            Button:
-                text: "Previous"  # Navigates to the previous month.
-                on_press: root.change_month(-1)  # Decrements the month.
+            size_hint_y: None
+            height: dp(40)
+            spacing: dp(10)  # Add horizontal spacing between buttons
+            UniformButton:
+                text: "Previous"
+                on_press: root.change_month(-1)
             Label:
-                text: root.month_year_text  # Displays the current month and year.
-                font_size: dp(18)  # Font size for the month-year text.
-            Button:
-                text: "Next"  # Navigates to the next month.
-                on_press: root.change_month(1)  # Increments the month.
+                text: root.month_year_text
+                font_size: dp(18)
+                color: (0, 0, 0, 1)  # Black text
+                size_hint_x: 1
+            UniformButton:
+                text: "Next"
+                on_press: root.change_month(1)
 
-        # Header displaying the days of the week.
+        # Days of the week header
         BoxLayout:
-            size_hint_y: None  # Fixed height for the weekday header.
-            height: "50dp"  # Sets the height of the header.
+            size_hint_y: None
+            height: dp(40)
+            spacing: dp(2)
+            canvas.before:
+                Color:
+                    rgba: (0.2, 0.6, 0.8, 1)  # Light blue background
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
             Label:
-                text: "Sun"  # Displays Sunday.
+                text: "Sun"
                 halign: "center"
+                color: (1, 1, 1, 1)  # White text for visibility
             Label:
-                text: "Mon"  # Displays Monday.
-                halign: "center"  # Centers the text horizontally.
-            Label:
-                text: "Tue"  # Displays Tuesday.
+                text: "Mon"
                 halign: "center"
+                color: (1, 1, 1, 1)
             Label:
-                text: "Wed"  # Displays Wednesday.
+                text: "Tue"
                 halign: "center"
+                color: (1, 1, 1, 1)
             Label:
-                text: "Thu"  # Displays Thursday.
+                text: "Wed"
                 halign: "center"
+                color: (1, 1, 1, 1)
             Label:
-                text: "Fri"  # Displays Friday.
+                text: "Thu"
                 halign: "center"
+                color: (1, 1, 1, 1)
             Label:
-                text: "Sat"  # Displays Saturday.
+                text: "Fri"
                 halign: "center"
+                color: (1, 1, 1, 1)
+            Label:
+                text: "Sat"
+                halign: "center"
+                color: (1, 1, 1, 1)
 
-        # Scrollable calendar grid for displaying day buttons.
+        # Calendar grid
         ScrollView:
-            do_scroll_x: False  # Disables horizontal scrolling.
-            do_scroll_y: True  # Enables vertical scrolling.
+            do_scroll_x: False
+            do_scroll_y: True
             GridLayout:
-                id: calendar_grid  # Identifier for the calendar grid.
-                cols: 7  # 7 columns for 7 days of the week.
-                padding: dp(10)  # Padding around the grid.
-                spacing: dp(1)  # Space between each grid item.
-                row_default_height: dp(60)  # Default row height.
-                row_force_default: True  # Ensures all rows are the same height.
-                adaptive_height: True  # Adjusts height based on content.
+                id: calendar_grid
+                cols: 7
+                spacing: dp(5)
+                row_default_height: dp(60)
+                row_force_default: True
+                adaptive_height: True
 
-        # Button to open the Add Task popup.
+        # Footer with buttons
         BoxLayout:
-            size_hint_y: 0.2  # Adjusts the height.
-            Button:
-                text: "Add Event"  # Opens a popup for adding tasks.
-                on_release: app.open_add_event_modal()  # Calls the add event modal.
-            Button:
-                text: "To-Do List"  # Button to switch screens.
-                on_release: app.switch_to_screen("todo")  # Switches to the To-Do List.
-
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)  # Add spacing between buttons
+            UniformButton:
+                text: "Add Event"
+                on_release: app.open_add_event_modal()
+            UniformButton:
+                text: "To-Do List"
+                on_release: app.switch_to_screen("todo")
 
 <ToDoListView>:
     name: "todo"
 
     BoxLayout:
         orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)  # Add vertical spacing
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)  # White background
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
-        # Header with To-Do List title
+        # Header with title
         BoxLayout:
             size_hint_y: None
             height: dp(50)
+            spacing: dp(10)
             Label:
                 text: "To-Do List"
                 font_size: dp(20)
+                color: (0, 0, 0, 1)  # Black text
                 size_hint_x: 1
 
-        # Sort options and add task button
+        # Sort and Filter Options (centered)
         BoxLayout:
             size_hint_y: None
-            height: "50dp"
-            padding: "10dp"
-            spacing: "10dp"
-
+            height: dp(50)
+            padding: dp(50)
+            spacing: dp(10)
             Spinner:
                 id: filter_spinner
                 text: "Filter by Priority"
                 values: ["All", "High", "Medium", "Low", "-"]
-                on_text: root.filter_tasks(self.text)  # Call the filter method on selection
-
+                on_text: root.filter_tasks(self.text)
+                size_hint_x: 0.5
             Spinner:
                 id: sort_spinner
                 text: "Sort by"
                 values: ["Priority", "Due Date", "Category"]
                 on_text: root.sort_tasks(self.text)
+                size_hint_x: 0.5
 
-            Button:
-                text: "Calendar View"
-                on_release: app.switch_to_screen("calendar")
-
-        # Scrollable task list
+        # Task list
         ScrollView:
             GridLayout:
                 id: task_list
                 cols: 1
-                spacing: "5dp"
+                spacing: dp(5)
                 size_hint_y: None
                 height: self.minimum_height
-                
-                # Sample task item
-                BoxLayout:
-                    padding: "2dp"
-                    spacing: "2dp"
-                    size_hint_y: None
-                    height: "30dp"
-                    canvas.before:
-                        Color:
-                            rgba: (0.9, 0.9, 0.9, 1) if self.height > 50 else (1, 1, 1, 1)
-                        Rectangle:
-                            size: self.size
-                            pos: self.pos
-                    
-                    Label:
-                        text: "C"
-                        size_hint_x: 0.1
-                        color: (0.9, 0.9, 0.9, 1)
-                    
-                    Label:
-                        text: "Task Title"
-                        size_hint_x: 0.5
-                        color: (0, 0, 0, 1)
 
-                    Label:
-                        text: "Due Date"
-                        size_hint_x: 0.3
-                        color: (0, 0, 0, 1)
-
-                    Label:
-                        text: "!"
-                        size_hint_x: 0.1
-                        color: (1, 0, 0, 1)  # Red exclamation for priority
-                        font_size: "24sp"
-
-                    Label:
-                        text: "Categories"
-                        size_hint_x: 0.2
-                        color: (0, 0, 0, 1)
-                    
-        # Footer with Add Task button
+        # Footer with buttons
         BoxLayout:
             size_hint_y: None
             height: dp(50)
-        # Button to switch to the To-Do List screen.
-        BoxLayout:
-            size_hint_y: 0.2  # Adjusts the height.
-            Button:
-                text: "Calendar View"
-                on_release: app.switch_to_screen("calendar")
-            Button:
+            spacing: dp(10)
+            UniformButton:
                 text: "Add Task"
                 on_release: app.open_add_task_modal()
-                
+            UniformButton:
+                text: "Calendar View"
+                on_release: app.switch_to_screen("calendar")
+
 <DailyView>:
-    name: "daily"  # Unique name for DailyView screen.
+    name: "daily"
+
     BoxLayout:
         orientation: 'vertical'
+        padding: dp(10)
+        spacing: dp(10)
+        canvas.before:
+            Color:
+                rgba: (1, 1, 1, 1)  # White background
+            Rectangle:
+                pos: self.pos
+                size: self.size
 
-        # Header with date navigation
+        # Header with title
         BoxLayout:
             size_hint_y: None
             height: dp(50)
-            Button:
-                text: "Back"  # Navigate back to the calendar view.
-                on_press: app.switch_to_screen("calendar")  # Switch back to the calendar.
+            spacing: dp(10)
+            Label:
+                text: "Daily View"
+                font_size: dp(20)
+                color: (0, 0, 0, 1)  # Black text
+                size_hint_x: 1
+
+        # Navigation for date
+        BoxLayout:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)
+            UniformButton:
+                text: "Previous"
+                on_press: root.navigate_previous_day()
             Label:
                 id: date_label
                 text: "Date"
                 font_size: dp(18)
+                color: (0, 0, 0, 1)  # Black text for visibility
                 size_hint_x: 1
-            Button:
-                text: "Previous"
-                on_press: root.navigate_previous_day()  # Go to the previous day.
-            Button:
+                halign: "center"
+                valign: "middle"
+                text_size: self.size  # Ensure text is centered
+            UniformButton:
                 text: "Next"
-                on_press: root.navigate_next_day()  # Go to the next day.
+                on_press: root.navigate_next_day()
 
-        # Scrollable event list
+        # Event list
         ScrollView:
             GridLayout:
                 id: event_list
                 cols: 1
-                spacing: "10dp"
+                spacing: dp(10)
                 size_hint_y: None
                 height: self.minimum_height
 
-        # Add Event Button
         BoxLayout:
-            size_hint_y: 0.2
-            Button:
+            size_hint_y: None
+            height: dp(50)
+            spacing: dp(10)  # Add spacing between buttons
+            UniformButton:
                 text: "Add Event"
-                on_release: root.add_event()
+                on_release: app.open_add_event_modal()
+            UniformButton:
+                text: "Calendar View"
+                on_release: app.switch_to_screen("calendar")
+
+<UniformButton@Button>:
+    background_normal: ""
+    background_color: (0, 0, 0, 0)
+    color: (1, 1, 1, 1)  # White text
+    font_size: dp(16)
+    padding: [dp(10), dp(10)]
+    size_hint_y: None
+    height: dp(50)
+    canvas.before:
+        Color:
+            rgba: (0.1, 0.2, 0.8, 1)  # Darker blue for buttons
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [self.height / 2]
