@@ -14,6 +14,7 @@
 #   - November 10, 2024: Group modified to ensure event button clicks open the edit modal - [Whole Group]
 #   - November 18, 2024: Implemented recurring events - [Magaly Camacho]
 #   - December 5, 2024: Redid the add_event() to truncate names that were too long and added a hover feature to display the full name and time of events [Matthew McManness]
+#   - December 6, 2024: changed the populate_calendar() to call open_daily_view() when a day is pressed and created open_daily_view() (to see the details of days when there are more than two events) - [Matthew McManness] 
 #
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
@@ -161,7 +162,7 @@ class CalendarView(Screen):
                     day_button = Button(
                         background_normal="",
                         background_color=(0.9, 0.9, 0.9, 1),  # Light gray background.
-                        on_press=self.on_day_press,  # Bind to day press event.
+                        on_press=lambda instance, day=day: self.open_daily_view(day),  # Open DailyView on press.
                         size_hint=(1, 1),  # Make the button fill the cell.
                         text=""  # No text on the button itself.
                     )
@@ -213,77 +214,89 @@ class CalendarView(Screen):
             on_press=lambda instance, event_id=event_id: self.open_edit_event_modal(event_id)  # Pass event ID to the method
         )
 
-        # Create a styled hover modal
+        # Add hover detection for the event button
         modal = ModalView(size_hint=(None, None), size=(200, 100), auto_dismiss=True)
-
-        # Remove the default modal background
         modal.background = ""
         modal.background_color = (0, 0, 0, 0)
-        
-        # Add a custom background to the modal
+
+        # Add a custom modal background
         with modal.canvas.before:
             Color(0.7, 0.3, 0.3, 1)  # Match the event box color
-            modal.rect = RoundedRectangle(size=modal.size, pos=modal.pos, radius=[dp(10), dp(10)])
+            modal.rect = RoundedRectangle(size=modal.size, pos=modal.pos, radius=[dp(10)])
         modal.bind(size=lambda instance, value: setattr(modal.rect, 'size', value))
         modal.bind(pos=lambda instance, value: setattr(modal.rect, 'pos', value))
 
-        # Add a Label to display the full name and time, centered
+        # Add event details to the modal
         modal_layout = BoxLayout(orientation="vertical", padding=10, spacing=5)
         event_details = Label(
             text=f"{name}\n{start_time.strftime('%H:%M')}",
             color=(1, 1, 1, 1),  # White text
-            halign="center",  # Center text horizontally
-            valign="middle",  # Center text vertically
+            halign="center",
+            valign="middle",
             size_hint=(1, 1)
         )
-        event_details.bind(size=event_details.setter('text_size'))  # Make text wrap inside the box
+        event_details.bind(size=event_details.setter('text_size'))
         modal_layout.add_widget(event_details)
         modal.add_widget(modal_layout)
 
-        # Add hover detection
+        # Hover logic
         def on_mouse_move(window, pos):
-            """Check if the mouse is over the button."""
-            if event_button.collide_point(*event_button.to_widget(*pos)):
-                if not modal.parent:
-                    modal.open()
-            else:
-                if modal.parent:
-                    modal.dismiss()
+            if self.manager.current == "calendar":  # Ensure this logic runs only in CalendarView
+                if event_button.collide_point(*event_button.to_widget(*pos)):
+                    if not modal.parent:
+                        modal.open()
+                else:
+                    if modal.parent:
+                        modal.dismiss()
 
-        # Bind mouse motion to hover detection
         Window.bind(mouse_pos=on_mouse_move)
 
-        # Use canvas instructions to round the button's corners
+        # Add rounded corners to the event button
         with event_button.canvas.before:
-            Color(0.7, 0.3, 0.3, 1)  # Same color as background_color
-            event_button.rect = RoundedRectangle(
-                size=event_button.size,
-                pos=event_button.pos,
-                radius=[(dp(5), dp(5), dp(5), dp(5))]  # Rounded corners
-            )
-
-        # Bind button size and position updates to keep the rounded rectangle in sync
+            Color(0.7, 0.3, 0.3, 1)
+            event_button.rect = RoundedRectangle(size=event_button.size, pos=event_button.pos, radius=[dp(5)])
         event_button.bind(size=lambda inst, val: setattr(inst.rect, 'size', val))
         event_button.bind(pos=lambda inst, val: setattr(inst.rect, 'pos', val))
 
         # Retrieve the cell widget for the event's start date
         cell = self.get_cell_widget(start_time)
         if cell:
-            # Check if an AnchorLayout exists in the cell; if not, create one
+            # Ensure AnchorLayout for events exists
             if not cell.children or not isinstance(cell.children[0], AnchorLayout):
-                # Create an AnchorLayout to anchor events to the top
                 anchor_layout = AnchorLayout(anchor_y='top', size_hint_y=None, height=dp(60))
-                events_layout = BoxLayout(orientation='vertical', size_hint_y=None, padding=(2, 2))  # Small padding for spacing
+                events_layout = BoxLayout(orientation='vertical', size_hint_y=None, padding=(2, 2))
                 events_layout.bind(minimum_height=events_layout.setter('height'))
                 anchor_layout.add_widget(events_layout)
                 cell.add_widget(anchor_layout)
             else:
-                events_layout = cell.children[0].children[0]  # Access the BoxLayout inside AnchorLayout
+                events_layout = cell.children[0].children[0]
 
-            # Add the new event button to the layout
-            events_layout.add_widget(event_button)
+            # Add the event button only if fewer than 2 events are currently displayed
+            displayed_events = [child for child in events_layout.children if isinstance(child, Button)]
+            if len(displayed_events) < 2:
+                events_layout.add_widget(event_button)
+
+            # Add "More..." label if there are more than 2 events
+            if len(displayed_events) == 2:
+                # Ensure the "More..." label exists only once
+                more_label_layout = next(
+                    (child for child in events_layout.children if isinstance(child, AnchorLayout) and child.anchor_y == "bottom"),
+                    None
+                )
+                if not more_label_layout:
+                    more_label_layout = AnchorLayout(anchor_y="bottom", size_hint_y=None, height=dp(15))
+                    more_label = Label(
+                        text="More...",
+                        size_hint=(None, None),
+                        height=dp(15),
+                        color=(0.5, 0.5, 0.5, 1)  # Grey color for the "More..." label
+                    )
+                    more_label_layout.add_widget(more_label)
+                    events_layout.add_widget(more_label_layout)
 
             print(f"Added event: {event_id} - {display_name} on {start_time}")
+
+
 
 
     def get_cell_widget(self, date_obj):
@@ -346,3 +359,16 @@ class CalendarView(Screen):
         """Open the Edit Event modal for a specific event ID and refresh calendar upon save."""
         edit_event_modal = EditEventModal(event_id=event_id, refresh_callback=self.refresh_calendar)
         edit_event_modal.open()
+
+    def open_daily_view(self, day):
+        """
+        Open the DailyView for the selected day.
+        """
+        selected_date = datetime(self.current_year, self.current_month, day)
+        daily_view = self.manager.get_screen('daily')  # Access the DailyView screen
+        daily_view.current_date = selected_date  # Set the date in DailyView
+        daily_view.update_date_label()  # Update the date label in DailyView
+        daily_view.populate_events()  # Populate events for the selected day
+
+        # Switch to the DailyView screen
+        self.manager.current = 'daily'
