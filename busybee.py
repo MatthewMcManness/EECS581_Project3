@@ -12,6 +12,7 @@
 # - November 11, 2024: Added open_edit_task_modal(self, task_id) (Updated by: Matthew McManness)
 # - November 24, 2024: Added switch_to_daily_view_today to facilitate seeing the daily view (Matthew McManness)
 # - November 24,2024: Resolved conflicts to merch testing-1 branch with main (Maagaly Camacho)
+# - December 6, 2024: Implemented variables for ease of UI modification (Matthew McManness)
 #
 # Preconditions:
 # - Kivy must be installed and properly configured in the Python environment.
@@ -60,6 +61,11 @@ from screens.editEvent import EditEventModal # Import the edit event modal
 from kivy.uix.screenmanager import ScreenManager
 from screens.dailyview import DailyView # Import the daily view class
 from datetime import datetime
+from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager
+from kivy.properties import NumericProperty
+from kivy.core.window import Window
+
 
 # -----------------------------------------------------------------------------
 # Main Application Class: BusyBeeApp
@@ -67,6 +73,23 @@ from datetime import datetime
 # -----------------------------------------------------------------------------
 class BusyBeeApp(App):
     """Main app class to manage screens and modals."""
+
+    #Variables:
+
+    #Fonts
+    button_font_size = NumericProperty((Window.width + Window.height) * 0.015)
+    title_font_size = NumericProperty((Window.width + Window.height) * 0.02)
+    label_font_size = NumericProperty((Window.width + Window.height) * 0.01)
+
+    #Colors
+    Background_Color = (43, 48, 58, 1)
+    Button_Color = (67, 129, 193, 1)
+    Day_Label_Color = (146, 220, 229, 1)
+    Day_Box_Color = (238, 229, 233, 1)
+    Main_Label_Color = (191, 177, 193, 1)
+
+
+
 
     def build(self):
         """
@@ -82,6 +105,7 @@ class BusyBeeApp(App):
         - Returns the initialized ScreenManager instance.
         """
         self.screen_manager = ScreenManager(transition=NoTransition())  # Initialize ScreenManager
+
 
         # Initialize To Do list view
         todo = ToDoListView(name="todo")

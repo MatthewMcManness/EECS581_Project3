@@ -44,6 +44,7 @@ from kivy.app import App  # Kivy's base class for applications
 import sys  # System-specific parameters and functions
 import os  # Miscellaneous operating system interfaces
 
+
 # Add the project directory to Python path to ensure imports work
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
