@@ -68,14 +68,24 @@ class AddEventModal(ModalView):
         # Access app-wide styles
         app = App.get_running_app()
 
-          # Set up custom background
-        with self.canvas.before:
+        # Create the main layout
+        layout = BoxLayout(
+            orientation='vertical',
+            padding=dp(10),
+            spacing=dp(10)
+        )
+
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
             Color(rgba=app.Background_Color)  # Use the app's background color
-            self.bg_rect = RoundedRectangle(pos=self.pos, size=self.size, radius=[dp(20)])  # Add rounded corners
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
 
-
-        # Create a vertical layout to hold the widgets.
-        layout = BoxLayout(orientation='vertical', padding=dp(10), spacing=dp(10))
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
 
         # Input field for the event name (non-multiline).
         self.event_name_input = TextInput(
@@ -88,10 +98,13 @@ class AddEventModal(ModalView):
         layout.add_widget(self.event_name_input)  # Add input field to the layout.
 
         # Label to display the selected event date and time.
-        date_layout = BoxLayout(orientation='horizontal', spacing=dp(10))
+        date_layout = BoxLayout(
+            orientation='horizontal',
+            spacing=dp(10)
+        )
         self.event_date_label = Label(
             text="Pick Event Date & Time",
-            font_size=app.label_font_size,
+            font_size=app.button_font_size,
             color=(0, 0, 0, 1),
         )
         date_layout.add_widget(self.event_date_label)  # Add label to the layout.
@@ -122,11 +135,16 @@ class AddEventModal(ModalView):
         layout.add_widget(self.notes_input)
 
         # Layout for the action buttons (Cancel and Save).
-        button_layout = BoxLayout(orientation='horizontal', spacing=dp(10), size_hint_y=None, height=dp(50))
+        button_layout = BoxLayout(
+            orientation='horizontal',
+            spacing=dp(10),
+            size_hint_y=None,
+            height=dp(50)
+        )
         cancel_button = UniformButton(
             text="CANCEL"
         )
-        cancel_button.bind(on_release=self.dismiss)
+        cancel_button.bind(on_release=self.cancel_and_close)
         save_button = UniformButton(
             text="SAVE"
         )
@@ -138,7 +156,6 @@ class AddEventModal(ModalView):
         # Add the complete layout to the modal.
         self.add_widget(layout)
 
-
     def open_date_picker(self, instance):
         """Open the DatePicker modal to select the event date and time."""
         DatePicker(self).open()  # Open the date picker modal.
@@ -149,10 +166,99 @@ class AddEventModal(ModalView):
 
     def save_event(self, *args):
         """Save the event details and validate input."""
-        # Your save logic remains unchanged
-        pass
+        event_name = self.event_name_input.text.strip()  # Get the trimmed event name.
+        event_date = self.event_date_label.text  # Get the selected event date from the label.
+
+        # Ensure the event name is not empty before saving.
+        if not self.event_name_input.text or self.event_date_label.text == "Pick Event Date & Time":
+            print("Event Name and Datetime are required.")  # Print error if the name is empty.
+            return  # Stop execution to prevent saving.
+
+        # Gets info from inputs
+        name = self.event_name_input.text
+        notes = self.notes_input.text
+        date = self.event_date_label.text
+        repeat_info = self.repeat_button.text.split(" ")
+        frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[0])
+        times = None if len(repeat_info) == 2 else int(repeat_info[1].split(" ")[0].replace("(", ""))
+
+        # Connection to the database
+        with db.get_session() as session:
+            with session.begin():  # Transaction started that will auto commit before exiting
+                # Collecting event data
+                new_event = Event_(name=name, notes=notes)
+
+                # Add the date of the event
+                date = " ".join(self.event_date_label.text.split(" ")[2:])
+                new_event.start_time = datetime.strptime(date, "%Y-%m-%d %H:%M")  # Adding date and time to the event
+
+                # Add the event to the session
+                session.add(new_event)
+
+                # Add recurrence and create other events, if needed
+                if times and frequency:
+                    recurrence_id = self.save_recurrence(frequency, times)  # Save recurrence
+                    new_event.recurrence_id = recurrence_id  # Add recurrence to event
+
+                    # Create other events
+                    current_date = new_event.start_time
+                    for _ in range(times - 1):
+                        new_date = frequency.get_next_date(current_date, new_event.start_time)
+
+                        # Create event with same info as new_event but update the date
+                        event_i = Event_(
+                            name=new_event.name,
+                            notes=new_event.notes,
+                            start_time=new_date,
+                            recurrence_id=recurrence_id
+                        )
+                        current_date = new_date  # Save date to calculate next one
+                        session.add(event_i)
+
+                    # Log message
+                    print(f"Saving event: {new_event}")
+
+                event_id = new_event.id  # Get new_event ID
+
+        # Access the running app
+        app = App.get_running_app()
+        calendar_screen = app.screen_manager.get_screen('calendar')
+
+        # If repeating events, add them all to the Calendar screen
+        if times and frequency:
+            with db.get_session() as session:  # Start session to get all events
+                stmt = select(Event_).where(Event_.recurrence_id == recurrence_id)  # SQL statement
+                events = session.scalars(stmt)  # Query database
+
+                for event in events:
+                    calendar_screen.add_event(event.id, event.name, event.start_time, frequency=frequency, times=times)
+
+        # Otherwise, add the single event to the Calendar screen
+        else:
+            calendar_screen.add_event(event_id, name, date)
+
+        # Print the saved event details to the console.
+        print(f"Event '{event_name}' scheduled for {event_date}")
+        self.dismiss()  # Close the modal after saving.
 
     def save_recurrence(self, frequency: Frequency, times: int) -> int:
-        """Saves the given recurrence and returns its id"""
-        # Your recurrence saving logic remains unchanged
-        pass
+        """Saves the given recurrence and returns its ID."""
+        with db.get_session() as session:  # Start session
+            with session.begin():  # Begin transaction, create and save recurrence
+                recurrence = Recurrence(times=times, frequency=frequency)
+                session.add(recurrence)
+            recurrence_id = recurrence.id  # Store recurrence ID to return
+
+        return recurrence_id
+
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
+
+    def cancel_and_close(self, *args):
+        """Close the modal and reset the modal_open flag in CalendarView."""
+
+
+        # Dismiss the modal
+        self.dismiss()

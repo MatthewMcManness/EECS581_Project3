@@ -64,31 +64,36 @@ from kivy.uix.anchorlayout import AnchorLayout  # Import for anchoring widgets
 from kivy.graphics import Color, Rectangle, RoundedRectangle  # Import for rounded rectangle backgrounds
 import calendar  # Import calendar for setting first day of the week
 from screens.editEvent import EditEventModal  # Adjust the path if the file is located elsewhere
-from kivy.core.window import Window
+from kivy.app import App  # Access the app instance for global styles
+
+
+
+class UniformButton(Button):
+    pass
+
 
 
 # Set the first day of the week to Sunday
 calendar.setfirstweekday(calendar.SUNDAY)
 
-
-
-db = get_database() # get database
+db = get_database()  # Get database
 
 class EventBox(BoxLayout):
     """A BoxLayout to hold event details"""
     event_id = ObjectProperty(None)
         
     def __init__(self, **kwargs):
-        """Initialize the Eventkbox"""
-        super().__init__(**kwargs) # initialize BoxLayout class
-        # initialize sixe of event box and make it's background color white
+        """Initialize the EventBox"""
+        super().__init__(**kwargs)  # Initialize BoxLayout class
+        # Initialize size of EventBox and make its background color white
         with self.canvas.before:
             Color(0, 0, 0, 0)
             self.rect = Rectangle(size=self.size, pos=self.pos)
-        # when eventbox is updated, make sure size is correct
+        # When EventBox is updated, make sure size is correct
         self.bind(size=self.update_rect, pos=self.update_rect)
+
     def update_rect(self, *args):
-        """Update rectanlge to match the size and position of the EventBox"""
+        """Update rectangle to match the size and position of the EventBox"""
         self.rect.pos = self.pos
         self.rect.size = self.size
         
@@ -96,6 +101,7 @@ class CalendarView(Screen):
     """Displays a monthly calendar with navigational buttons and day selection."""
 
     month_year_text = StringProperty()  # Reactive property for month and year text.
+    modal_open = False
 
     def __init__(self, **kwargs):
         """Initialize the calendar with the current month and year."""
@@ -146,7 +152,7 @@ class CalendarView(Screen):
                     grid.add_widget(Label())
                 else:
                     # Create a relative layout for each day cell.
-                    cell = BoxLayout(orientation = 'vertical', spacing = -20)
+                    cell = BoxLayout(orientation='vertical', spacing=-20)
                     container = RelativeLayout(size_hint=(1, None), height=dp(60))
 
                     # Create a label to display the day number.
@@ -176,26 +182,15 @@ class CalendarView(Screen):
                     grid.add_widget(container)
         self.populate()
 
-    def on_day_press(self, instance):
-        """Handle the event when a day button is pressed."""
-        day_text = instance.parent.children[1].text  # Get the selected day number.
-        print(f"You selected day: {day_text}")  # Print the selected day to the console.
-
-
-
-
     def add_event(self, event_id, name, start_time, frequency=None, times=None, place=None):
         """
-        Add a new event to the calendar with a styled hoverable modal for details.
-
-        Parameters:
-            event_id (int): The ID of the event.
-            name (str): The name of the event.
-            start_time (datetime or str): The start date and time of the event.
-            place (Optional[str]): The location of the event (if available).
+        Add a new event to the calendar.
         """
+
+        app = App.get_running_app()
+
         # Define a character limit for truncation
-        char_limit = 10  # Adjust this value as needed
+        char_limit = 9  # Adjust this value as needed
 
         # Truncate the event name if it exceeds the character limit
         display_name = name if len(name) <= char_limit else f"{name[:char_limit]}..."
@@ -205,58 +200,16 @@ class CalendarView(Screen):
             start_time = datetime.strptime(start_time, '%Y-%m-%d %H:%M')
 
         # Create the event button
-        event_button = Button(
+        event_button = UniformButton(
             text=display_name,
             size_hint_y=None,
             height=dp(15),
             background_normal="",
-            background_color=(0.7, 0.3, 0.3, 1),
             on_press=lambda instance, event_id=event_id: self.open_edit_event_modal(event_id)  # Pass event ID to the method
         )
 
-        # Add hover detection for the event button
-        modal = ModalView(size_hint=(None, None), size=(200, 100), auto_dismiss=True)
-        modal.background = ""
-        modal.background_color = (0, 0, 0, 0)
-
-        # Add a custom modal background
-        with modal.canvas.before:
-            Color(0.7, 0.3, 0.3, 1)  # Match the event box color
-            modal.rect = RoundedRectangle(size=modal.size, pos=modal.pos, radius=[dp(10)])
-        modal.bind(size=lambda instance, value: setattr(modal.rect, 'size', value))
-        modal.bind(pos=lambda instance, value: setattr(modal.rect, 'pos', value))
-
-        # Add event details to the modal
-        modal_layout = BoxLayout(orientation="vertical", padding=10, spacing=5)
-        event_details = Label(
-            text=f"{name}\n{start_time.strftime('%H:%M')}",
-            color=(1, 1, 1, 1),  # White text
-            halign="center",
-            valign="middle",
-            size_hint=(1, 1)
-        )
-        event_details.bind(size=event_details.setter('text_size'))
-        modal_layout.add_widget(event_details)
-        modal.add_widget(modal_layout)
-
-        # Hover logic
-        def on_mouse_move(window, pos):
-            if self.manager.current == "calendar":  # Ensure this logic runs only in CalendarView
-                if event_button.collide_point(*event_button.to_widget(*pos)):
-                    if not modal.parent:
-                        modal.open()
-                else:
-                    if modal.parent:
-                        modal.dismiss()
-
-        Window.bind(mouse_pos=on_mouse_move)
-
-        # Add rounded corners to the event button
-        with event_button.canvas.before:
-            Color(0.7, 0.3, 0.3, 1)
-            event_button.rect = RoundedRectangle(size=event_button.size, pos=event_button.pos, radius=[dp(5)])
-        event_button.bind(size=lambda inst, val: setattr(inst.rect, 'size', val))
-        event_button.bind(pos=lambda inst, val: setattr(inst.rect, 'pos', val))
+        # Set font_size explicitly after creation
+        event_button.font_size = app.label_font_size
 
         # Retrieve the cell widget for the event's start date
         cell = self.get_cell_widget(start_time)
@@ -296,9 +249,6 @@ class CalendarView(Screen):
 
             print(f"Added event: {event_id} - {display_name} on {start_time}")
 
-
-
-
     def get_cell_widget(self, date_obj):
         """Retrieve the widget for the specified date."""
         # Parse the date string into a datetime object
@@ -334,12 +284,9 @@ class CalendarView(Screen):
         grid = self.ids['calendar_grid']  # Get the calendar grid from the KV file.
         grid.clear_widgets()  # Clear any existing widgets from the grid.
         self.populate_calendar()
-        #self.populate()
-
 
     def populate(self):
         """Retrieve and display events for the current month."""
-
         session = db.get_session()
         try:
             stmt = select(Event_).where(
@@ -357,7 +304,14 @@ class CalendarView(Screen):
 
     def open_edit_event_modal(self, event_id):
         """Open the Edit Event modal for a specific event ID and refresh calendar upon save."""
+        self.modal_open = True
         edit_event_modal = EditEventModal(event_id=event_id, refresh_callback=self.refresh_calendar)
+
+        # Reset modal_open when the modal is dismissed
+        def reset_modal_open(*args):
+            self.modal_open = False
+
+        edit_event_modal.bind(on_dismiss=reset_modal_open)
         edit_event_modal.open()
 
     def open_daily_view(self, day):

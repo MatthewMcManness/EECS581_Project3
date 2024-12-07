@@ -33,14 +33,19 @@ from kivy.uix.textinput import TextInput  # Input fields for user text
 from kivy.uix.button import Button  # Standard button widget
 from kivy.uix.label import Label  # Label widget for displaying text
 from Models import Event_, Recurrence  # Event class
-from Models.databaseEnums import Frequency # For event frequency
+from Models.databaseEnums import Frequency  # For event frequency
 from database import get_database  # To connect to the database
 from sqlalchemy import select  # To query the database
-from sqlalchemy.orm import Session # for typing
+from sqlalchemy.orm import Session  # for typing
 from datetime import datetime  # For event date and time
-from screens.usefulwidgets import DatePicker # Date picker
-from screens.usefulwidgets import RepeatOptionsModal  # Additional modals
+from screens.usefulwidgets import DatePicker, RepeatOptionsModal  # Additional modals
+from kivy.metrics import dp  # For consistent spacing and sizing
+from kivy.app import App  # Access the app instance for global styles
+from kivy.graphics import Color, RoundedRectangle  # For rounded rectangle shape
 
+
+class UniformButton(Button):
+    pass
 
 db = get_database(debug=True)  # Get the database connection
 
@@ -53,34 +58,85 @@ class EditEventModal(ModalView):
         self.auto_dismiss = False
         self.refresh_callback = refresh_callback  # Store the refresh callback
 
+        # Access app-wide styles
+        app = App.get_running_app()
+
         # Create layout
-        layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+        layout = BoxLayout(orientation='vertical', padding=dp(10), spacing=dp(10))
+
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
 
         # Title input for event name
-        self.title_input = TextInput(hint_text="Event Title", multiline=False)
+        self.title_input = TextInput(
+            hint_text="Event Title",
+            multiline=False,
+            font_size=app.button_font_size,
+            foreground_color=(0, 0, 0, 1),
+            padding=[dp(10), dp(5)]
+        )
         layout.add_widget(self.title_input)
 
         # Date and time section
-        date_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.event_date_label = Label(text="Pick a date & time", size_hint_x=0.8)
+        date_layout = BoxLayout(orientation='horizontal', spacing=dp(10))
+        self.event_date_label = Label(
+            text="Pick a date & time",
+            font_size=app.button_font_size,
+            color=(0, 0, 0, 1),
+            size_hint_x=0.8
+        )
         date_layout.add_widget(self.event_date_label)
-        pick_date_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
+        pick_date_button = UniformButton(
+            text="Pick Date & Time",
+            on_release=self.open_date_picker
+        )
         date_layout.add_widget(pick_date_button)
         layout.add_widget(date_layout)
 
         # Button to open the Repeat Options modal
-        self.repeat_button = Button(text=Frequency.frequency_options()[0], on_release=self.open_repeat_window)
+        self.repeat_button = UniformButton(
+            text=Frequency.frequency_options()[0],
+            on_release=self.open_repeat_window
+        )
         layout.add_widget(self.repeat_button)
 
         # Notes input for event description
-        self.notes_input = TextInput(hint_text="Notes", multiline=True)
+        self.notes_input = TextInput(
+            hint_text="Notes",
+            multiline=True,
+            font_size=app.button_font_size,
+            foreground_color=(0, 0, 0, 1),
+            padding=[dp(10), dp(5)]
+        )
         layout.add_widget(self.notes_input)
 
         # Action buttons (Save, Delete, Cancel)
-        button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
-        button_layout.add_widget(Button(text="DELETE", on_release=self.delete_event))
-        button_layout.add_widget(Button(text="SAVE", on_release=self.save_event))
+        button_layout = BoxLayout(orientation='horizontal', spacing=dp(10), size_hint_y=None, height=dp(50))
+        cancel_button = UniformButton(
+            text="CANCEL",
+            on_release=self.cancel_and_close
+        )
+        delete_button = UniformButton(
+            text="DELETE",
+            on_release=self.delete_event
+        )
+        save_button = UniformButton(
+            text="SAVE",
+            on_release=self.save_event
+        )
+        button_layout.add_widget(cancel_button)
+        button_layout.add_widget(delete_button)
+        button_layout.add_widget(save_button)
         layout.add_widget(button_layout)
 
         self.add_widget(layout)
@@ -98,17 +154,14 @@ class EditEventModal(ModalView):
                 self.notes_input.text = event.notes
                 # Format and display the event start time
                 self.event_date_label.text = f"Event Date: {event.start_time.strftime('%Y-%m-%d %H:%M')}" if event.start_time else "Pick a date & time"
-                
+
                 # Get recurrence info
                 if event.recurrence_id:
-                    recurrence:Recurrence = event.recurrence
-                    self.repeat_button.text = Frequency.enum2str(recurrence.frequency) # add frequency part
+                    recurrence: Recurrence = event.recurrence
+                    self.repeat_button.text = Frequency.enum2str(recurrence.frequency)
 
-                    # add times part (except for NO_REPEAT)
                     if not Frequency.is_no_repeat(recurrence.frequency):
                         self.repeat_button.text += f" ({recurrence.times} times)"
-                    
-
     def save_event(self, *args):
         """Save the event, updating if it exists or creating a new one."""
         if not self.title_input.text:
@@ -181,7 +234,7 @@ class EditEventModal(ModalView):
             print("Refreshing")
             self.refresh_callback()
 
-        self.dismiss()
+        self.cancel_and_close()
 
     def delete_event(self, *args):
         """Delete the event from the database."""
@@ -196,7 +249,7 @@ class EditEventModal(ModalView):
             if self.refresh_callback:
                 self.refresh_callback()
 
-            self.dismiss()
+            self.cancel_and_close()
 
     def open_date_picker(self, instance):
         """Open the DatePicker modal to select a date and time."""
@@ -221,4 +274,16 @@ class EditEventModal(ModalView):
         recurrence = Recurrence(times=times, frequency=frequency)
         session.add(recurrence) 
         session.flush() # assigns id without needing to commiting (in case of a rollback)
+        
         return recurrence.id
+    
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
+    
+    def cancel_and_close(self, *args):
+        """Close the modal and reset the modal_open flag in CalendarView."""
+
+        # Dismiss the modal
+        self.dismiss()
