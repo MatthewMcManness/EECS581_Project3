@@ -51,6 +51,7 @@ from sqlalchemy.orm import aliased
 from sqlalchemy.sql import func
 from Models import Category  # Ensure the Category model is imported
 from sqlalchemy.sql import case
+from kivy.uix.button import Button
 
 db = get_database()  # get database
 
@@ -59,11 +60,12 @@ class TaskBox(BoxLayout):
     task_id = ObjectProperty(None)
     categories = ObjectProperty(None)
 
-    def __init__(self, on_click_callback, **kwargs):
+    def __init__(self, on_click_callback, edit_callback, **kwargs):
         """Initialize the TaskBox with a callback for clicks."""
         super().__init__(**kwargs)
         self.on_click_callback = on_click_callback  # Set the callback attribute
         self.check_box = None  # Placeholder for checkbox reference
+        self.edit_callback = edit_callback  # Callback for editing task
 
         # Attributes for drag-and-drop
         self.is_dragging = False
@@ -83,6 +85,13 @@ class TaskBox(BoxLayout):
         self.check_box.bind(on_release=callback)
         self.add_widget(self.check_box)
 
+    def add_edit_button(self):
+        """Adds an edit button for opening the edit modal."""
+        edit_button = Button(
+            text="Edit", size_hint_x=0.2, on_release=lambda instance: self.edit_callback(self.task_id)
+        )
+        self.add_widget(edit_button)
+        
     def update_rect(self, *args):
         """Update rectangle to match the size and position of the TaskBox."""
         self.rect.pos = self.pos
@@ -157,7 +166,7 @@ class ToDoListView(Screen):
     def add_task(self, task_id, name, priority=None, due_date=None, categories=None, complete=False):
         """Add a new task to the to-do list."""
         # Create a TaskBox and pass `on_task_click` as the click callback
-        task_box = TaskBox(on_click_callback=self.on_task_click, padding="5dp", spacing="5dp", size_hint_y=None, height="60dp", size_hint_x=1)
+        task_box = TaskBox(on_click_callback=self.on_task_click, edit_callback=self.on_edit_task_click, padding="5dp", spacing="5dp", size_hint_y=None, height="60dp", size_hint_x=1)
         task_box.task_id = task_id
 
         # Add checkbox for Task.complete and bind it to toggle_complete
@@ -183,6 +192,8 @@ class ToDoListView(Screen):
         task_box.add_widget(Label(text=due_date, size_hint_x=0.3, color=(0,0,0,1)))
         task_box.add_widget(Label(text=priority, size_hint_x=0.1, color=priority_color))
         task_box.add_widget(Label(text=categories, size_hint_x=0.5, color=(0,0,0,1)))
+        
+        task_box.add_edit_button()
 
         # Grey out task if already complete
         if complete:
@@ -373,3 +384,8 @@ class ToDoListView(Screen):
                 categories = ", ".join([cat.name for cat in task.categories]) if task.categories else "-"
                 self.add_task(task.id, task.name, task.priority, due_date, categories, complete=task.complete)
 
+    def on_edit_task_click(self, task_id):
+        """Opens the edit modal when the edit button is clicked."""
+        print(f"Edit button clicked for task with ID: {task_id}")
+        app = App.get_running_app()
+        app.open_edit_task_modal(task_id)
