@@ -20,7 +20,7 @@ ScreenManager:
         # Background color
         canvas.before:
             Color:
-                rgba: (1, 1, 1, 1)  # White background
+                rgba: app.Background_Color
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -39,7 +39,7 @@ ScreenManager:
                 spacing: dp(10)
                 Label:
                     text: "Calendar"
-                    font_size: dp(20)
+                    font_size: app.title_font_size
                     color: (0, 0, 0, 1)
 
             # Navigation buttons
@@ -52,7 +52,7 @@ ScreenManager:
                     on_press: root.change_month(-1)
                 Label:
                     text: root.month_year_text
-                    font_size: dp(18)
+                    font_size: app.button_font_size
                     color: (0, 0, 0, 1)
                 UniformButton:
                     text: "Next"
@@ -65,7 +65,7 @@ ScreenManager:
                 spacing: dp(2)
                 canvas.before:
                     Color:
-                        rgba: (0.2, 0.6, 0.8, 0.5)
+                        rgba: app.Day_Label_Color
                     Rectangle:
                         pos: self.pos
                         size: self.size
@@ -129,7 +129,7 @@ ScreenManager:
         # Background color
         canvas.before:
             Color:
-                rgba: (1, 1, 1, 1)  # White background
+                rgba: app.Background_Color  # White background
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -148,7 +148,7 @@ ScreenManager:
                 spacing: dp(10)
                 Label:
                     text: "To-Do List"
-                    font_size: dp(20)
+                    font_size: app.title_font_size
                     color: (0, 0, 0, 1)
 
             # Sort and filter options
@@ -214,7 +214,7 @@ ScreenManager:
                 spacing: dp(10)
                 Label:
                     text: "Daily View"
-                    font_size: dp(20)
+                    font_size: app.title_font_size
                     color: (0, 0, 0, 1)
 
             # Date navigation
@@ -228,7 +228,7 @@ ScreenManager:
                 Label:
                     id: date_label
                     text: "Date"
-                    font_size: dp(18)
+                    font_size: app.button_font_size
                     color: (0, 0, 0, 1)
                     size_hint_x: 1
                     halign: "center"
@@ -264,7 +264,7 @@ ScreenManager:
     background_normal: ""
     background_color: (0, 0, 0, 0)
     color: (1, 1, 1, 1)
-    font_size: dp(16)
+    font_size: app.button_font_size
     padding: [dp(10), dp(10)]
     size_hint_y: None
     height: dp(50)
@@ -280,13 +280,13 @@ ScreenManager:
     background_normal: ""
     background_color: (0, 0, 0, 0)
     color: (1, 1, 1, 1)
-    font_size: dp(16)
+    font_size: app.button_font_size
     size_hint_y: None
     height: dp(50)
     padding: [dp(10), dp(5)]
     canvas.before:
         Color:
-            rgba: (0.2, 0.6, 0.8, 1)
+            rgba: app.Button_Color
         RoundedRectangle:
             pos: self.pos
             size: self.size
@@ -305,7 +305,7 @@ ScreenManager:
             radius: [dp(5)]  # Slightly rounded edges
     Label:
         color: (1, 1, 1, 1)  # White text for dropdown items
-        font_size: dp(16)
+        font_size: app.button_font_size
         size_hint_y: None
         height: dp(40)
         padding: [dp(10), dp(5)]  # Padding for dropdown text

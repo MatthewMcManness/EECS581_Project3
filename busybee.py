@@ -65,6 +65,7 @@ from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
 from kivy.properties import NumericProperty
 from kivy.core.window import Window
+from kivy.utils import get_color_from_hex
 
 
 # -----------------------------------------------------------------------------
@@ -82,11 +83,10 @@ class BusyBeeApp(App):
     label_font_size = NumericProperty((Window.width + Window.height) * 0.01)
 
     #Colors
-    Background_Color = (43, 48, 58, 1)
-    Button_Color = (67, 129, 193, 1)
-    Day_Label_Color = (146, 220, 229, 1)
-    Day_Box_Color = (238, 229, 233, 1)
-    Main_Label_Color = (191, 177, 193, 1)
+    Background_Color = get_color_from_hex("#EEE5E9")
+    Button_Color =get_color_from_hex("#4381C1")
+    Day_Label_Color = get_color_from_hex("#92DCE5")
+    
 
 
 

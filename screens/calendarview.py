@@ -195,7 +195,7 @@ class CalendarView(Screen):
             place (Optional[str]): The location of the event (if available).
         """
         # Define a character limit for truncation
-        char_limit = 15  # Adjust this value as needed
+        char_limit = 10  # Adjust this value as needed
 
         # Truncate the event name if it exceeds the character limit
         display_name = name if len(name) <= char_limit else f"{name[:char_limit]}..."
