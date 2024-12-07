@@ -14,6 +14,8 @@
 #   - November 23, 2024: choosing a sorting option prints it to terminal instead of crashing - [Manvir Kaur]
 #   - November 23, 2024: updating populate function to correctly sort all tasks according to the option selected - [Manvir Kaur]
 #   - November 24, 2024: Implemented the filter_tasks fuction - [Matthew McManness]
+#   - November 27, 2024: Drag-and-drop almost working as intended - [Manvir Kaur]
+#   - December 06, 2024: Added an edit button for all tasks instead of just clicking the task so drag-and-drop can work without edit screen popping up - [Manvir Kaur]
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
