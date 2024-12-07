@@ -15,6 +15,7 @@
 #   - November 18, 2024: Implemented recurring events - [Magaly Camacho]
 #   - December 5, 2024: Redid the add_event() to truncate names that were too long and added a hover feature to display the full name and time of events [Matthew McManness]
 #   - December 6, 2024: changed the populate_calendar() to call open_daily_view() when a day is pressed and created open_daily_view() (to see the details of days when there are more than two events) - [Matthew McManness] 
+#   - December 7, 2024: Fixed setting date for dailyview - [Magaly Camacho, Mariam Oraby]
 #
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
@@ -315,14 +316,12 @@ class CalendarView(Screen):
         edit_event_modal.open()
 
     def open_daily_view(self, day):
-        """
-        Open the DailyView for the selected day.
-        """
+        """Open the DailyView for the selected day."""
         selected_date = datetime(self.current_year, self.current_month, day)
-        daily_view = self.manager.get_screen('daily')  # Access the DailyView screen
-        daily_view.current_date = selected_date  # Set the date in DailyView
-        daily_view.update_date_label()  # Update the date label in DailyView
-        daily_view.populate_events()  # Populate events for the selected day
+        daily_view = self.manager.get_screen('daily')  # Access the DailyView screen.
+        daily_view.current_date = selected_date  # Pass the selected date.
+        daily_view.selected_date = selected_date  # Pass the selected date.
+        daily_view.set_date()  # Display correct date label and add events
+        self.manager.transition.direction = 'left'  # Slide transition.
+        self.manager.current = 'daily'  # Switch to the DailyView screen.
 
-        # Switch to the DailyView screen
-        self.manager.current = 'daily'
