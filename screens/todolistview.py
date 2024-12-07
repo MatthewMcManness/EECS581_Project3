@@ -91,7 +91,8 @@ class TaskBox(BoxLayout):
             text="Edit", size_hint_x=0.2, on_release=lambda instance: self.edit_callback(self.task_id)
         )
         self.add_widget(edit_button)
-        
+        self.edit_button = edit_button
+
     def update_rect(self, *args):
         """Update rectangle to match the size and position of the TaskBox."""
         self.rect.pos = self.pos
@@ -99,6 +100,9 @@ class TaskBox(BoxLayout):
 
     def on_touch_down(self, touch):
         """Detect if the TaskBox was clicked but ignore if the checkbox was clicked."""
+        if self.edit_button.collide_point(*touch.pos):
+            return super().on_touch_down(touch)
+            
         if self.check_box and self.check_box.collide_point(*touch.pos):
             # If clicking on the checkbox, do not trigger the task click callback
             return super().on_touch_down(touch)
@@ -261,7 +265,7 @@ class ToDoListView(Screen):
         """Open the EditTaskModal for the clicked task."""
         print(f"Clicked task with ID: {task_id}")  # Debugging output
         app = App.get_running_app()
-        app.open_edit_task_modal(task_id)
+        #app.open_edit_task_modal(task_id)
     
     def refresh_tasks(self):
         """Refresh the list of tasks by reloading from the database."""
