@@ -11,6 +11,7 @@
 #   - November 18, 2024: Implemented recurring events - [Magaly Camacho]
 #   - November 20, 2024: Matched layout with editEvent layout - [Magaly Camacho]
 #   - December 7, 2024: Fixed newly added events not being able to be edited - [Magaly Camacho, Manvir Kaur, Mariam Oraby] 
+#   - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - The `DatePicker` class must be implemented and correctly imported from `screens.usefulwidgets`.
@@ -63,7 +64,7 @@ class AddEventModal(ModalView):
         """Initialize the event modal with input fields and buttons."""
         super().__init__(**kwargs)  # Initialize the superclass.
 
-        self.size_hint = (0.8, 0.5)  # Set modal size relative to the screen size.
+        self.size_hint = (0.95, 0.5)  # Set modal size relative to the screen size.
         self.auto_dismiss = False  # Prevent the modal from closing when clicked outside.
 
         # Access app-wide styles

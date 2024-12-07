@@ -12,6 +12,7 @@
 # - November 10, 2024: Fixed bug where app crashed when there wasn't a due date. Added priority picker functionality (Magaly Camacho)
 # - November 18, 2024: Updated default frequency string (Magaly Camacho)
 # - November 23, 2024: Updated the save_task function to handle recurrence (Matthew McManness)
+# - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -81,7 +82,7 @@ class AddTaskModal(ModalView):
         """
         super().__init__(**kwargs)
         self.refresh_callback = refresh_callback  # Store the refresh callback
-        self.size_hint = (0.9, 0.9)  # Set modal size
+        self.size_hint = (0.99, 0.9)  # Set modal size
         self.auto_dismiss = False  # Prevent accidental dismissal
 
         self.recurrence = None  # Initialize recurrence as None

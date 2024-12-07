@@ -14,6 +14,7 @@
 # - November 18, 2024: Updated RepeatOptionsModal to include how many times to repeat, made it so it pulls info from task modal (Magaly Camacho)
 # - November 23, 2024: Updated RepeatOptionsModal and created set_repeat_frequency modal to match the layout with our requirements, modified the save function to handle the recurrence info (Matthew McManness)
 # - December 5, 2024: Updated the logic and UI for the RepeatOptionsModal to match what the group decided (Matthew McManness)
+# - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
 #
 # Preconditions:
 # - Kivy framework must be installed and functional.
@@ -118,7 +119,7 @@ class DatePicker(ModalView):
         # Create label showing the current month and year
         self.month_year_label = Label(
             text=self.get_month_year_text(),
-            font_size=app.title_font_size,
+            font_size=app.button_font_size,
             color=(0, 0, 0, 1),
             size_hint_y=None,
             height=40
@@ -257,6 +258,7 @@ class DatePicker(ModalView):
             print("Please select a date first.")
             return
 
+        
         TimePicker(self).open()  # Open the TimePicker
 
     def update_background(self, *args):
@@ -331,9 +333,13 @@ class TimePicker(ModalView):
             self.date_picker.modal.deadline_label.text = f"Deadline: {selected_datetime}"
         elif hasattr(self.date_picker.modal, 'event_date_label'):
             self.date_picker.modal.event_date_label.text = f"Event Date: {selected_datetime}"
+        elif hasattr(self.date_picker.modal, 'pick_date_button'):
+            # Update the button's text with the selected date and time
+            self.date_picker.modal.pick_date_button.text = selected_datetime
         else:
             print("Error: No valid label to update.")
 
+        
         self.dismiss()  # Close the TimePicker
         self.date_picker.dismiss()  # Close the DatePicker
 

@@ -9,6 +9,7 @@
 # - November 9, 2024: Initial version copied from addtask.py then added the nessecary functions to update or delete a task (Author: Matthew McManness)
 # - November 10, 2024: Added priority picker and functionality (Magaly Camacho)
 # - November 23, 2024: Modified the initilization, the load_task and save_task functions to handle recurrence (Matthew McManness)
+# - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -76,7 +77,7 @@ class EditTaskModal(ModalView):
         """
         super().__init__(**kwargs)
         self.task_id = task_id  # Store task ID for editing
-        self.size_hint = (0.9, 0.9)
+        self.size_hint = (0.99, 0.9)
         self.auto_dismiss = False
         self.refresh_callback = refresh_callback  # Store the refresh callback
         self.recurrence = None  # Placeholder for recurrence information

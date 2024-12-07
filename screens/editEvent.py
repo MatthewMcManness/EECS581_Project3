@@ -8,6 +8,7 @@
 # - November 8, 2024: Initial version created for editing events (Author: Shravya Matta)
 # - November 10, 2024: Group modified to ensure event button clicks open the edit modal (Author whole group)
 # - November 20, 2024: Implemented recurrence and fixed some bugs (Magaly Camacho)
+# - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -54,7 +55,7 @@ class EditEventModal(ModalView):
     def __init__(self, event_id=None, refresh_callback=None, **kwargs):
         super().__init__(**kwargs)
         self.event_id = event_id  # Store the event ID for loading
-        self.size_hint = (0.8, 0.5)
+        self.size_hint = (0.95, 0.5)
         self.auto_dismiss = False
         self.refresh_callback = refresh_callback  # Store the refresh callback
 
@@ -90,10 +91,9 @@ class EditEventModal(ModalView):
         # Date and time section
         date_layout = BoxLayout(orientation='horizontal', spacing=dp(10))
         self.event_date_label = Label(
-            text="Pick a date & time",
+            text="Pick Event Date & Time",
             font_size=app.button_font_size,
             color=(0, 0, 0, 1),
-            size_hint_x=0.8
         )
         date_layout.add_widget(self.event_date_label)
         pick_date_button = UniformButton(
