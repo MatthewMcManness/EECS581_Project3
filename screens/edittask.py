@@ -44,6 +44,15 @@ from database import get_database # to connect to database
 from sqlalchemy import select # to query database
 from datetime import datetime # for Task.due_date
 from Models import Recurrence  # Import the Recurrence model
+from kivy.metrics import dp  # Import dp for density-independent pixel values
+from kivy.graphics import Color, RoundedRectangle  # For rounded rectangle shape
+
+
+class UniformButton(Button):
+    pass
+
+class UniformSpinner(Spinner):
+    pass
 
 db = get_database() # get database
 
@@ -72,6 +81,10 @@ class EditTaskModal(ModalView):
         self.refresh_callback = refresh_callback  # Store the refresh callback
         self.recurrence = None  # Placeholder for recurrence information
 
+
+        # Access app-wide styles
+        app = App.get_running_app()
+
         # Load categories
         with db.get_session() as session, session.begin():
             stmt = select(Category).where(True)
@@ -84,24 +97,40 @@ class EditTaskModal(ModalView):
         # Create layout
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
         # Title input
         self.title_input = TextInput(hint_text="Task Title")
         layout.add_widget(self.title_input)
 
         # Deadline section
         deadline_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.deadline_label = Label(text="Pick a deadline", size_hint_x=0.8)
+        self.deadline_label = Label(
+            text="Pick a deadline",
+            color=(0, 0, 0, 1),  # RGBA format for black color
+            font_size=app.button_font_size,
+            size_hint_x=0.8
+        )
         deadline_layout.add_widget(self.deadline_label)
-        pick_date_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
+        pick_date_button = UniformButton(text="Pick Date & Time", on_release=self.open_date_picker)
         deadline_layout.add_widget(pick_date_button)
         layout.add_widget(deadline_layout)
 
         # Repeat button
-        self.repeat_button = Button(text="Does not repeat", on_release=self.open_repeat_window)
+        self.repeat_button = UniformButton(text="Does not repeat", on_release=self.open_repeat_window)
         layout.add_widget(self.repeat_button)
         
         # Button to open the Priority Options modal
-        self.priority_button = Button(text="Pick Priority", on_release=self.open_priority_window)
+        self.priority_button = UniformButton(text="Pick Priority", on_release=self.open_priority_window)
         layout.add_widget(self.priority_button)
 
         # Notes input
@@ -110,7 +139,7 @@ class EditTaskModal(ModalView):
 
         # Category spinner
         category_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.category_spinner = Spinner(
+        self.category_spinner = UniformSpinner(
             text="Select Category",
             values=self.categories + ["Add New Category"],
             size_hint=(0.7, None),
@@ -126,9 +155,9 @@ class EditTaskModal(ModalView):
 
         # Action buttons
         button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
-        button_layout.add_widget(Button(text="DELETE", on_release=self.delete_task))
-        button_layout.add_widget(Button(text="SAVE", on_release=self.save_task))
+        button_layout.add_widget(UniformButton(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(UniformButton(text="DELETE", on_release=self.delete_task))
+        button_layout.add_widget(UniformButton(text="SAVE", on_release=self.save_task))
         layout.add_widget(button_layout)
 
         self.add_widget(layout)
@@ -309,3 +338,8 @@ class EditTaskModal(ModalView):
     def update_category_spinner(self):
         """Update the category spinner with the latest categories."""
         self.category_spinner.values = self.categories + ["Add New Category"]
+
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size

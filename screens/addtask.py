@@ -47,6 +47,15 @@ from database import get_database # to connect to database
 from sqlalchemy import select # to query database
 from datetime import datetime # for Task.due_date
 from Models import Recurrence  # Import the Recurrence model
+from kivy.metrics import dp  # Import dp for density-independent pixel values
+from kivy.graphics import Color, RoundedRectangle  # For rounded rectangle shape
+
+
+class UniformButton(Button):
+    pass
+
+class UniformSpinner(Spinner):
+    pass
 
 db = get_database() # get database
 
@@ -76,6 +85,8 @@ class AddTaskModal(ModalView):
         self.auto_dismiss = False  # Prevent accidental dismissal
 
         self.recurrence = None  # Initialize recurrence as None
+        # Access app-wide styles
+        app = App.get_running_app()
 
         # Initialize categories and the selected category list
         with db.get_session() as session, session.begin():
@@ -88,24 +99,41 @@ class AddTaskModal(ModalView):
         # Create the main layout
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
         # Input field for the task title
         self.title_input = TextInput(hint_text="Task Title")
         layout.add_widget(self.title_input)
 
         # Deadline section with a label and date picker button
         deadline_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.deadline_label = Label(text="Pick a deadline", size_hint_x=0.8)
+        self.deadline_label = Label(
+            text="Pick a deadline",
+            color=(0, 0, 0, 1),  # RGBA format for black color
+            font_size=app.button_font_size,
+            size_hint_x=0.8
+        )
         deadline_layout.add_widget(self.deadline_label)
-        pick_date_button = Button(text="Pick Date & Time", on_release=self.open_date_picker)
+        pick_date_button = UniformButton(text="Pick Date & Time", on_release=self.open_date_picker)
         deadline_layout.add_widget(pick_date_button)
         layout.add_widget(deadline_layout)
 
         # Button to open the Repeat Options modal
-        self.repeat_button = Button(text=Frequency.frequency_options()[0], on_release=self.open_repeat_window)
+        self.repeat_button = UniformButton(text=Frequency.frequency_options()[0], on_release=self.open_repeat_window)
         layout.add_widget(self.repeat_button)
         
         # Button to open the Priority Options modal
-        self.priority_button = Button(text="Pick Priority", on_release=self.open_priority_window)
+        self.priority_button = UniformButton(text="Pick Priority", on_release=self.open_priority_window)
         layout.add_widget(self.priority_button)
 
         # Input field for additional task notes
@@ -114,7 +142,7 @@ class AddTaskModal(ModalView):
 
         # Category spinner for category selection
         category_layout = BoxLayout(orientation='horizontal', spacing=10)
-        self.category_spinner = Spinner(
+        self.category_spinner = UniformSpinner(
             text="Select Category",
             values=self.categories + ["Add New Category"],
             size_hint=(0.7, None),
@@ -130,8 +158,8 @@ class AddTaskModal(ModalView):
 
         # Action buttons for canceling or saving the task
         button_layout = BoxLayout(orientation='horizontal', spacing=10, size_hint_y=None, height=50)
-        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
-        button_layout.add_widget(Button(text="SAVE", on_release=self.save_task))
+        button_layout.add_widget(UniformButton(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(UniformButton(text="SAVE", on_release=self.save_task))
         layout.add_widget(button_layout)
 
         self.add_widget(layout)  # Add the layout to the modal
@@ -261,3 +289,8 @@ class AddTaskModal(ModalView):
 
         print(f"Task saved with ID: {task_id}")
         self.dismiss()
+
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size

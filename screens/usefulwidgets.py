@@ -48,11 +48,25 @@ from database import get_database # class to interact with database
 import calendar  # Import calendar for setting first day of the week
 from kivy.metrics import dp
 from kivy.properties import NumericProperty
+from kivy.metrics import dp  # Import dp for density-independent pixel values
+from kivy.graphics import Color, RoundedRectangle  # For rounded rectangle shape
+from kivy.app import App  # Ensure App is imported
+from kivy.graphics import Color, Rectangle
+
+class UniformButton(Button):
+    pass
+
+class UniformSpinner(Spinner):
+    pass
 
 # Set the first day of the week to Sunday
 calendar.setfirstweekday(calendar.SUNDAY)
 
 db = get_database() # get database
+
+
+
+
 
 ####################### Custom Date Picker ###########################
 class DatePicker(ModalView):
@@ -79,8 +93,23 @@ class DatePicker(ModalView):
 
         self.selected_button = None  # No button selected initially
 
+        # Access app-wide styles
+        app = App.get_running_app()
         # Layout for the modal
         layout = BoxLayout(orientation='vertical', padding=10, spacing=5)
+
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
 
         # Set initial year and month to current
         self.current_year = datetime.today().year
@@ -89,16 +118,17 @@ class DatePicker(ModalView):
         # Create label showing the current month and year
         self.month_year_label = Label(
             text=self.get_month_year_text(),
-            font_size='20sp',
+            font_size=app.title_font_size,
+            color=(0, 0, 0, 1),
             size_hint_y=None,
             height=40
         )
 
         # Header layout for month navigation
         header_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=50)
-        header_layout.add_widget(Button(text="<", on_release=lambda _: self.change_month(-1)))
+        header_layout.add_widget(UniformButton(text="<", on_release=lambda _: self.change_month(-1)))
         header_layout.add_widget(self.month_year_label)
-        header_layout.add_widget(Button(text=">", on_release=lambda _: self.change_month(1)))
+        header_layout.add_widget(UniformButton(text=">", on_release=lambda _: self.change_month(1)))
         layout.add_widget(header_layout)
 
         # Grid layout for calendar days
@@ -107,8 +137,8 @@ class DatePicker(ModalView):
 
         # Footer buttons for Cancel and Select
         button_layout = BoxLayout(orientation='horizontal', size_hint_y=None, height=50, spacing=10)
-        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
-        button_layout.add_widget(Button(text="SELECT", on_release=self.on_select))
+        button_layout.add_widget(UniformButton(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(UniformButton(text="SELECT", on_release=self.on_select))
         layout.add_widget(button_layout)
 
         self.add_widget(layout)  # Add layout to modal
@@ -156,10 +186,30 @@ class DatePicker(ModalView):
         total_rows = num_weeks + 1  # +1 for header row
         row_height = 1 / total_rows
 
+        # Access app-wide styles
+        app = App.get_running_app()
+
         # Add headers for days of the week
         days_of_week = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
         for day in days_of_week:
-            self.grid.add_widget(Label(text=day, size_hint_y=row_height))
+            # Create a BoxLayout to hold the label and its background
+            header_box = BoxLayout(size_hint_y=row_height)
+            
+            # Add a canvas.before to draw the background
+            with header_box.canvas.before:
+                Color(rgba=app.Day_Label_Color)  
+                header_box.bg_rect = Rectangle(pos=header_box.pos, size=header_box.size)
+            
+            # Update the rectangle when the layout changes size or position
+            header_box.bind(pos=lambda instance, value: setattr(instance.bg_rect, 'pos', value))
+            header_box.bind(size=lambda instance, value: setattr(instance.bg_rect, 'size', value))
+            
+            # Add the day label to the header box
+            header_label = Label(text=day, size_hint=(1, 1), color=(0, 0, 0, 1))  # Black text
+            header_box.add_widget(header_label)
+            
+            # Add the header box to the grid
+            self.grid.add_widget(header_box)
 
         # Add buttons for each day of the month
         for week in cal:
@@ -169,7 +219,9 @@ class DatePicker(ModalView):
                 else:
                     button = Button(
                         text=str(day),
+                        color=(0,0,0,1),
                         size_hint_y=row_height,
+                        background_normal='',
                         background_color=(1, 1, 1, 1)  # White background
                     )
                     button.bind(on_release=lambda btn=button: self.select_date(btn))
@@ -207,6 +259,10 @@ class DatePicker(ModalView):
 
         TimePicker(self).open()  # Open the TimePicker
 
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
 ####################### Custom Time Picker ###########################
 class TimePicker(ModalView):
     """A custom time picker mimicking Material Design style."""
@@ -223,23 +279,39 @@ class TimePicker(ModalView):
         """
         super().__init__(**kwargs)
         self.date_picker = date_picker  # Store reference
-        self.size_hint = (0.8, 0.5)
+        self.size_hint = (0.5, 0.3)
         self.auto_dismiss = False
+
+        # Access app-wide styles
+        app = App.get_running_app()
 
         layout = BoxLayout(orientation='vertical', padding=20, spacing=15)
 
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
+
         # Add spinners for hours and minutes
         time_layout = BoxLayout(orientation='horizontal', spacing=30)
-        self.hour_spinner = Spinner(text="00", values=[f"{i:02d}" for i in range(24)])
-        self.minute_spinner = Spinner(text="00", values=[f"{i:02d}" for i in range(60)])
+        self.hour_spinner = UniformSpinner(text="00", values=[f"{i:02d}" for i in range(24)])
+        self.minute_spinner = UniformSpinner(text="00", values=[f"{i:02d}" for i in range(60)])
         time_layout.add_widget(self.hour_spinner)
         time_layout.add_widget(self.minute_spinner)
         layout.add_widget(time_layout)
 
         # Add Cancel and OK buttons
         button_layout = BoxLayout(orientation='horizontal', spacing=20)
-        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
-        button_layout.add_widget(Button(text="OK", on_release=self.confirm_selection))
+        button_layout.add_widget(UniformButton(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(UniformButton(text="OK", on_release=self.confirm_selection))
         layout.add_widget(button_layout)
 
         self.add_widget(layout)
@@ -265,6 +337,10 @@ class TimePicker(ModalView):
         self.dismiss()  # Close the TimePicker
         self.date_picker.dismiss()  # Close the DatePicker
 
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
 ############################   Recurrence Modal ########################################################
 class RepeatOptionsModal(ModalView):
     """A modal that provides options for repeating tasks with a streamlined interface."""
@@ -287,18 +363,34 @@ class RepeatOptionsModal(ModalView):
         self.size_hint = (0.6, 0.3)  # Compact modal size
         self.auto_dismiss = False  # Prevent accidental dismissal
         self.task_modal = task_modal  # Reference to the parent task modal
+        
+        # Access app-wide styles
+        app = App.get_running_app()
 
         # Create the main layout
         layout = BoxLayout(orientation="vertical", padding=10, spacing=15)
+
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
 
         # Create a BoxLayout for the repeat options
         repeat_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(1, None), height=50)
 
         # "Repeats" label
-        self.repeats_label = Label(text="Repeats", size_hint=(0.2, 1))
+        self.repeats_label = Label(text="Repeats", color=(0,0,0,1), size_hint=(0.2, 1))
 
         # Spinner for repeat frequency
-        self.repeats_spinner = Spinner(
+        self.repeats_spinner = UniformSpinner(
             text="Never Repeats",
             values=["Never Repeats", "Daily", "Weekly", "Monthly", "Yearly"],
             size_hint=(0.4, 1),
@@ -306,10 +398,10 @@ class RepeatOptionsModal(ModalView):
         self.repeats_spinner.bind(text=self.update_visibility)
 
         # Counter widgets for repeat times
-        self.minus_button = Button(text="-", size_hint=(0.1, 1))
-        self.times_input = Label(text="1", size_hint=(0.1, 1), halign="center", valign="middle")
-        self.plus_button = Button(text="+", size_hint=(0.1, 1))
-        self.times_label = Label(text="times", size_hint=(0.2, 1))  # Label for "times"
+        self.minus_button = UniformButton(text="-", size_hint=(0.1, 1))
+        self.times_input = Label(text="1", color=(0,0,0,1), size_hint=(0.1, 1), halign="center", valign="middle")
+        self.plus_button = UniformButton(text="+", size_hint=(0.1, 1))
+        self.times_label = Label(text="times",color=(0,0,0,1), size_hint=(0.2, 1))  # Label for "times"
 
         # Increment and decrement logic for the counter
         self.minus_button.bind(on_press=self.decrement_times)
@@ -328,8 +420,8 @@ class RepeatOptionsModal(ModalView):
 
         # Add save and cancel buttons
         save_cancel_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(1, None), height=50)
-        save_cancel_layout.add_widget(Button(text="Cancel", size_hint=(0.5, 1), on_release=self.dismiss))
-        save_cancel_layout.add_widget(Button(text="Save", size_hint=(0.5, 1), on_release=self.save))
+        save_cancel_layout.add_widget(UniformButton(text="Cancel", size_hint=(0.5, 1), on_release=self.dismiss))
+        save_cancel_layout.add_widget(UniformButton(text="Save", size_hint=(0.5, 1), on_release=self.save))
         layout.add_widget(save_cancel_layout)
 
         # Add the layout to the modal
@@ -372,6 +464,10 @@ class RepeatOptionsModal(ModalView):
 
         self.dismiss()
 
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
 
 ####################### Priority Options Modal ###########################
 class PriorityOptionsModal(ModalView):
@@ -386,22 +482,38 @@ class PriorityOptionsModal(ModalView):
             **kwargs: Additional keyword arguments passed to the superclass.
         """
         super().__init__(**kwargs)
-        self.size_hint = (0.6, 0.4)  # Set modal size
+        self.size_hint = (0.6, 0.525)  # Set modal size
         self.auto_dismiss = False  # Prevent accidental dismissal
         self.task_modal = task_modal  # Store reference to the task modal
+        
+        # Access app-wide styles
+        app = App.get_running_app()
 
         # Create the main layout for priority options
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
 
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
+
         # Add buttons for each priority option
         options = Priority.priority_options() + ["Clear"]
         for option in options:
-            button = Button(text=option, size_hint_y=None, height=50)
+            button = UniformButton(text=option, size_hint_y=None, height=50)
             button.bind(on_release=self.set_priority_option)  # Bind selection to handler
             layout.add_widget(button)
 
         # Add a cancel button to dismiss the modal
-        cancel_button = Button(text="CANCEL", size_hint_y=None, height=50, on_release=self.dismiss)
+        cancel_button = UniformButton(text="CANCEL", size_hint_y=None, height=50, on_release=self.dismiss)
         layout.add_widget(cancel_button)
 
         self.add_widget(layout)  # Add the layout to the modal
@@ -419,6 +531,10 @@ class PriorityOptionsModal(ModalView):
             self.task_modal.priority_button.text = instance.text  # Update the priority option in the parent modal
         self.dismiss()  # Close the modal
 
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
 ####################### Category Modals ###########################
 class CategoryModal(ModalView):
     """A modal for adding a new category to tasks."""
@@ -440,9 +556,25 @@ class CategoryModal(ModalView):
         super().__init__(**kwargs)
         self.task_modal = task_modal  # Store reference to the task modal
         self.size_hint = (0.8, 0.4)  # Set modal size
+        
+        # Access app-wide styles
+        app = App.get_running_app()
 
         # Create the main layout for the modal
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
+
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
 
         # Input field for new category
         self.new_category_input = TextInput(hint_text="Enter new category")
@@ -450,8 +582,8 @@ class CategoryModal(ModalView):
 
         # Action buttons to cancel or save the category
         button_layout = BoxLayout(orientation='horizontal', spacing=10)
-        button_layout.add_widget(Button(text="CANCEL", on_release=self.dismiss))
-        button_layout.add_widget(Button(text="SAVE", on_release=self.save_category))
+        button_layout.add_widget(UniformButton(text="CANCEL", on_release=self.dismiss))
+        button_layout.add_widget(UniformButton(text="SAVE", on_release=self.save_category))
         layout.add_widget(button_layout)
 
         self.add_widget(layout)  # Add the layout to the modal
@@ -485,6 +617,11 @@ class CategoryModal(ModalView):
 
         self.dismiss()  # Close the modal
 
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
+
 class DuplicateCategoryModal(ModalView):
     """A modal to notify the user if a duplicate category is detected."""
 
@@ -497,13 +634,34 @@ class DuplicateCategoryModal(ModalView):
         """
         super().__init__(**kwargs)
         self.size_hint = (0.6, 0.3)  # Set modal size
+        
+        # Access app-wide styles
+        app = App.get_running_app()
 
         # Create the layout with error message and OK button
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
-        layout.add_widget(Label(text="This category already exists."))
-        layout.add_widget(Button(text="OK", on_release=self.dismiss))
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
+
+        layout.add_widget(Label(text="This category already exists.", color=(0,0,0,1)))
+        layout.add_widget(UniformButton(text="OK", on_release=self.dismiss))
 
         self.add_widget(layout)  # Add layout to modal
+
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
 
 class CategoryConfirmationModal(ModalView):
     """A modal to confirm the addition of a new category."""
@@ -520,10 +678,31 @@ class CategoryConfirmationModal(ModalView):
         """
         super().__init__(**kwargs)
         self.size_hint = (0.6, 0.3)  # Set modal size
+        
+        # Access app-wide styles
+        app = App.get_running_app()
 
         # Create layout with confirmation message and OK button
         layout = BoxLayout(orientation='vertical', padding=10, spacing=10)
-        layout.add_widget(Label(text=f"Category '{category_name}' added successfully!"))
-        layout.add_widget(Button(text="OK", on_release=self.dismiss))
+        # Add a custom background color with rounded corners
+        with layout.canvas.before:
+            Color(rgba=app.Background_Color)  # Use the app's background color
+            self.bg_rect = RoundedRectangle(
+                pos=layout.pos,
+                size=layout.size,
+                radius=[dp(20)]
+            )
+
+        # Bind the position and size of the layout to update the background rectangle dynamically
+        layout.bind(pos=self.update_background, size=self.update_background)
+
+
+        layout.add_widget(Label(text=f"Category '{category_name}' added successfully!", color=(0,0,0,1)))
+        layout.add_widget(UniformButton(text="OK", on_release=self.dismiss))
 
         self.add_widget(layout)  # Add layout to modal
+
+    def update_background(self, *args):
+        """Update the size and position of the background rectangle."""
+        self.bg_rect.pos = self.pos
+        self.bg_rect.size = self.size
