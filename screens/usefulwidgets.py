@@ -360,7 +360,7 @@ class RepeatOptionsModal(ModalView):
             - A modal with options to select repeat frequency and times is displayed.
         """
         super().__init__(**kwargs)
-        self.size_hint = (0.6, 0.3)  # Compact modal size
+        self.size_hint = (0.9, 0.22)  # Compact modal size
         self.auto_dismiss = False  # Prevent accidental dismissal
         self.task_modal = task_modal  # Reference to the parent task modal
         
@@ -387,21 +387,21 @@ class RepeatOptionsModal(ModalView):
         repeat_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(1, None), height=50)
 
         # "Repeats" label
-        self.repeats_label = Label(text="Repeats", color=(0,0,0,1), size_hint=(0.2, 1))
+        self.repeats_label = Label(text="Repeats", color=(0,0,0,1), font_size=app.button_font_size, size_hint=(0.2, 1))
 
         # Spinner for repeat frequency
         self.repeats_spinner = UniformSpinner(
             text="Never Repeats",
             values=["Never Repeats", "Daily", "Weekly", "Monthly", "Yearly"],
-            size_hint=(0.4, 1),
+            size_hint=(0.5, 1),
         )
         self.repeats_spinner.bind(text=self.update_visibility)
 
         # Counter widgets for repeat times
         self.minus_button = UniformButton(text="-", size_hint=(0.1, 1))
-        self.times_input = Label(text="1", color=(0,0,0,1), size_hint=(0.1, 1), halign="center", valign="middle")
+        self.times_input = Label(text="1", color=(0,0,0,1), font_size=app.button_font_size, size_hint=(0.1, 1), halign="center", valign="middle")
         self.plus_button = UniformButton(text="+", size_hint=(0.1, 1))
-        self.times_label = Label(text="times",color=(0,0,0,1), size_hint=(0.2, 1))  # Label for "times"
+        self.times_label = Label(text="times",color=(0,0,0,1), font_size=app.button_font_size, size_hint=(0.2, 1))  # Label for "times"
 
         # Increment and decrement logic for the counter
         self.minus_button.bind(on_press=self.decrement_times)
