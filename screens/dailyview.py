@@ -53,6 +53,7 @@ class DailyView(Screen):  # Change inheritance to Screen
     def update_date_label(self):
         """Updates the date label to show the current date."""
         self.ids.date_label.text = self.current_date.strftime("%B %d, %Y")
+        print(self.current_date.strftime("%B %d, %Y"))
 
     def navigate_previous_day(self):
         """Navigate to the previous day."""

@@ -315,11 +315,12 @@ class CalendarView(Screen):
         edit_event_modal.open()
 
     def open_daily_view(self, day):
-        print (day)
         """Open the DailyView for the selected day."""
         selected_date = datetime(self.current_year, self.current_month, day)
         daily_view = self.manager.get_screen('daily')  # Access the DailyView screen.
+        daily_view.current_date = selected_date  # Pass the selected date.
         daily_view.selected_date = selected_date  # Pass the selected date.
+        daily_view.update_date_label()
         daily_view.populate_daily_events()  # Populate the daily events.
         self.manager.transition.direction = 'left'  # Slide transition.
         self.manager.current = 'daily'  # Switch to the DailyView screen.
