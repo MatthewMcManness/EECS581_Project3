@@ -210,7 +210,8 @@ class CalendarView(Screen):
         )
 
         # Set font_size explicitly after creation
-        event_button.font_size = app.label_font_size
+        event_button.font_size = dp(12)
+        event_button.height = dp(15)
 
         # Retrieve the cell widget for the event's start date
         cell = self.get_cell_widget(start_time)

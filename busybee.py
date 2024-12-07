@@ -77,15 +77,16 @@ class BusyBeeApp(App):
 
     #Variables:
 
-    #Fonts
-    button_font_size = NumericProperty((Window.width + Window.height) * 0.015)
-    title_font_size = NumericProperty((Window.width + Window.height) * 0.02)
-    label_font_size = NumericProperty((Window.width + Window.height) * 0.01)
-
+    #Sizes
+    button_font_size = NumericProperty((Window.width + Window.height) * 0.02)
+    title_font_size = NumericProperty((Window.width + Window.height) * 0.03)
+    label_font_size = NumericProperty((Window.width + Window.height) * 0.015)
+    button_size = NumericProperty((Window.width + Window.height) * 0.025)
     #Colors
-    Background_Color = get_color_from_hex("#EEE5E9")
+    Background_Color = get_color_from_hex("#BFB1C1")
     Button_Color =get_color_from_hex("#4381C1")
     Day_Label_Color = get_color_from_hex("#92DCE5")
+    Day_Button_Color = get_color_from_hex("#EEE5E9")
     
 
 
