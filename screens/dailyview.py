@@ -6,7 +6,7 @@
 # Dates Revised:
 # - November 18, 2024, created the .py file to implement the Daily View (created by: Mariam Oraby)
 # - November 24, 2024, changed the code to make DailyView inherit from Screen (to work with the Screen Manager) (Updated by: Matthew McManness)
-# - December 7, 2024, Fixed setting date for dailyview, added prologue comments - [Magaly Camacho, Mariam Oraby]
+# - December 7, 2024, Fixed setting date for dailyview, added prologue comments, made it so calendar view is refreshed when an event is edited - [Magaly Camacho, Mariam Oraby, Manvir Kaur]
 
 from datetime import datetime, timedelta
 from kivy.uix.screenmanager import Screen
@@ -23,6 +23,7 @@ from Models import Event_
 from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle, RoundedRectangle  
+from screens.calendarview import CalendarView
 
 db = get_database()
 
@@ -115,6 +116,8 @@ class DailyView(Screen):  # Change inheritance to Screen
         """
         Fetch and display events for the selected date.
         """
+        calendar_view:CalendarView = self.manager.get_screen('calendar')  # Access the CalendarView screen.
+        calendar_view.refresh_calendar()
         if not self.selected_date:
             print("Error: No date selected.")
             return

@@ -2,7 +2,7 @@
 # Code Artifact: AddEventModal Class Definition
 # Brief Description: This code defines the `AddEventModal` class, which provides a pop-up modal for creating 
 # new events. Users can input an event name and select a date and time using a date picker widget.
-# Programmer: Matthew McManness (2210261), Manvir Kaur (3064194), Magaly Camacho (3072618)
+# Programmer: Matthew McManness (2210261), Manvir Kaur (3064194), Magaly Camacho (3072618), Mariam Oraby (3127776)
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of event modal structure (placeholder for navigation) - [Matthew McManness]
@@ -10,6 +10,7 @@
 #   - November 10, 2024: Fixed start time not being saved correctly, added check to make sure date and time are picked - [Magaly Camacho]
 #   - November 18, 2024: Implemented recurring events - [Magaly Camacho]
 #   - November 20, 2024: Matched layout with editEvent layout - [Magaly Camacho]
+#   - December 7, 2024: Fixed newly added events not being able to be edited - [Magaly Camacho, Manvir Kaur, Mariam Oraby] 
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - The `DatePicker` class must be implemented and correctly imported from `screens.usefulwidgets`.
@@ -218,7 +219,7 @@ class AddEventModal(ModalView):
                     # Log message
                     print(f"Saving event: {new_event}")
 
-                event_id = new_event.id  # Get new_event ID
+            event_id = new_event.id  # Get new_event ID
 
         # Access the running app
         app = App.get_running_app()
@@ -238,7 +239,7 @@ class AddEventModal(ModalView):
             calendar_screen.add_event(event_id, name, date)
 
         # Print the saved event details to the console.
-        print(f"Event '{event_name}' scheduled for {event_date}")
+        print(f"Event '{event_name}' scheduled for {event_date}, id={event_id}")
         self.dismiss()  # Close the modal after saving.
 
     def save_recurrence(self, frequency: Frequency, times: int) -> int:
