@@ -1,9 +1,13 @@
-#
-#
-# - November 18, 224, created the .py file to implement the Daily View (created by: Mariam Oraby)
+# Prologue Comments:
+# Code Artifact: DailyView Class Definition
+# Brief Description: This code defines the `DailyView` class for displaying a the events on a given day
+# Programmer: Matthew McManness (2210261), Mariam Oraby (3127776), Magaly Camacho (3072618)
+# Date Created: October 26, 2024
+# Dates Revised:
+# - November 18, 2024, created the .py file to implement the Daily View (created by: Mariam Oraby)
 # - November 24, 2024, changed the code to make DailyView inherit from Screen (to work with the Screen Manager) (Updated by: Matthew McManness)
-#
-#
+# - December 7, 2024, Fixed setting date for dailyview, added prologue comments - [Magaly Camacho, Mariam Oraby]
+
 from datetime import datetime, timedelta
 from kivy.uix.screenmanager import Screen
 from kivy.uix.boxlayout import BoxLayout
@@ -52,20 +56,18 @@ class DailyView(Screen):  # Change inheritance to Screen
 
     def update_date_label(self):
         """Updates the date label to show the current date."""
-        self.ids.date_label.text = self.current_date.strftime("%B %d, %Y")
-        print(self.current_date.strftime("%B %d, %Y"))
+        self.ids.date_label.text = self.current_date.strftime("%A %B %d, %Y").replace(" ", "\n", 1)
+        print(self.current_date.strftime("%A %B %d, %Y"))
 
     def navigate_previous_day(self):
         """Navigate to the previous day."""
         self.current_date -= timedelta(days=1)
-        self.update_date_label()
-        self.populate_events()
+        self.set_date()
 
     def navigate_next_day(self):
         """Navigate to the next day."""
         self.current_date += timedelta(days=1)
-        self.update_date_label()
-        self.populate_events()
+        self.set_date()
 
     def populate_events(self):
         """Populate the event list for the current date."""
@@ -90,20 +92,23 @@ class DailyView(Screen):  # Change inheritance to Screen
     def add_event(self):
         """Placeholder function to add a new event."""
         print("Add Event button clicked!")
+
     def on_kv_post(self, base_widget):
         """Populate events after the KV file is loaded."""
         if self.selected_date:
             self.populate_daily_events()
 
-    def set_date(self, date_obj):
+    def set_date(self, date_obj=None):
         """
         Set the selected date and refresh the events.
         """
+        if date_obj is None:
+            date_obj = self.current_date
         if isinstance(date_obj, str):
             self.selected_date = datetime.strptime(date_obj, '%Y-%m-%d')
         else:
             self.selected_date = date_obj
-        self.ids['date_label'].text = self.selected_date.strftime('%A, %B %d, %Y')
+        self.ids['date_label'].text = self.selected_date.strftime('%A %B %d, %Y').replace(" ", "\n", 1)
         self.refresh_events()
 
     def refresh_events(self):
@@ -114,9 +119,9 @@ class DailyView(Screen):  # Change inheritance to Screen
             print("Error: No date selected.")
             return
 
-        session = db.get_session()
         try:
             # Query events for the selected date
+            session = db.get_session()
             start_of_day = datetime.combine(self.selected_date, datetime.min.time())
             end_of_day = datetime.combine(self.selected_date, datetime.max.time())
 
@@ -124,16 +129,18 @@ class DailyView(Screen):  # Change inheritance to Screen
                 Event_.start_time >= start_of_day,
                 Event_.start_time <= end_of_day
             )
+
             events = session.scalars(stmt).all()
             self.display_events(events)
-        finally:
             session.close()
+        except Exception as e:
+            print(e)
 
     def display_events(self, events):
         """
-        Display events in the `events_container`.
+        Display events in the `event_list`.
         """
-        container = self.ids['events_container']
+        container = self.ids['event_list']
         container.clear_widgets()  # Clear existing widgets
 
         if not events:
@@ -190,10 +197,12 @@ class DailyView(Screen):  # Change inheritance to Screen
 
         edit_modal = EditEventModal(event_id=event_id, refresh_callback=self.refresh_events)
         edit_modal.open()
+
     def populate_daily_events(self):
         """Retrieve and display events for the selected day."""
-        session = db.get_session()
         try:
+            session = db.get_session()
+            
             # Query events for the selected day
             stmt = select(Event_).where(
                 extract("year", Event_.start_time) == self.selected_date.year,
@@ -214,6 +223,8 @@ class DailyView(Screen):  # Change inheritance to Screen
                 event_box = EventBox()
                 event_box.add_widget(Label(text=f"{event.start_time.strftime('%H:%M')} - {event.name}"))
                 events_list.add_widget(event_box)
-
-        finally:
+            
             session.close()
+        
+        except Exception as e:
+            print(e)
