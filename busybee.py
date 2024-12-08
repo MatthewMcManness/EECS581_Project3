@@ -11,8 +11,9 @@
 # - November 4, 2024: Added call to To Do list view so that tasks already in the database are populated (Updated by: Magaly Camacho)
 # - November 11, 2024: Added open_edit_task_modal(self, task_id) (Updated by: Matthew McManness)
 # - November 24, 2024: Added switch_to_daily_view_today to facilitate seeing the daily view (Matthew McManness)
-# - November 24,2024: Resolved conflicts to merch testing-1 branch with main (Maagaly Camacho)
+# - November 24,2024: Resolved conflicts to merch testing-1 branch with main (Magaly Camacho)
 # - December 6, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+# - December 7, 2024: Added theme toggling functionality (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy must be installed and properly configured in the Python environment.

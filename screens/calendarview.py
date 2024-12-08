@@ -17,6 +17,7 @@
 #   - December 5, 2024: Redid the add_event() to truncate names that were too long and added a hover feature to display the full name and time of events [Matthew McManness]
 #   - December 6, 2024: changed the populate_calendar() to call open_daily_view() when a day is pressed and created open_daily_view() (to see the details of days when there are more than two events) - [Matthew McManness] 
 #   - December 7, 2024: Fixed setting date for dailyview - [Magaly Camacho, Mariam Oraby]
+#   - December 7, 2024: Removed EventBox class since it wasn't used - [Magaly Camacho]
 #
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
