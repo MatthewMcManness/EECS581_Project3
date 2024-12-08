@@ -187,7 +187,7 @@ class AddEventModal(ModalView):
 
         # Extract and sanitize repeat information
         repeat_info = self.repeat_button.text.split(" ")
-        repeat_frequency = repeat_info[0].replace("Repeats", "").strip()  # Remove unnecessary prefix like "Repeats"
+     
         frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[1])
         times = None if len(repeat_info) == 2 else int(repeat_info[2])
 
@@ -221,7 +221,7 @@ class AddEventModal(ModalView):
                     recurrence_id = None
 
                 session.add(new_event)  # Save the main event
-                event_id = new_event.id  # Get the ID of the newly saved event
+            event_id = new_event.id  # Get the ID of the newly saved event
 
         # Update the CalendarView with the new event(s)
         app = App.get_running_app()
