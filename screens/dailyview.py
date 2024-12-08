@@ -4,10 +4,11 @@
 # Programmer: Matthew McManness (2210261), Mariam Oraby (3127776), Magaly Camacho (3072618)
 # Date Created: October 26, 2024
 # Dates Revised:
-# - November 18, 2024, created the .py file to implement the Daily View (created by: Mariam Oraby)
-# - November 24, 2024, changed the code to make DailyView inherit from Screen (to work with the Screen Manager) (Updated by: Matthew McManness)
-# - December 7, 2024, Fixed setting date for dailyview, added prologue comments, made it so calendar view is refreshed when an event is edited - [Magaly Camacho, Mariam Oraby, Manvir Kaur]
-# - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+#   - November 18, 2024: created the .py file to implement the Daily View - [Mariam Oraby]
+#   - November 24, 2024: changed the code to make DailyView inherit from Screen (to work with the Screen Manager) - [Matthew McManness]
+#   - December 7, 2024: Fixed setting date for dailyview, added prologue comments, made it so calendar view is refreshed when an event is edited - [Magaly Camacho, Mariam Oraby, Manvir Kaur]
+#   - December 7, 2024: Implemented variables for ease of UI modification - [Matthew McManness]
+#   - December 8, 2024: Removed example testing code that's unnecessary now - [Manvir Kaur]
 
 from datetime import datetime, timedelta
 from kivy.uix.screenmanager import Screen
@@ -76,20 +77,6 @@ class DailyView(Screen):  # Change inheritance to Screen
         event_list = self.ids.event_list
         event_list.clear_widgets()
 
-        # Example of loading events
-        example_events = [
-            {"time": "08:00 AM", "title": "Meeting"},
-            {"time": "01:00 PM", "title": "Lunch with Alex"},
-            {"time": "05:00 PM", "title": "Gym"},
-        ]
-
-        for event in example_events:
-            box = BoxLayout(orientation='horizontal', size_hint_y=None, height='40dp')
-            time_label = Label(text=f"{event['time']} - {event['title']}")
-            edit_button = Label(text="Edit", size_hint_x=0.2)
-            box.add_widget(time_label)
-            box.add_widget(edit_button)
-            event_list.add_widget(box)
 
     def add_event(self):
         """Placeholder function to add a new event."""
