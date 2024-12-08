@@ -37,7 +37,7 @@ class EventBox(BoxLayout):
         super().__init__(**kwargs)  # Initialize BoxLayout class
         # Initialize size of EventBox and make its background color white
         with self.canvas.before:
-            Color(0, 0, 0, 0)
+            Color(1, 1, 1, 1)
             self.rect = Rectangle(size=self.size, pos=self.pos)
         # When EventBox is updated, make sure size is correct
         self.bind(size=self.update_rect, pos=self.update_rect)
@@ -152,6 +152,7 @@ class DailyView(Screen):  # Change inheritance to Screen
             container.add_widget(Label(text="No events for this day.", size_hint_y=None, height=dp(40)))
             return
 
+        print("here 2")
         for event in events:
             self.add_event_to_container(event, container)
 
@@ -159,7 +160,7 @@ class DailyView(Screen):  # Change inheritance to Screen
         """
         Add a single event to the container.
         """
-        event_box = BoxLayout(orientation='horizontal', size_hint_y=None, height=dp(60), spacing=dp(10))
+        event_box = BoxLayout(orientation='horizontal', size_hint_y=None, height=dp(60), spacing=dp(5), padding=dp(5))
         
         # Display event name and time
         time_label = Label(
@@ -179,9 +180,7 @@ class DailyView(Screen):  # Change inheritance to Screen
         # Add a button to edit the event
         edit_button = Button(
             text="Edit",
-            size_hint=(None, None),
-            width=dp(60),
-            height=dp(40),
+            size_hint_x=0.2,#(None, None),
             on_press=lambda instance, event_id=event.id: self.open_edit_event_modal(event.id)
         )
         
@@ -227,6 +226,7 @@ class DailyView(Screen):  # Change inheritance to Screen
                 event_box = EventBox()
                 event_box.add_widget(Label(text=f"{event.start_time.strftime('%H:%M')} - {event.name}"))
                 events_list.add_widget(event_box)
+                print("here")
             
             session.close()
         

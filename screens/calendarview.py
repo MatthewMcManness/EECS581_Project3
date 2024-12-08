@@ -78,25 +78,6 @@ class UniformButton(Button):
 calendar.setfirstweekday(calendar.SUNDAY)
 
 db = get_database()  # Get database
-
-class EventBox(BoxLayout):
-    """A BoxLayout to hold event details"""
-    event_id = ObjectProperty(None)
-        
-    def __init__(self, **kwargs):
-        """Initialize the EventBox"""
-        super().__init__(**kwargs)  # Initialize BoxLayout class
-        # Initialize size of EventBox and make its background color white
-        with self.canvas.before:
-            Color(0, 0, 0, 0)
-            self.rect = Rectangle(size=self.size, pos=self.pos)
-        # When EventBox is updated, make sure size is correct
-        self.bind(size=self.update_rect, pos=self.update_rect)
-
-    def update_rect(self, *args):
-        """Update rectangle to match the size and position of the EventBox"""
-        self.rect.pos = self.pos
-        self.rect.size = self.size
         
 class CalendarView(Screen):
     """Displays a monthly calendar with navigational buttons and day selection."""

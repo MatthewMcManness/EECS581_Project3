@@ -37,23 +37,23 @@ ScreenManager:
                 size_hint_y: None
                 height: dp(50)
                 spacing: dp(10)
+                padding: [0, dp(20), 0, dp(10)]  # Add padding on top and bottom
                 Label:
                     text: "Calendar"
                     font_size: app.title_font_size
-                    color: (0, 0, 0, 1)
+                    color: app.Title_Color
 
             # Navigation buttons
             BoxLayout:
                 size_hint_y: None
                 height: dp(40)
                 spacing: dp(10)
+                padding: [dp(10), 0, dp(10), 0]  # Add padding on sides
                 UniformButton:
                     text: "Previous"
                     on_press: root.change_month(-1)
-                Label:
+                UniformButtonClear:
                     text: root.month_year_text
-                    font_size: app.button_font_size
-                    color: (0, 0, 0, 1)
                 UniformButton:
                     text: "Next"
                     on_press: root.change_month(1)
@@ -63,6 +63,7 @@ ScreenManager:
                 size_hint_y: None
                 height: dp(40)
                 spacing: dp(2)
+                padding: [dp(10), dp(10)]
                 canvas.before:
                     Color:
                         rgba: app.Day_Label_Color
@@ -106,6 +107,7 @@ ScreenManager:
                     id: calendar_grid
                     cols: 7
                     spacing: dp(5)
+                    padding: [dp(5), 0] # add padding to sides
                     row_default_height: dp(60)
                     row_force_default: True
                     adaptive_height: True
@@ -115,13 +117,16 @@ ScreenManager:
                 size_hint_y: None
                 height: dp(80)  # Increased height for padding
                 spacing: dp(10)
-                padding: [0, dp(10), 0, dp(10)]  # Add vertical padding
+                padding: [dp(10), dp(10), dp(10), dp(10)]  # Add padding
+                UniformButton:
+                    text: "To-Do List"
+                    on_release: app.switch_to_screen("todo")
                 UniformButton:
                     text: "Add Event"
                     on_release: app.open_add_event_modal()
                 UniformButton:
-                    text: "To-Do List"
-                    on_release: app.switch_to_screen("todo")
+                    text: "Toggle Theme"
+                    on_release: app.toggle_theme()
 
 <ToDoListView>:
     name: "todo"
@@ -146,16 +151,18 @@ ScreenManager:
                 size_hint_y: None
                 height: dp(50)
                 spacing: dp(10)
+                padding: [0, dp(20), 0, dp(10)]  # Add padding on top and bottom
                 Label:
                     text: "To-Do List"
                     font_size: app.title_font_size
-                    color: (0, 0, 0, 1)
+                    color: app.Title_Color
 
             # Sort and filter options
             BoxLayout:
                 size_hint_y: None
-                height: dp(70)
+                height: dp(40)
                 spacing: dp(10)
+                padding: [dp(10), 0, dp(10), 0]
                 UniformSpinner:
                     id: filter_spinner
                     text: "Filter by Priority"
@@ -173,6 +180,7 @@ ScreenManager:
                     id: task_list
                     cols: 1
                     spacing: dp(5)
+                    padding: [dp(10), 0, dp(10), 0]  # Add padding on sides
                     size_hint_y: None
                     height: self.minimum_height
 
@@ -181,13 +189,16 @@ ScreenManager:
                 size_hint_y: None
                 height: dp(80)  # Increased height for padding
                 spacing: dp(10)
-                padding: [0, dp(10), 0, dp(10)]  # Add vertical padding
+                padding: [dp(10), dp(10), dp(10), dp(10)]  # Add vertical padding
+                UniformButton:
+                    text: "Calendar View"
+                    on_release: app.switch_to_screen("calendar")
                 UniformButton:
                     text: "Add Task"
                     on_release: app.open_add_task_modal()
                 UniformButton:
-                    text: "Calendar View"
-                    on_release: app.switch_to_screen("calendar")
+                    text: "Toggle Theme"
+                    on_release: app.toggle_theme()
 
 <DailyView>:
     name: "daily"
@@ -212,16 +223,18 @@ ScreenManager:
                 size_hint_y: None
                 height: dp(50)
                 spacing: dp(10)
+                padding: [0, dp(20), 0, dp(10)]  # Add padding on top and bottom
                 Label:
                     text: "Daily View"
                     font_size: app.title_font_size
-                    color: (0, 0, 0, 1)
+                    color: app.Title_Color
 
             # Date navigation
             BoxLayout:
                 size_hint_y: None
                 height: dp(50)
                 spacing: dp(10)
+                padding: [dp(10), 0, dp(10), 0]  # Add padding on sides
                 UniformButton:
                     text: "Previous"
                     on_press: root.navigate_previous_day()
@@ -229,7 +242,7 @@ ScreenManager:
                     id: date_label
                     text: "Date"
                     font_size: app.button_font_size
-                    color: (0, 0, 0, 1)
+                    color: app.Title_Color
                     size_hint_x: 1
                     halign: "center"
                     valign: "middle"
@@ -244,6 +257,7 @@ ScreenManager:
                     id: event_list
                     cols: 1
                     spacing: dp(10)
+                    padding: [dp(10), 0, dp(10), 0]  # Add padding on sides
                     size_hint_y: None
                     height: self.minimum_height
 
@@ -252,7 +266,7 @@ ScreenManager:
                 size_hint_y: None
                 height: dp(80)  # Increased height for padding
                 spacing: dp(10)
-                padding: [0, dp(10), 0, dp(10)]  # Add vertical padding
+                padding: [dp(10), dp(10), dp(10), dp(10)]  # Add vertical padding
                 UniformButton:
                     text: "Add Event"
                     on_release: app.open_add_event_modal()
@@ -271,6 +285,22 @@ ScreenManager:
     canvas.before:
         Color:
             rgba: app.Button_Color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [self.height / 2]
+
+<UniformButtonClear@Button>:
+    background_normal: ""
+    background_color: (0, 0, 0, 0)
+    color: (1, 1, 1, 1)
+    font_size: app.button_font_size
+    padding: [dp(10), dp(10)]
+    size_hint_y: None
+    height: dp(50)
+    canvas.before:
+        Color:
+            rgba: app.Background_Color
         RoundedRectangle:
             pos: self.pos
             size: self.size

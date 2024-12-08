@@ -66,6 +66,7 @@ from kivy.uix.screenmanager import ScreenManager
 from kivy.properties import NumericProperty
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
+from theme import Theme, THEME_SETTINGS
 
 
 # -----------------------------------------------------------------------------
@@ -82,15 +83,16 @@ class BusyBeeApp(App):
     title_font_size = NumericProperty((Window.width + Window.height) * 0.03)
     label_font_size = NumericProperty((Window.width + Window.height) * 0.015)
     button_size = NumericProperty((Window.width + Window.height) * 0.025)
+
     #Colors
+    Title_Color = get_color_from_hex("#FFFFFF")
     Background_Color = get_color_from_hex("#BFB1C1")
-    Button_Color =get_color_from_hex("#4381C1")
+    Button_Color = get_color_from_hex("#4381C1")
     Day_Label_Color = get_color_from_hex("#92DCE5")
     Day_Button_Color = get_color_from_hex("#EEE5E9")
+
+    current_theme = Theme.LIGHT
     
-
-
-
 
     def build(self):
         """
@@ -211,6 +213,28 @@ class BusyBeeApp(App):
         daily_view.update_date_label()  # Update the date label
         daily_view.populate_events()  # Populate today's events
         self.screen_manager.current = "daily"  # Switch to the Daily View screen
+
+    def toggle_theme(self):
+        """Toggle theme between light and dark mode"""
+        # get new them and save
+        self.current_theme = Theme.toggle(self.current_theme)
+        theme_settings = self.current_theme.get_settings()
+
+        # update colors
+        self.Title_Color = theme_settings["Title_Color"]
+        self.Background_Color = theme_settings["Background_Color"]
+        self.Button_Color = theme_settings["Button_Color"]
+        self.Day_Label_Color = theme_settings["Day_Label_Color"]
+        self.Day_Button_Color = theme_settings["Day_Button_Color"]
+
+        # releod screens
+        for screen in self.screen_manager.screens:
+            screen.__init__()
+
+        # re-add tasks
+        self.root.get_screen('todo').populate()
+        
+
 
 def open_edit_event_modal(self, event_id):
     edit_event_modal = EditEventModal(event_id=event_id, refresh_callback=self.populate)
