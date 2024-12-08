@@ -1,7 +1,6 @@
 # Prologue Comments:
 # Code Artifact: ToDoListView Class Definition
-# Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage 
-# tasks in a to-do list. It provides a method to add tasks dynamically based on input data.
+# Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage  tasks in a to-do list. It provides a method to add tasks dynamically based on input data.
 # Programmer: Matthew McManness (2210261), Manvir Kaur (3064194), and Magaly Camacho (3072618)
 # Date Created: October 26, 2024
 # Dates Revised:
@@ -15,9 +14,10 @@
 #   - November 23, 2024: choosing a sorting option prints it to terminal instead of crashing - [Manvir Kaur]
 #   - November 23, 2024: updating populate function to correctly sort all tasks according to the option selected - [Manvir Kaur]
 #   - November 24, 2024: Implemented the filter_tasks fuction - [Matthew McManness]
-#   - November 27, 2024: Drag-and-drop almost working as intended - [Manvir Kaur]
+#   - November 27, 2024: Drag-and-drop almost working as intended but you have to right-click to get a red dot to appear which you can the drag to drag and drop the task - [Manvir Kaur]
 #   - December 06, 2024: Added an edit button for all tasks instead of just clicking the task so drag-and-drop can work without edit screen popping up - [Manvir Kaur]
-#   - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+#   - December 06, 2024: Fixed the drag-and-drop functionality to work perfectly! - [Manvir Kaur]
+#   - December 07, 2024: Implemented variables for ease of UI modification (Matthew McManness)
 #  - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -215,6 +215,10 @@ class ToDoListView(Screen):
     def populate(self):
         """
         Populate the ToDoListView with tasks from the database, sorted based on the current_sort attribute.
+        
+        Postconditions:
+            - Retrieves all tasks, including those created through recurrence.
+            - Tasks are displayed in the to-do list, ordered by due date.
         """
         with db.get_session() as session:
             stmt = None  # Initialize stmt to avoid UnboundLocalError
