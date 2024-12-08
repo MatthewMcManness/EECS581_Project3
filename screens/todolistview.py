@@ -17,7 +17,8 @@
 #   - November 27, 2024: Drag-and-drop almost working as intended but you have to right-click to get a red dot to appear which you can the drag to drag and drop the task - [Manvir Kaur]
 #   - December 06, 2024: Added an edit button for all tasks instead of just clicking the task so drag-and-drop can work without edit screen popping up - [Manvir Kaur]
 #   - December 06, 2024: Fixed the drag-and-drop functionality to work perfectly! - [Manvir Kaur]
-#   - December 07, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+#   - December 07, 2024: Implemented variables for ease of UI modification - [Matthew McManness]
+#   - December 08, 2024: Removed update_task_order since we do not need that based on our requirements - [Manvir Kaur]
 #  - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -142,24 +143,9 @@ class TaskBox(BoxLayout):
             for sibling in siblings:
                 task_list.add_widget(sibling)
 
-            # Update the task order in the database (optional)
-            self.update_task_order()
-
             return True
         return super().on_touch_up(touch)
-
-    def update_task_order(self):
-        """Update task order in the database based on the current UI order."""
-        task_list = self.parent
-        task_ids = [child.task_id for child in task_list.children if isinstance(child, TaskBox)]
-        print(f"New task order: {task_ids}")
-
-        with db.get_session() as session:
-            for index, task_id in enumerate(reversed(task_ids), start=1):
-                task = session.query(Task).filter_by(id=task_id).first()
-                if task:
-                    task.order_index = index  # Assuming an `order_index` column exists
-            session.commit()
+        
             
 class ToDoListView(Screen):
     """A screen for displaying the To-Do List."""
