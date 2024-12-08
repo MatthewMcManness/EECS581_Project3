@@ -174,8 +174,8 @@ class EditEventModal(ModalView):
         start_time = (" ").join(self.event_date_label.text.split(" ")[2:]) if "Event Date:" in self.event_date_label.text else None # remove "Event Date:"
         start_time = datetime.strptime(start_time, "%Y-%m-%d %H:%M") if start_time else None
         repeat_info = self.repeat_button.text.split(" ")
-        frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[0]) # None if "Doesn't Repeat"
-        times = None if len(repeat_info) == 2 else int(repeat_info[1].split(" ")[0].replace("(", "")) # None if "Doesn't repeat"
+        frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[1]) # None if "Doesn't Repeat"
+        times = None if len(repeat_info) == 2 else int(repeat_info[2]) # None if "Doesn't repeat"
 
         with db.get_session() as session, session.begin():
             if self.event_id:

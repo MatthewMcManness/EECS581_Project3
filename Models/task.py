@@ -69,7 +69,7 @@ class Task(Item):
     )
     
     priority: Mapped[Optional[Priority]] = mapped_column(
-        default=Priority.LOW # defaults to low priority
+
     )
     
     t_created: Mapped[datetime] = mapped_column(

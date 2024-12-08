@@ -168,90 +168,90 @@ class AddEventModal(ModalView):
 
     def save_event(self, *args):
         """Save the event details and validate input."""
-        event_name = self.event_name_input.text.strip()  # Get the trimmed event name.
-        event_date = self.event_date_label.text  # Get the selected event date from the label.
+        # Get the event name and event date from user inputs
+        event_name = self.event_name_input.text.strip()  # Get the trimmed event name
+        event_date_label = self.event_date_label.text  # Get the selected event date from the label
 
-        # Ensure the event name is not empty before saving.
-        if not self.event_name_input.text or self.event_date_label.text == "Pick Event Date & Time":
-            print("Event Name and Datetime are required.")  # Print error if the name is empty.
-            return  # Stop execution to prevent saving.
+        # Ensure the event name and date are provided before saving
+        if not event_name or event_date_label == "Pick Event Date & Time":
+            print("Event Name and Datetime are required.")  # Print error if the name or date is missing
+            return  # Stop execution to prevent saving
 
-        # Gets info from inputs
-        name = self.event_name_input.text
-        notes = self.notes_input.text
-        date = self.event_date_label.text
+        # Parse event date and time
+        try:
+            event_date = " ".join(event_date_label.split(" ")[2:])  # Extract the date-time from the label
+            start_time = datetime.strptime(event_date, "%Y-%m-%d %H:%M")
+        except ValueError:
+            print("Invalid date format.")
+            return
+
+        # Extract and sanitize repeat information
         repeat_info = self.repeat_button.text.split(" ")
-        frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[0])
-        times = None if len(repeat_info) == 2 else int(repeat_info[1].split(" ")[0].replace("(", ""))
+        repeat_frequency = repeat_info[0].replace("Repeats", "").strip()  # Remove unnecessary prefix like "Repeats"
+        frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[1])
+        times = None if len(repeat_info) == 2 else int(repeat_info[2])
 
-        # Connection to the database
+        # Extract additional notes
+        notes = self.notes_input.text.strip()
+
+        # Connect to the database and save the event
         with db.get_session() as session:
             with session.begin():  # Transaction started that will auto commit before exiting
-                # Collecting event data
-                new_event = Event_(name=name, notes=notes)
+                # Create and save the main event
+                new_event = Event_(name=event_name, notes=notes, start_time=start_time)
 
-                # Add the date of the event
-                date = " ".join(self.event_date_label.text.split(" ")[2:])
-                new_event.start_time = datetime.strptime(date, "%Y-%m-%d %H:%M")  # Adding date and time to the event
-
-                # Add the event to the session
-                session.add(new_event)
-
-                # Add recurrence and create other events, if needed
+                # Add recurrence details if specified
                 if times and frequency:
-                    recurrence_id = self.save_recurrence(frequency, times)  # Save recurrence
-                    new_event.recurrence_id = recurrence_id  # Add recurrence to event
+                    recurrence_id = self.save_recurrence(frequency, times)  # Save recurrence in DB
+                    new_event.recurrence_id = recurrence_id  # Link recurrence to the event
 
-                    # Create other events
-                    current_date = new_event.start_time
+                    # Generate additional events based on recurrence
+                    current_date = start_time
                     for _ in range(times - 1):
-                        new_date = frequency.get_next_date(current_date, new_event.start_time)
-
-                        # Create event with same info as new_event but update the date
-                        event_i = Event_(
-                            name=new_event.name,
-                            notes=new_event.notes,
+                        new_date = frequency.get_next_date(current_date, start_time)
+                        recurring_event = Event_(
+                            name=event_name,
+                            notes=notes,
                             start_time=new_date,
                             recurrence_id=recurrence_id
                         )
-                        current_date = new_date  # Save date to calculate next one
-                        session.add(event_i)
+                        session.add(recurring_event)
+                        current_date = new_date  # Update the current date for the next recurrence
+                else:
+                    recurrence_id = None
 
-                    # Log message
-                    print(f"Saving event: {new_event}")
+                session.add(new_event)  # Save the main event
+                event_id = new_event.id  # Get the ID of the newly saved event
 
-            event_id = new_event.id  # Get new_event ID
-
-        # Access the running app
+        # Update the CalendarView with the new event(s)
         app = App.get_running_app()
         calendar_screen = app.screen_manager.get_screen('calendar')
 
-        # If repeating events, add them all to the Calendar screen
-        if times and frequency:
-            with db.get_session() as session:  # Start session to get all events
-                stmt = select(Event_).where(Event_.recurrence_id == recurrence_id)  # SQL statement
-                events = session.scalars(stmt)  # Query database
-
+        # Add recurring events to the calendar if applicable
+        if recurrence_id:
+            with db.get_session() as session:
+                stmt = select(Event_).where(Event_.recurrence_id == recurrence_id)
+                events = session.scalars(stmt)
                 for event in events:
-                    calendar_screen.add_event(event.id, event.name, event.start_time, frequency=frequency, times=times)
-
-        # Otherwise, add the single event to the Calendar screen
+                    calendar_screen.add_event(
+                        event.id, event.name, event.start_time, frequency=frequency, times=times
+                    )
         else:
-            calendar_screen.add_event(event_id, name, date)
+            # Add a single event to the calendar
+            calendar_screen.add_event(event_id, event_name, start_time)
 
-        # Print the saved event details to the console.
-        print(f"Event '{event_name}' scheduled for {event_date}, id={event_id}")
-        self.dismiss()  # Close the modal after saving.
+        # Log success and dismiss the modal
+        print(f"Event '{event_name}' scheduled for {event_date_label}, id={event_id}")
+        self.dismiss()  # Close the modal after saving
+
 
     def save_recurrence(self, frequency: Frequency, times: int) -> int:
-        """Saves the given recurrence and returns its ID."""
-        with db.get_session() as session:  # Start session
-            with session.begin():  # Begin transaction, create and save recurrence
+        """Save recurrence details in the database and return the recurrence ID."""
+        with db.get_session() as session:
+            with session.begin():
                 recurrence = Recurrence(times=times, frequency=frequency)
                 session.add(recurrence)
-            recurrence_id = recurrence.id  # Store recurrence ID to return
-
-        return recurrence_id
+            return recurrence.id
 
     def update_background(self, *args):
         """Update the size and position of the background rectangle."""
