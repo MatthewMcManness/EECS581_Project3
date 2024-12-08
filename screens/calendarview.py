@@ -7,7 +7,8 @@
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of calendar view structure (just a placeholder for navigation) - [Matthew McManness]
-#   - November 9, 2024: Added EventBox, connection to the database to add all events to the database and show up on the calendar - [Manvir Kaur]
+#   - November 9, 2024: Added EventBox to add new events to calendar, connection to the database to add all events to the database and show up on the calendar whenever a new event is added or the app is opened. Added widgets to display event info - [Manvir Kaur]
+#   - November 9, 2024: Fixed the color, created relative layout for each day cell and added the day button to each cell. Did some debugging - [Manvir Kaur]
 #   - November 9, 2024: Updated the populate(), get_cell_widgets(), and populate_calendar() functions - [Mariam Oraby]
 #   - November 10, 2024: Updated what Manvir and Mariam added to make it stack events correctly - [Matthew McManness]
 #   - November 10, 2024: updated the calendar view so that the week starts on a Sunday - Matthew McManness
