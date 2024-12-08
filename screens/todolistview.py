@@ -2,10 +2,11 @@
 # Code Artifact: ToDoListView Class Definition
 # Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage 
 # tasks in a to-do list. It provides a method to add tasks dynamically based on input data.
-# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618), Manvir Kaur (3064194)
+# Programmer: Matthew McManness (2210261), Manvir Kaur (3064194), and Magaly Camacho (3072618)
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of ToDoListView structure  (placeholder for navigation) - [Matthew McManness]
+#   - October 27, 2024: Created init, sort_tasks, add_task, and save_task function structure with initialization for what they will include to ToDoListView(Screen) and added in dummy task to display how tasks will look like - [Manvir Kaur]
 #   - November 4, 2024: Updated add_task to connect to database, and added a method populate() that adds all tasks in the database - [Magaly Camacho]
 #   - November 10, 2024: Added def on_task_click(self, task_id), refresh_tasks(self), toggle_complete(self, checkbox, task_id, task_box), grey_out_task(self, task_box), reset_task_appearance(self, task_box)  - [Matthew McManness]
 #   - November 10, 2024: Fixed bug that crashed app when there's no due date. Added priority picker functionality - [Magaly Camacho]
