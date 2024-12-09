@@ -10,7 +10,7 @@
 # - November 10, 2024: Added priority picker and functionality (Magaly Camacho)
 # - November 23, 2024: Modified the initilization, the load_task and save_task functions to handle recurrence (Matthew McManness)
 # - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
-# - December 8, 2024: Theme toggling (Magaly Camacho)
+# - December 8, 2024: Theme toggling, fixed recurrence (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -41,9 +41,10 @@ from screens.usefulwidgets import RepeatOptionsModal, PriorityOptionsModal, Cate
 from kivy.uix.label import Label  # Label widget for displaying text
 from kivy.app import App  # Ensure App is imported
 from Models import Task, Category # Task and Category classes
-from Models.databaseEnums import Priority # for tasl priorities
+from Models.databaseEnums import Priority, Frequency # for task properties
 from database import get_database # to connect to database
 from sqlalchemy import select # to query database
+from sqlalchemy.orm import Session  # for typing
 from datetime import datetime # for Task.due_date
 from Models import Recurrence  # Import the Recurrence model
 from kivy.metrics import dp  # Import dp for density-independent pixel values
@@ -128,7 +129,7 @@ class EditTaskModal(ModalView):
         layout.add_widget(deadline_layout)
 
         # Repeat button
-        self.repeat_button = UniformButton(text="Does not repeat", on_release=self.open_repeat_window)
+        self.repeat_button = UniformButton(text=Frequency.frequency_options()[0], on_release=self.open_repeat_window)
         layout.add_widget(self.repeat_button)
         
         # Button to open the Priority Options modal
@@ -190,14 +191,13 @@ class EditTaskModal(ModalView):
                 self.update_applied_categories()
 
                 # Load recurrence if it exists
-                if task.recurrence:
-                    self.recurrence = {
-                        "frequency": task.recurrence.frequency,
-                        "times": task.recurrence.times
-                    }
-                    self.repeat_button.text = f"{task.recurrence.frequency.name.capitalize()} ({task.recurrence.times} times)"
-                else:
-                    self.recurrence = None
+                if task.recurrence_id:
+                    recurrence:Recurrence = task.recurrence
+                    frequency_name = Frequency.enum2str(recurrence.frequency)
+                    if Frequency.is_no_repeat(recurrence.frequency):
+                        self.repeat_button.text = frequency_name
+                    else:
+                        self.repeat_button.text = f"Repeats {frequency_name} {recurrence.times} times"
 
     def save_task(self, *args):
         """
@@ -219,33 +219,69 @@ class EditTaskModal(ModalView):
         due_date = datetime.strptime(due_date, "%Y-%m-%d %H:%M") if due_date else None
         priority = Priority.str2enum(self.priority_button.text) if "Pick Priority" != self.priority_button.text else None
 
+        repeat_info = self.repeat_button.text.split(" ")
+        print(f"REPEAT INFO: {repeat_info}")
+        frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[1]) # None if "Doesn't Repeat"
+        times = None if len(repeat_info) == 2 else int(repeat_info[2]) # None if "Doesn't repeat"
+
         # Retrieve category instances
         selected_categories_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
 
-        with db.get_session() as session:
+        with db.get_session() as session, session.begin():
             if self.task_id:
                 task = session.query(Task).filter_by(id=self.task_id).first()
+
+                if not task:
+                    print(f"No task found with ID {self.event_id}.")
+
+                # update existing task
                 task.name = name
                 task.notes = notes
                 task.due_date = due_date
                 task.priority = priority
                 task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
 
+                make_new_recurrence = False # assume new recurrence isn't needed
+
                 # Update recurrence if it exists
-                if self.recurrence:
-                    if task.recurrence:
-                        task.recurrence.frequency = self.recurrence["frequency"]
-                        task.recurrence.times = self.recurrence["times"]
+                if times and frequency:
+                    # if task has recurrence, new recurrence is need if it doesn't match existing one
+                    if task.recurrence_id:
+                        recurrence = task.recurrence
+                        if times != recurrence.times or frequency != recurrence.frequency:
+                            make_new_recurrence = True
                     else:
-                        recurrence = Recurrence(
-                            frequency=self.recurrence["frequency"],
-                            times=self.recurrence["times"]
+                        make_new_recurrence = True
+                    
+                # Clear recurrence if needed
+                elif task.recurrence.id:
+                    task.recurrence = None
+                    task.recurrence_id = None
+
+                # Make new recurrence if needed
+                if make_new_recurrence:
+                    new_recurrence_id = self.save_recurrence(frequency, times, session=session)
+                    task.recurrence_id = new_recurrence_id
+
+                    # create other tasks
+                    current_date = due_date
+                    for _ in range(times - 1):
+                        new_date = frequency.get_next_date(current_date, due_date)
+
+                        # create task with same info as edited task
+                        task_i = Task(
+                            name=name,
+                            notes=notes,
+                            due_date=new_date,
+                            priority=priority,
+                            recurrence_id=new_recurrence_id
                         )
-                        session.add(recurrence)
-                        session.flush()  # Get recurrence ID
-                        task.recurrence_id = recurrence.id
-                else:
-                    task.recurrence = None  # Clear recurrence if none is selected
+                        task_i.categories = task.categories
+
+                        current_date = new_date # save date to calculate next one
+                        session.add(task_i)
+
+            # make a new task if no event_id was provided    
             else:
                 task = Task(
                     name=name,
@@ -256,19 +292,7 @@ class EditTaskModal(ModalView):
                 task.categories = session.query(Category).filter(Category.id.in_(selected_categories_ids)).all()
                 session.add(task)
                 session.flush()  # Get task ID immediately
-
-                # Add recurrence if specified
-                if self.recurrence:
-                    recurrence = Recurrence(
-                        frequency=self.recurrence["frequency"],
-                        times=self.recurrence["times"]
-                    )
-                    session.add(recurrence)
-                    session.flush()
-                    task.recurrence_id = recurrence.id
-
-            # Commit the session
-            session.commit()
+                session.commit()
 
         if self.refresh_callback:
             self.refresh_callback()
@@ -345,3 +369,21 @@ class EditTaskModal(ModalView):
         """Update the size and position of the background rectangle."""
         self.bg_rect.pos = self.pos
         self.bg_rect.size = self.size
+
+    def save_recurrence(self, frequency:Frequency, times:int, session:Session) -> int:
+        """
+        Adds the given recurrence to the given session and returns its id
+        
+        Parameters:
+            frequency (Frequency): the frequency of the recurrence (daily, weekly, monthly, yearly)
+            times (int): the number of times to repeat the event 
+            session (Session): the session to add the recurrence to
+
+        Returns:
+            int: the id of the new recurrence
+        """
+        recurrence = Recurrence(times=times, frequency=frequency)
+        session.add(recurrence) 
+        session.flush() # assigns id without needing to commiting (in case of a rollback)
+        
+        return recurrence.id

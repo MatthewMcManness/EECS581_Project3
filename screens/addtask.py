@@ -13,7 +13,7 @@
 # - November 18, 2024: Updated default frequency string (Magaly Camacho)
 # - November 23, 2024: Updated the save_task function to handle recurrence (Matthew McManness)
 # - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
-# - December 8, 2024: Theme toggling (Magaly Camacho)
+# - December 8, 2024: Theme toggling, fixed recurrence (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -224,18 +224,19 @@ class AddTaskModal(ModalView):
         notes = self.notes_input.text
         due_date = self.deadline_label.text.split(" ", 1)[1] if "Deadline" in self.deadline_label.text else None
 
-        # Ensure a valid due_date is provided if recurrence is specified
-        if self.recurrence and not due_date:
-            print("Due date is required for recurring tasks.")  # Debugging message
-            return
-
         # Convert due_date to a datetime object
         due_date = datetime.strptime(due_date, "%Y-%m-%d %H:%M") if due_date else None
         priority = Priority.str2enum(self.priority_button.text) if "Pick Priority" != self.priority_button.text else None
 
-        # Ensure self.recurrence is None if "Does not Repeat" is selected or untouched
-        if self.recurrence is None or self.repeat_button.text == Frequency.frequency_options()[0]:
-            self.recurrence = None
+        # Extract and sanitize repeat information
+        repeat_info = self.repeat_button.text.split(" ")
+        frequency = None if len(repeat_info) == 2 else Frequency.str2enum(repeat_info[1])
+        times = None if len(repeat_info) == 2 else int(repeat_info[2])
+
+        # Ensure a valid due_date is provided if recurrence is specified
+        if frequency and times and not due_date:
+            print("Due date is required for recurring tasks.")  # Debugging message
+            return
 
         # Retrieve category instances
         selected_categories_ids = [cat_id for cat_id, cat in zip(self.categories_ids, self.categories) if cat in self.selected_categories]
@@ -253,10 +254,10 @@ class AddTaskModal(ModalView):
             session.flush()  # Get task ID immediately
 
             # Add recurrence if specified
-            if self.recurrence:
+            if times and frequency:
                 recurrence = Recurrence(
-                    frequency=self.recurrence["frequency"],
-                    times=self.recurrence["times"]
+                    frequency=frequency,
+                    times=times
                 )
                 session.add(recurrence)
                 session.flush()
@@ -264,7 +265,7 @@ class AddTaskModal(ModalView):
 
                 # Create repeated tasks based on recurrence
                 next_date = due_date
-                for _ in range(self.recurrence["times"] - 1):  # Subtract 1 because the first task is already created
+                for _ in range(times - 1):  # Subtract 1 because the first task is already created
                     next_date = recurrence.frequency.get_next_date(next_date, due_date)
                     if not next_date:  # Debugging check for invalid dates
                         print("Error: next_date calculation returned None.")
@@ -279,7 +280,7 @@ class AddTaskModal(ModalView):
                     repeated_task.categories = task.categories
                     session.add(repeated_task)
 
-             # Capture the task ID before the session is closed
+            # Capture the task ID before the session is closed
             task_id = task.id
 
             # Commit all changes
