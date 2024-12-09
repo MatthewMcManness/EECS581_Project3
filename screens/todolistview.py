@@ -1,11 +1,11 @@
 # Prologue Comments:
 # Code Artifact: ToDoListView Class Definition
-# Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage 
-# tasks in a to-do list. It provides a method to add tasks dynamically based on input data.
-# Programmer: Matthew McManness (2210261), Magaly Camacho (3072618), Manvir Kaur (3064194)
+# Brief Description: This code defines the `ToDoListView` class, a screen used to display and manage  tasks in a to-do list. It provides a method to add tasks dynamically based on input data.
+# Programmer: Matthew McManness (2210261), Manvir Kaur (3064194), and Magaly Camacho (3072618)
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of ToDoListView structure  (placeholder for navigation) - [Matthew McManness]
+#   - October 27, 2024: Created init, sort_tasks, add_task, and save_task function structure with initialization for what they will include to ToDoListView(Screen) and added in dummy task to display how tasks will look like - [Manvir Kaur]
 #   - November 4, 2024: Updated add_task to connect to database, and added a method populate() that adds all tasks in the database - [Magaly Camacho]
 #   - November 10, 2024: Added def on_task_click(self, task_id), refresh_tasks(self), toggle_complete(self, checkbox, task_id, task_box), grey_out_task(self, task_box), reset_task_appearance(self, task_box)  - [Matthew McManness]
 #   - November 10, 2024: Fixed bug that crashed app when there's no due date. Added priority picker functionality - [Magaly Camacho]
@@ -14,9 +14,11 @@
 #   - November 23, 2024: choosing a sorting option prints it to terminal instead of crashing - [Manvir Kaur]
 #   - November 23, 2024: updating populate function to correctly sort all tasks according to the option selected - [Manvir Kaur]
 #   - November 24, 2024: Implemented the filter_tasks fuction - [Matthew McManness]
-#   - November 27, 2024: Drag-and-drop almost working as intended - [Manvir Kaur]
+#   - November 27, 2024: Drag-and-drop almost working as intended but you have to right-click to get a red dot to appear which you can the drag to drag and drop the task - [Manvir Kaur]
 #   - December 06, 2024: Added an edit button for all tasks instead of just clicking the task so drag-and-drop can work without edit screen popping up - [Manvir Kaur]
-#   - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+#   - December 06, 2024: Fixed the drag-and-drop functionality to work perfectly! - [Manvir Kaur]
+#   - December 07, 2024: Implemented variables for ease of UI modification - [Matthew McManness]
+#   - December 08, 2024: Removed update_task_order since we do not need that based on our requirements - [Manvir Kaur]
 #  - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -141,24 +143,9 @@ class TaskBox(BoxLayout):
             for sibling in siblings:
                 task_list.add_widget(sibling)
 
-            # Update the task order in the database (optional)
-            self.update_task_order()
-
             return True
         return super().on_touch_up(touch)
-
-    def update_task_order(self):
-        """Update task order in the database based on the current UI order."""
-        task_list = self.parent
-        task_ids = [child.task_id for child in task_list.children if isinstance(child, TaskBox)]
-        print(f"New task order: {task_ids}")
-
-        with db.get_session() as session:
-            for index, task_id in enumerate(reversed(task_ids), start=1):
-                task = session.query(Task).filter_by(id=task_id).first()
-                if task:
-                    task.order_index = index  # Assuming an `order_index` column exists
-            session.commit()
+        
             
 class ToDoListView(Screen):
     """A screen for displaying the To-Do List."""
@@ -214,6 +201,10 @@ class ToDoListView(Screen):
     def populate(self):
         """
         Populate the ToDoListView with tasks from the database, sorted based on the current_sort attribute.
+        
+        Postconditions:
+            - Retrieves all tasks, including those created through recurrence.
+            - Tasks are displayed in the to-do list, ordered by due date.
         """
         with db.get_session() as session:
             stmt = None  # Initialize stmt to avoid UnboundLocalError

@@ -6,7 +6,8 @@
 # Date Created: October 26, 2024
 # Dates Revised:
 #   - October 26, 2024: Initial creation of event modal structure (placeholder for navigation) - [Matthew McManness]
-#   - November 9. 2024: Added connection to database to save events and show on the calendar - [Manvir Kaur]
+#   - November 9, 2024: Added connection to database to save events and show on the calendar view - [Manvir Kaur]
+#   - November 9, 2024: All events should populte to the calendar when app is loaded or a new event is added - [Manvir Kaur]
 #   - November 10, 2024: Fixed start time not being saved correctly, added check to make sure date and time are picked - [Magaly Camacho]
 #   - November 18, 2024: Implemented recurring events - [Magaly Camacho]
 #   - November 20, 2024: Matched layout with editEvent layout - [Magaly Camacho]
