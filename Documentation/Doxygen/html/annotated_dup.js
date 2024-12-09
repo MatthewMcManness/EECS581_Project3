@@ -1,7 +1,7 @@
 var annotated_dup =
 [
     [ "EECS581_Project3", "namespace_e_e_c_s581___project3.html", [
-      [ "busybee", "namespace_e_e_c_s581___project3_1_1busybee.html", [
+      [ "busybee", null, [
         [ "BusyBeeApp", "class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app.html", "class_e_e_c_s581___project3_1_1busybee_1_1_busy_bee_app" ]
       ] ],
       [ "database", "namespace_e_e_c_s581___project3_1_1database.html", [
@@ -32,52 +32,56 @@ var annotated_dup =
           [ "Task", "class_e_e_c_s581___project3_1_1_models_1_1task_1_1_task.html", "class_e_e_c_s581___project3_1_1_models_1_1task_1_1_task" ]
         ] ]
       ] ],
-      [ "original", "namespace_e_e_c_s581___project3_1_1original.html", [
-        [ "AddEventModal", "class_e_e_c_s581___project3_1_1original_1_1_add_event_modal.html", "class_e_e_c_s581___project3_1_1original_1_1_add_event_modal" ],
-        [ "AddTaskModal", "class_e_e_c_s581___project3_1_1original_1_1_add_task_modal.html", "class_e_e_c_s581___project3_1_1original_1_1_add_task_modal" ],
-        [ "BusyBeeApp", "class_e_e_c_s581___project3_1_1original_1_1_busy_bee_app.html", "class_e_e_c_s581___project3_1_1original_1_1_busy_bee_app" ],
-        [ "CalendarView", "class_e_e_c_s581___project3_1_1original_1_1_calendar_view.html", "class_e_e_c_s581___project3_1_1original_1_1_calendar_view" ],
-        [ "CategoryConfirmationModal", "class_e_e_c_s581___project3_1_1original_1_1_category_confirmation_modal.html", "class_e_e_c_s581___project3_1_1original_1_1_category_confirmation_modal" ],
-        [ "CategoryModal", "class_e_e_c_s581___project3_1_1original_1_1_category_modal.html", "class_e_e_c_s581___project3_1_1original_1_1_category_modal" ],
-        [ "DatePicker", "class_e_e_c_s581___project3_1_1original_1_1_date_picker.html", "class_e_e_c_s581___project3_1_1original_1_1_date_picker" ],
-        [ "DuplicateCategoryModal", "class_e_e_c_s581___project3_1_1original_1_1_duplicate_category_modal.html", "class_e_e_c_s581___project3_1_1original_1_1_duplicate_category_modal" ],
-        [ "RepeatOptionsModal", "class_e_e_c_s581___project3_1_1original_1_1_repeat_options_modal.html", "class_e_e_c_s581___project3_1_1original_1_1_repeat_options_modal" ],
-        [ "TimePicker", "class_e_e_c_s581___project3_1_1original_1_1_time_picker.html", "class_e_e_c_s581___project3_1_1original_1_1_time_picker" ],
-        [ "ToDoListView", "class_e_e_c_s581___project3_1_1original_1_1_to_do_list_view.html", "class_e_e_c_s581___project3_1_1original_1_1_to_do_list_view" ]
-      ] ],
       [ "screens", "namespace_e_e_c_s581___project3_1_1screens.html", [
-        [ "addevent", "namespace_e_e_c_s581___project3_1_1screens_1_1addevent.html", [
-          [ "AddEventModal", "class_e_e_c_s581___project3_1_1screens_1_1addevent_1_1_add_event_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1addevent_1_1_add_event_modal" ]
+        [ "addevent", null, [
+          [ "AddEventModal", "class_e_e_c_s581___project3_1_1screens_1_1addevent_1_1_add_event_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1addevent_1_1_add_event_modal" ],
+          [ "UniformButton", "class_e_e_c_s581___project3_1_1screens_1_1addevent_1_1_uniform_button.html", null ]
         ] ],
-        [ "addtask", "namespace_e_e_c_s581___project3_1_1screens_1_1addtask.html", [
-          [ "AddTaskModal", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal" ]
+        [ "addtask", null, [
+          [ "AddTaskModal", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_add_task_modal" ],
+          [ "UniformButton", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_uniform_button.html", null ],
+          [ "UniformSpinner", "class_e_e_c_s581___project3_1_1screens_1_1addtask_1_1_uniform_spinner.html", null ]
         ] ],
-        [ "calendarview", "namespace_e_e_c_s581___project3_1_1screens_1_1calendarview.html", [
+        [ "calendarview", null, [
           [ "CalendarView", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view.html", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_calendar_view" ],
-          [ "EventBox", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_event_box.html", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_event_box" ]
+          [ "EventButton", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_event_button.html", null ],
+          [ "UniformButton", "class_e_e_c_s581___project3_1_1screens_1_1calendarview_1_1_uniform_button.html", null ]
         ] ],
-        [ "dailyview", "namespace_e_e_c_s581___project3_1_1screens_1_1dailyview.html", [
-          [ "DailyView", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_daily_view.html", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_daily_view" ]
+        [ "dailyview", null, [
+          [ "DailyView", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_daily_view.html", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_daily_view" ],
+          [ "EditButton", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_edit_button.html", null ],
+          [ "EventBox", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_event_box.html", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_event_box" ],
+          [ "UniformButton", "class_e_e_c_s581___project3_1_1screens_1_1dailyview_1_1_uniform_button.html", null ]
         ] ],
-        [ "editEvent", "namespace_e_e_c_s581___project3_1_1screens_1_1edit_event.html", [
-          [ "EditEventModal", "class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal" ]
+        [ "editEvent", null, [
+          [ "EditEventModal", "class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_edit_event_modal" ],
+          [ "UniformButton", "class_e_e_c_s581___project3_1_1screens_1_1edit_event_1_1_uniform_button.html", null ]
         ] ],
-        [ "edittask", "namespace_e_e_c_s581___project3_1_1screens_1_1edittask.html", [
-          [ "EditTaskModal", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal" ]
+        [ "edittask", null, [
+          [ "EditTaskModal", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal" ],
+          [ "UniformButton", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_uniform_button.html", null ],
+          [ "UniformSpinner", "class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_uniform_spinner.html", null ]
         ] ],
-        [ "todolistview", "namespace_e_e_c_s581___project3_1_1screens_1_1todolistview.html", [
+        [ "todolistview", null, [
+          [ "EditButton", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_edit_button.html", null ],
           [ "TaskBox", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_task_box.html", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_task_box" ],
-          [ "ToDoListView", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view" ]
+          [ "ToDoListView", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view" ],
+          [ "UniformButton", "class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_uniform_button.html", null ]
         ] ],
-        [ "usefulwidgets", "namespace_e_e_c_s581___project3_1_1screens_1_1usefulwidgets.html", [
+        [ "usefulwidgets", null, [
           [ "CategoryConfirmationModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_confirmation_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_confirmation_modal" ],
           [ "CategoryModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_modal" ],
           [ "DatePicker", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_date_picker.html", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_date_picker" ],
           [ "DuplicateCategoryModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_duplicate_category_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_duplicate_category_modal" ],
           [ "PriorityOptionsModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_priority_options_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_priority_options_modal" ],
           [ "RepeatOptionsModal", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal.html", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_repeat_options_modal" ],
-          [ "TimePicker", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker.html", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker" ]
+          [ "TimePicker", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker.html", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_time_picker" ],
+          [ "UniformButton", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_uniform_button.html", null ],
+          [ "UniformSpinner", "class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_uniform_spinner.html", null ]
         ] ]
+      ] ],
+      [ "theme", null, [
+        [ "Theme", "class_e_e_c_s581___project3_1_1theme_1_1_theme.html", null ]
       ] ]
     ] ]
 ];

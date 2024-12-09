@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">BusyBee
    </div>
-   <div id="projectbrief">Mobile friendly calendar and to-do list application</div>
+   <div id="projectbrief">A 2-in-1 calendar and to-do list desktop application.</div>
   </td>
  </tr>
  </tbody>
@@ -116,7 +116,7 @@ Inheritance diagram for EECS581_Project3.screens.usefulwidgets.DatePicker:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a983e73da589c17b7ff3af1a48582e35c" id="r_a983e73da589c17b7ff3af1a48582e35c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a983e73da589c17b7ff3af1a48582e35c">__init__</a> (self, <a class="el" href="#a6e6038d1ec9670cf006b857b254fd5d3">modal</a>, **kwargs)</td></tr>
+<tr class="memitem:a983e73da589c17b7ff3af1a48582e35c" id="r_a983e73da589c17b7ff3af1a48582e35c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a983e73da589c17b7ff3af1a48582e35c">__init__</a> (self, modal, **kwargs)</td></tr>
 <tr class="separator:a983e73da589c17b7ff3af1a48582e35c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a47b4440fb1220a6b156a8f128186a6fc" id="r_a47b4440fb1220a6b156a8f128186a6fc"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a47b4440fb1220a6b156a8f128186a6fc">get_month_year_text</a> (self)</td></tr>
 <tr class="separator:a47b4440fb1220a6b156a8f128186a6fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -128,27 +128,36 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a4db8e3e6b8a61f51272a7b566679f282"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab14798bd7c0d5ef7e492e3247d429710" id="r_ab14798bd7c0d5ef7e492e3247d429710"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab14798bd7c0d5ef7e492e3247d429710">on_select</a> (self, instance)</td></tr>
 <tr class="separator:ab14798bd7c0d5ef7e492e3247d429710"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aed1031dfe077ed08dac3df8049ac445d" id="r_aed1031dfe077ed08dac3df8049ac445d"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aed1031dfe077ed08dac3df8049ac445d">update_background</a> (self, *args)</td></tr>
+<tr class="separator:aed1031dfe077ed08dac3df8049ac445d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a6e6038d1ec9670cf006b857b254fd5d3" id="r_a6e6038d1ec9670cf006b857b254fd5d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6e6038d1ec9670cf006b857b254fd5d3">modal</a> = modal</td></tr>
+<tr class="memitem:a6e6038d1ec9670cf006b857b254fd5d3" id="r_a6e6038d1ec9670cf006b857b254fd5d3"><td class="memItemLeft" align="right" valign="top"><a id="a6e6038d1ec9670cf006b857b254fd5d3" name="a6e6038d1ec9670cf006b857b254fd5d3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>modal</b> = modal</td></tr>
 <tr class="separator:a6e6038d1ec9670cf006b857b254fd5d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af22305ae5615aa83aacb742d7e5c5de0" id="r_af22305ae5615aa83aacb742d7e5c5de0"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af22305ae5615aa83aacb742d7e5c5de0">size_hint</a> = (0.9, 0.9)</td></tr>
+<tr class="memitem:af22305ae5615aa83aacb742d7e5c5de0" id="r_af22305ae5615aa83aacb742d7e5c5de0"><td class="memItemLeft" align="right" valign="top"><a id="af22305ae5615aa83aacb742d7e5c5de0" name="af22305ae5615aa83aacb742d7e5c5de0"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>size_hint</b> = (0.9, 0.9)</td></tr>
 <tr class="separator:af22305ae5615aa83aacb742d7e5c5de0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af955711200786f21b56d4cbffb9ff623" id="r_af955711200786f21b56d4cbffb9ff623"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af955711200786f21b56d4cbffb9ff623">auto_dismiss</a> = False</td></tr>
+<tr class="memitem:af955711200786f21b56d4cbffb9ff623" id="r_af955711200786f21b56d4cbffb9ff623"><td class="memItemLeft" align="right" valign="top"><a id="af955711200786f21b56d4cbffb9ff623" name="af955711200786f21b56d4cbffb9ff623"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>auto_dismiss</b> = False</td></tr>
 <tr class="separator:af955711200786f21b56d4cbffb9ff623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab72e2af184a4ba1a287a2e460e5c0623" id="r_ab72e2af184a4ba1a287a2e460e5c0623"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab72e2af184a4ba1a287a2e460e5c0623">selected_button</a> = None</td></tr>
+<tr class="memitem:ab72e2af184a4ba1a287a2e460e5c0623" id="r_ab72e2af184a4ba1a287a2e460e5c0623"><td class="memItemLeft" align="right" valign="top"><a id="ab72e2af184a4ba1a287a2e460e5c0623" name="ab72e2af184a4ba1a287a2e460e5c0623"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>selected_button</b> = None</td></tr>
 <tr class="separator:ab72e2af184a4ba1a287a2e460e5c0623"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6c6a30dac07e178892227644f07ca863" id="r_a6c6a30dac07e178892227644f07ca863"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a6c6a30dac07e178892227644f07ca863">current_year</a> = datetime.today().year</td></tr>
+<tr class="memitem:ae36377ce6b39c15555e98de18355e5e3" id="r_ae36377ce6b39c15555e98de18355e5e3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae36377ce6b39c15555e98de18355e5e3">bg_rect</a></td></tr>
+<tr class="separator:ae36377ce6b39c15555e98de18355e5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c6a30dac07e178892227644f07ca863" id="r_a6c6a30dac07e178892227644f07ca863"><td class="memItemLeft" align="right" valign="top"><a id="a6c6a30dac07e178892227644f07ca863" name="a6c6a30dac07e178892227644f07ca863"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>current_year</b> = datetime.today().year</td></tr>
 <tr class="separator:a6c6a30dac07e178892227644f07ca863"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5887a00c1fb0f4999ec6d10cb01b4eee" id="r_a5887a00c1fb0f4999ec6d10cb01b4eee"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5887a00c1fb0f4999ec6d10cb01b4eee">current_month</a> = datetime.today().month</td></tr>
+<tr class="memitem:a5887a00c1fb0f4999ec6d10cb01b4eee" id="r_a5887a00c1fb0f4999ec6d10cb01b4eee"><td class="memItemLeft" align="right" valign="top"><a id="a5887a00c1fb0f4999ec6d10cb01b4eee" name="a5887a00c1fb0f4999ec6d10cb01b4eee"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><b>current_month</b> = datetime.today().month</td></tr>
 <tr class="separator:a5887a00c1fb0f4999ec6d10cb01b4eee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a32477f1467d63575a487412a560f4cd2" id="r_a32477f1467d63575a487412a560f4cd2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a32477f1467d63575a487412a560f4cd2">month_year_label</a></td></tr>
 <tr class="separator:a32477f1467d63575a487412a560f4cd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2e658fa9b2c7ae45cca598a42d3047d3" id="r_a2e658fa9b2c7ae45cca598a42d3047d3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2e658fa9b2c7ae45cca598a42d3047d3">grid</a> = GridLayout(cols=7, spacing=2, padding=5, size_hint_y=0.8)</td></tr>
+<tr class="memitem:a2e658fa9b2c7ae45cca598a42d3047d3" id="r_a2e658fa9b2c7ae45cca598a42d3047d3"><td class="memItemLeft" align="right" valign="top"><a id="a2e658fa9b2c7ae45cca598a42d3047d3" name="a2e658fa9b2c7ae45cca598a42d3047d3"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>grid</b> = GridLayout(cols=7, spacing=2, padding=5, size_hint_y=0.8)</td></tr>
 <tr class="separator:a2e658fa9b2c7ae45cca598a42d3047d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abbee4116a2a9d848e0cbeba7610172f6" id="r_abbee4116a2a9d848e0cbeba7610172f6"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abbee4116a2a9d848e0cbeba7610172f6">selected_button</a> = (1, 1, 1, 1)</td></tr>
-<tr class="separator:abbee4116a2a9d848e0cbeba7610172f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a95744e030f6b9fd39e30c124559eac7a" id="r_a95744e030f6b9fd39e30c124559eac7a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a95744e030f6b9fd39e30c124559eac7a">selected_date</a></td></tr>
 <tr class="separator:a95744e030f6b9fd39e30c124559eac7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -312,75 +321,45 @@ Postconditions:
 </pre> 
 </div>
 </div>
+<a id="aed1031dfe077ed08dac3df8049ac445d" name="aed1031dfe077ed08dac3df8049ac445d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aed1031dfe077ed08dac3df8049ac445d">&#9670;&#160;</a></span>update_background()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.usefulwidgets.DatePicker.update_background </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Update the size and position of the background rectangle.</pre> 
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="af955711200786f21b56d4cbffb9ff623" name="af955711200786f21b56d4cbffb9ff623"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af955711200786f21b56d4cbffb9ff623">&#9670;&#160;</a></span>auto_dismiss</h2>
+<a id="ae36377ce6b39c15555e98de18355e5e3" name="ae36377ce6b39c15555e98de18355e5e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae36377ce6b39c15555e98de18355e5e3">&#9670;&#160;</a></span>bg_rect</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool EECS581_Project3.screens.usefulwidgets.DatePicker.auto_dismiss = False</td>
+          <td class="memname">EECS581_Project3.screens.usefulwidgets.DatePicker.bg_rect</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a5887a00c1fb0f4999ec6d10cb01b4eee" name="a5887a00c1fb0f4999ec6d10cb01b4eee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5887a00c1fb0f4999ec6d10cb01b4eee">&#9670;&#160;</a></span>current_month</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int EECS581_Project3.screens.usefulwidgets.DatePicker.current_month = datetime.today().month</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6c6a30dac07e178892227644f07ca863" name="a6c6a30dac07e178892227644f07ca863"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6c6a30dac07e178892227644f07ca863">&#9670;&#160;</a></span>current_year</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.usefulwidgets.DatePicker.current_year = datetime.today().year</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a2e658fa9b2c7ae45cca598a42d3047d3" name="a2e658fa9b2c7ae45cca598a42d3047d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2e658fa9b2c7ae45cca598a42d3047d3">&#9670;&#160;</a></span>grid</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.usefulwidgets.DatePicker.grid = GridLayout(cols=7, spacing=2, padding=5, size_hint_y=0.8)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a6e6038d1ec9670cf006b857b254fd5d3" name="a6e6038d1ec9670cf006b857b254fd5d3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6e6038d1ec9670cf006b857b254fd5d3">&#9670;&#160;</a></span>modal</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.usefulwidgets.DatePicker.modal = modal</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">=  RoundedRectangle(</div>
+<div class="line">                pos=layout.pos,</div>
+<div class="line">                size=layout.size,</div>
+<div class="line">                radius=[dp(20)]</div>
+<div class="line">            )</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a32477f1467d63575a487412a560f4cd2" name="a32477f1467d63575a487412a560f4cd2"></a>
@@ -396,39 +375,12 @@ Postconditions:
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">=  Label(</div>
 <div class="line">            text=self.get_month_year_text(),</div>
-<div class="line">            font_size=<span class="stringliteral">&#39;20sp&#39;</span>,</div>
+<div class="line">            font_size=app.button_font_size,</div>
+<div class="line">            color=app.Subtitle_Color,</div>
 <div class="line">            size_hint_y=<span class="keywordtype">None</span>,</div>
 <div class="line">            height=40</div>
 <div class="line">        )</div>
 </div><!-- fragment -->
-</div>
-</div>
-<a id="ab72e2af184a4ba1a287a2e460e5c0623" name="ab72e2af184a4ba1a287a2e460e5c0623"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab72e2af184a4ba1a287a2e460e5c0623">&#9670;&#160;</a></span>selected_button <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.usefulwidgets.DatePicker.selected_button = None</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="abbee4116a2a9d848e0cbeba7610172f6" name="abbee4116a2a9d848e0cbeba7610172f6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abbee4116a2a9d848e0cbeba7610172f6">&#9670;&#160;</a></span>selected_button <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple EECS581_Project3.screens.usefulwidgets.DatePicker.selected_button = (1, 1, 1, 1)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
 </div>
 </div>
 <a id="a95744e030f6b9fd39e30c124559eac7a" name="a95744e030f6b9fd39e30c124559eac7a"></a>
@@ -448,29 +400,15 @@ Postconditions:
 </div><!-- fragment -->
 </div>
 </div>
-<a id="af22305ae5615aa83aacb742d7e5c5de0" name="af22305ae5615aa83aacb742d7e5c5de0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af22305ae5615aa83aacb742d7e5c5de0">&#9670;&#160;</a></span>size_hint</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple EECS581_Project3.screens.usefulwidgets.DatePicker.size_hint = (0.9, 0.9)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>screens/<a class="el" href="usefulwidgets_8py.html">usefulwidgets.py</a></li>
+<li>screens/<b>usefulwidgets.py</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens_1_1usefulwidgets.html">usefulwidgets</a></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_date_picker.html">DatePicker</a></li>
+    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><b>usefulwidgets</b></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_date_picker.html">DatePicker</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

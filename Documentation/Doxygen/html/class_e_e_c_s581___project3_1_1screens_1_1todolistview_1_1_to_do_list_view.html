@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">BusyBee
    </div>
-   <div id="projectbrief">Mobile friendly calendar and to-do list application</div>
+   <div id="projectbrief">A 2-in-1 calendar and to-do list desktop application.</div>
   </td>
  </tr>
  </tbody>
@@ -133,12 +133,16 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a3c78bc01c589c3be7b27a21d1f49097a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa3de05f97efb243ddb72216569b245d8" id="r_aa3de05f97efb243ddb72216569b245d8"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa3de05f97efb243ddb72216569b245d8">filter_tasks</a> (self, priority_filter)</td></tr>
 <tr class="separator:aa3de05f97efb243ddb72216569b245d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad011fd720653a06e0c96dd54052f7ace" id="r_ad011fd720653a06e0c96dd54052f7ace"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad011fd720653a06e0c96dd54052f7ace">on_edit_task_click</a> (self, task_id)</td></tr>
+<tr class="separator:ad011fd720653a06e0c96dd54052f7ace"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a136f9287b0085380480f0dfafc8f6041" id="r_a136f9287b0085380480f0dfafc8f6041"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a136f9287b0085380480f0dfafc8f6041">sort_by_dropdown</a> = DropDown()</td></tr>
+<tr class="memitem:a136f9287b0085380480f0dfafc8f6041" id="r_a136f9287b0085380480f0dfafc8f6041"><td class="memItemLeft" align="right" valign="top"><a id="a136f9287b0085380480f0dfafc8f6041" name="a136f9287b0085380480f0dfafc8f6041"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>sort_by_dropdown</b> = DropDown()</td></tr>
 <tr class="separator:a136f9287b0085380480f0dfafc8f6041"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa9355807113d5f7ab1ada0bac3a9e16" id="r_afa9355807113d5f7ab1ada0bac3a9e16"><td class="memItemLeft" align="right" valign="top">str&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa9355807113d5f7ab1ada0bac3a9e16">current_sort</a> = &quot;Due Date&quot;</td></tr>
+<tr class="memitem:afa9355807113d5f7ab1ada0bac3a9e16" id="r_afa9355807113d5f7ab1ada0bac3a9e16"><td class="memItemLeft" align="right" valign="top"><a id="afa9355807113d5f7ab1ada0bac3a9e16" name="afa9355807113d5f7ab1ada0bac3a9e16"></a>
+str&#160;</td><td class="memItemRight" valign="bottom"><b>current_sort</b> = &quot;Due Date&quot;</td></tr>
 <tr class="separator:afa9355807113d5f7ab1ada0bac3a9e16"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5761f1182f440c188f4cfa295ca3adad" id="r_a5761f1182f440c188f4cfa295ca3adad"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5761f1182f440c188f4cfa295ca3adad">current_sort</a></td></tr>
 <tr class="separator:a5761f1182f440c188f4cfa295ca3adad"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -259,6 +263,27 @@ Args:
 <pre class="fragment">Grey out the task's appearance.</pre> 
 </div>
 </div>
+<a id="ad011fd720653a06e0c96dd54052f7ace" name="ad011fd720653a06e0c96dd54052f7ace"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad011fd720653a06e0c96dd54052f7ace">&#9670;&#160;</a></span>on_edit_task_click()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.todolistview.ToDoListView.on_edit_task_click </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>task_id</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Opens the edit modal when the edit button is clicked.</pre> 
+</div>
+</div>
 <a id="ae6615a60a71c53c30a1b324f0e4adee1" name="ae6615a60a71c53c30a1b324f0e4adee1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ae6615a60a71c53c30a1b324f0e4adee1">&#9670;&#160;</a></span>on_task_click()</h2>
 
@@ -295,6 +320,10 @@ Args:
       </table>
 </div><div class="memdoc">
 <pre class="fragment">Populate the ToDoListView with tasks from the database, sorted based on the current_sort attribute.
+
+Postconditions:
+    - Retrieves all tasks, including those created through recurrence.
+    - Tasks are displayed in the to-do list, ordered by due date.
 </pre> 
 </div>
 </div>
@@ -393,22 +422,8 @@ Args:
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="afa9355807113d5f7ab1ada0bac3a9e16" name="afa9355807113d5f7ab1ada0bac3a9e16"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa9355807113d5f7ab1ada0bac3a9e16">&#9670;&#160;</a></span>current_sort <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">str EECS581_Project3.screens.todolistview.ToDoListView.current_sort = &quot;Due Date&quot;</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <a id="a5761f1182f440c188f4cfa295ca3adad" name="a5761f1182f440c188f4cfa295ca3adad"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5761f1182f440c188f4cfa295ca3adad">&#9670;&#160;</a></span>current_sort <span class="overload">[2/2]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5761f1182f440c188f4cfa295ca3adad">&#9670;&#160;</a></span>current_sort</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -426,29 +441,15 @@ Args:
 </div><!-- fragment -->
 </div>
 </div>
-<a id="a136f9287b0085380480f0dfafc8f6041" name="a136f9287b0085380480f0dfafc8f6041"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a136f9287b0085380480f0dfafc8f6041">&#9670;&#160;</a></span>sort_by_dropdown</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.todolistview.ToDoListView.sort_by_dropdown = DropDown()</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>screens/<a class="el" href="todolistview_8py.html">todolistview.py</a></li>
+<li>screens/<b>todolistview.py</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens_1_1todolistview.html">todolistview</a></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html">ToDoListView</a></li>
+    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><b>todolistview</b></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1todolistview_1_1_to_do_list_view.html">ToDoListView</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

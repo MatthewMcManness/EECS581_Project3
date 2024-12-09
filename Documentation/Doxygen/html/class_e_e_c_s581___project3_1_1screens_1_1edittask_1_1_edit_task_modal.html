@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">BusyBee
    </div>
-   <div id="projectbrief">Mobile friendly calendar and to-do list application</div>
+   <div id="projectbrief">A 2-in-1 calendar and to-do list desktop application.</div>
   </td>
  </tr>
  </tbody>
@@ -113,9 +113,9 @@ Inheritance diagram for EECS581_Project3.screens.edittask.EditTaskModal:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:adb6bf157740bf0491dc8a9a4a7c05100" id="r_adb6bf157740bf0491dc8a9a4a7c05100"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb6bf157740bf0491dc8a9a4a7c05100">__init__</a> (self, <a class="el" href="#a4e38948d975fb27147cc52c22d9e479a">task_id</a>=None, <a class="el" href="#aa6c405ee561ce26d301afcf0ce7c834f">refresh_callback</a>=None, **kwargs)</td></tr>
+<tr class="memitem:adb6bf157740bf0491dc8a9a4a7c05100" id="r_adb6bf157740bf0491dc8a9a4a7c05100"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#adb6bf157740bf0491dc8a9a4a7c05100">__init__</a> (self, task_id=None, refresh_callback=None, **kwargs)</td></tr>
 <tr class="separator:adb6bf157740bf0491dc8a9a4a7c05100"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad306b4db1f67e6b5dfd751a8e990a92c" id="r_ad306b4db1f67e6b5dfd751a8e990a92c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad306b4db1f67e6b5dfd751a8e990a92c">load_task</a> (self, <a class="el" href="#a4e38948d975fb27147cc52c22d9e479a">task_id</a>)</td></tr>
+<tr class="memitem:ad306b4db1f67e6b5dfd751a8e990a92c" id="r_ad306b4db1f67e6b5dfd751a8e990a92c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad306b4db1f67e6b5dfd751a8e990a92c">load_task</a> (self, task_id)</td></tr>
 <tr class="separator:ad306b4db1f67e6b5dfd751a8e990a92c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab75b7846d7a41d70caf04422d3f87c79" id="r_ab75b7846d7a41d70caf04422d3f87c79"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab75b7846d7a41d70caf04422d3f87c79">save_task</a> (self, *args)</td></tr>
 <tr class="separator:ab75b7846d7a41d70caf04422d3f87c79"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -135,38 +135,55 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:aeae9b549b8bb27f1c16c1a2ccfeb16dc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2a9c0d946ffc1a082cc5eecbff4eae22" id="r_a2a9c0d946ffc1a082cc5eecbff4eae22"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2a9c0d946ffc1a082cc5eecbff4eae22">update_category_spinner</a> (self)</td></tr>
 <tr class="separator:a2a9c0d946ffc1a082cc5eecbff4eae22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa54a95da545569d7adfd2d3220d6fb41" id="r_aa54a95da545569d7adfd2d3220d6fb41"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa54a95da545569d7adfd2d3220d6fb41">update_background</a> (self, *args)</td></tr>
+<tr class="separator:aa54a95da545569d7adfd2d3220d6fb41"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a4e38948d975fb27147cc52c22d9e479a" id="r_a4e38948d975fb27147cc52c22d9e479a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4e38948d975fb27147cc52c22d9e479a">task_id</a> = task_id</td></tr>
+<tr class="memitem:a4e38948d975fb27147cc52c22d9e479a" id="r_a4e38948d975fb27147cc52c22d9e479a"><td class="memItemLeft" align="right" valign="top"><a id="a4e38948d975fb27147cc52c22d9e479a" name="a4e38948d975fb27147cc52c22d9e479a"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>task_id</b> = task_id</td></tr>
 <tr class="separator:a4e38948d975fb27147cc52c22d9e479a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67face9dd12a3db5420fcbd9efe41674" id="r_a67face9dd12a3db5420fcbd9efe41674"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a67face9dd12a3db5420fcbd9efe41674">size_hint</a> = (0.9, 0.9)</td></tr>
+<tr class="memitem:a67face9dd12a3db5420fcbd9efe41674" id="r_a67face9dd12a3db5420fcbd9efe41674"><td class="memItemLeft" align="right" valign="top"><a id="a67face9dd12a3db5420fcbd9efe41674" name="a67face9dd12a3db5420fcbd9efe41674"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>size_hint</b> = (0.99, 0.9)</td></tr>
 <tr class="separator:a67face9dd12a3db5420fcbd9efe41674"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e653d72ad658c917bb3f73334bf3459" id="r_a1e653d72ad658c917bb3f73334bf3459"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1e653d72ad658c917bb3f73334bf3459">auto_dismiss</a> = False</td></tr>
+<tr class="memitem:a1e653d72ad658c917bb3f73334bf3459" id="r_a1e653d72ad658c917bb3f73334bf3459"><td class="memItemLeft" align="right" valign="top"><a id="a1e653d72ad658c917bb3f73334bf3459" name="a1e653d72ad658c917bb3f73334bf3459"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>auto_dismiss</b> = False</td></tr>
 <tr class="separator:a1e653d72ad658c917bb3f73334bf3459"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa6c405ee561ce26d301afcf0ce7c834f" id="r_aa6c405ee561ce26d301afcf0ce7c834f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa6c405ee561ce26d301afcf0ce7c834f">refresh_callback</a> = refresh_callback</td></tr>
+<tr class="memitem:aa6c405ee561ce26d301afcf0ce7c834f" id="r_aa6c405ee561ce26d301afcf0ce7c834f"><td class="memItemLeft" align="right" valign="top"><a id="aa6c405ee561ce26d301afcf0ce7c834f" name="aa6c405ee561ce26d301afcf0ce7c834f"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>refresh_callback</b> = refresh_callback</td></tr>
 <tr class="separator:aa6c405ee561ce26d301afcf0ce7c834f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0801a68f4978564c184f59c141f70ec" id="r_af0801a68f4978564c184f59c141f70ec"><td class="memItemLeft" align="right" valign="top">dict&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af0801a68f4978564c184f59c141f70ec">recurrence</a> = None</td></tr>
+<tr class="memitem:af0801a68f4978564c184f59c141f70ec" id="r_af0801a68f4978564c184f59c141f70ec"><td class="memItemLeft" align="right" valign="top"><a id="af0801a68f4978564c184f59c141f70ec" name="af0801a68f4978564c184f59c141f70ec"></a>
+dict&#160;</td><td class="memItemRight" valign="bottom"><b>recurrence</b> = None</td></tr>
 <tr class="separator:af0801a68f4978564c184f59c141f70ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad6eb2c1d9920b66f2f8556de638c73b9" id="r_ad6eb2c1d9920b66f2f8556de638c73b9"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad6eb2c1d9920b66f2f8556de638c73b9">categories</a> = [result.name for result in results]</td></tr>
+<tr class="memitem:ad6eb2c1d9920b66f2f8556de638c73b9" id="r_ad6eb2c1d9920b66f2f8556de638c73b9"><td class="memItemLeft" align="right" valign="top"><a id="ad6eb2c1d9920b66f2f8556de638c73b9" name="ad6eb2c1d9920b66f2f8556de638c73b9"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>categories</b> = [result.name for result in results]</td></tr>
 <tr class="separator:ad6eb2c1d9920b66f2f8556de638c73b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afa7822fa327541eaf30bcc6e409f31fb" id="r_afa7822fa327541eaf30bcc6e409f31fb"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afa7822fa327541eaf30bcc6e409f31fb">categories_ids</a> = [result.id for result in results]</td></tr>
+<tr class="memitem:afa7822fa327541eaf30bcc6e409f31fb" id="r_afa7822fa327541eaf30bcc6e409f31fb"><td class="memItemLeft" align="right" valign="top"><a id="afa7822fa327541eaf30bcc6e409f31fb" name="afa7822fa327541eaf30bcc6e409f31fb"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>categories_ids</b> = [result.id for result in results]</td></tr>
 <tr class="separator:afa7822fa327541eaf30bcc6e409f31fb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3fb3a8d0382b1cad68f569c2ffbd4ff3" id="r_a3fb3a8d0382b1cad68f569c2ffbd4ff3"><td class="memItemLeft" align="right" valign="top">list&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3fb3a8d0382b1cad68f569c2ffbd4ff3">selected_categories</a> = []</td></tr>
+<tr class="memitem:a3fb3a8d0382b1cad68f569c2ffbd4ff3" id="r_a3fb3a8d0382b1cad68f569c2ffbd4ff3"><td class="memItemLeft" align="right" valign="top"><a id="a3fb3a8d0382b1cad68f569c2ffbd4ff3" name="a3fb3a8d0382b1cad68f569c2ffbd4ff3"></a>
+list&#160;</td><td class="memItemRight" valign="bottom"><b>selected_categories</b> = []</td></tr>
 <tr class="separator:a3fb3a8d0382b1cad68f569c2ffbd4ff3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af63d3643ce6a1e5c2dcdf5b5e4b5b782" id="r_af63d3643ce6a1e5c2dcdf5b5e4b5b782"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af63d3643ce6a1e5c2dcdf5b5e4b5b782">title_input</a> = TextInput(hint_text=&quot;Task Title&quot;)</td></tr>
+<tr class="memitem:a74bf7a8624320cc0a09d8719ff365a16" id="r_a74bf7a8624320cc0a09d8719ff365a16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a74bf7a8624320cc0a09d8719ff365a16">bg_rect</a></td></tr>
+<tr class="separator:a74bf7a8624320cc0a09d8719ff365a16"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af63d3643ce6a1e5c2dcdf5b5e4b5b782" id="r_af63d3643ce6a1e5c2dcdf5b5e4b5b782"><td class="memItemLeft" align="right" valign="top"><a id="af63d3643ce6a1e5c2dcdf5b5e4b5b782" name="af63d3643ce6a1e5c2dcdf5b5e4b5b782"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>title_input</b> = TextInput(hint_text=&quot;Task Title&quot;)</td></tr>
 <tr class="separator:af63d3643ce6a1e5c2dcdf5b5e4b5b782"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a16bfc2e3a7f7b24daf6a96ac8c019f32" id="r_a16bfc2e3a7f7b24daf6a96ac8c019f32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16bfc2e3a7f7b24daf6a96ac8c019f32">deadline_label</a> = Label(text=&quot;Pick a deadline&quot;, size_hint_x=0.8)</td></tr>
+<tr class="memitem:a16bfc2e3a7f7b24daf6a96ac8c019f32" id="r_a16bfc2e3a7f7b24daf6a96ac8c019f32"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a16bfc2e3a7f7b24daf6a96ac8c019f32">deadline_label</a></td></tr>
 <tr class="separator:a16bfc2e3a7f7b24daf6a96ac8c019f32"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae80cf3c6444644790db13ef97a532760" id="r_ae80cf3c6444644790db13ef97a532760"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae80cf3c6444644790db13ef97a532760">repeat_button</a> = Button(text=&quot;Does not repeat&quot;, on_release=self.open_repeat_window)</td></tr>
+<tr class="memitem:ae80cf3c6444644790db13ef97a532760" id="r_ae80cf3c6444644790db13ef97a532760"><td class="memItemLeft" align="right" valign="top"><a id="ae80cf3c6444644790db13ef97a532760" name="ae80cf3c6444644790db13ef97a532760"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>repeat_button</b> = <a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_uniform_button.html">UniformButton</a>(text=&quot;Does not repeat&quot;, on_release=self.open_repeat_window)</td></tr>
 <tr class="separator:ae80cf3c6444644790db13ef97a532760"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a89ca28571d9081a6ec9c2a9525167a23" id="r_a89ca28571d9081a6ec9c2a9525167a23"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a89ca28571d9081a6ec9c2a9525167a23">priority_button</a> = Button(text=&quot;Pick Priority&quot;, on_release=self.open_priority_window)</td></tr>
+<tr class="memitem:a89ca28571d9081a6ec9c2a9525167a23" id="r_a89ca28571d9081a6ec9c2a9525167a23"><td class="memItemLeft" align="right" valign="top"><a id="a89ca28571d9081a6ec9c2a9525167a23" name="a89ca28571d9081a6ec9c2a9525167a23"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>priority_button</b> = <a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_uniform_button.html">UniformButton</a>(text=&quot;Pick Priority&quot;, on_release=self.open_priority_window)</td></tr>
 <tr class="separator:a89ca28571d9081a6ec9c2a9525167a23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a113b120d899a5948db6931e8acc4b18e" id="r_a113b120d899a5948db6931e8acc4b18e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a113b120d899a5948db6931e8acc4b18e">notes_input</a> = TextInput(hint_text=&quot;Notes&quot;, multiline=True)</td></tr>
+<tr class="memitem:a113b120d899a5948db6931e8acc4b18e" id="r_a113b120d899a5948db6931e8acc4b18e"><td class="memItemLeft" align="right" valign="top"><a id="a113b120d899a5948db6931e8acc4b18e" name="a113b120d899a5948db6931e8acc4b18e"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>notes_input</b> = TextInput(hint_text=&quot;Notes&quot;, multiline=True)</td></tr>
 <tr class="separator:a113b120d899a5948db6931e8acc4b18e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaf4a8e852c3ec104057f288b10e403bf" id="r_aaf4a8e852c3ec104057f288b10e403bf"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aaf4a8e852c3ec104057f288b10e403bf">category_spinner</a></td></tr>
 <tr class="separator:aaf4a8e852c3ec104057f288b10e403bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1df48c030df5b5b6513da824374bed85" id="r_a1df48c030df5b5b6513da824374bed85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a1df48c030df5b5b6513da824374bed85">applied_categories_layout</a> = BoxLayout(orientation='vertical', spacing=5)</td></tr>
+<tr class="memitem:a1df48c030df5b5b6513da824374bed85" id="r_a1df48c030df5b5b6513da824374bed85"><td class="memItemLeft" align="right" valign="top"><a id="a1df48c030df5b5b6513da824374bed85" name="a1df48c030df5b5b6513da824374bed85"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>applied_categories_layout</b> = BoxLayout(orientation='vertical', spacing=5)</td></tr>
 <tr class="separator:a1df48c030df5b5b6513da824374bed85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -432,6 +449,27 @@ Postconditions:
 <pre class="fragment">Update the layout displaying selected categories.</pre> 
 </div>
 </div>
+<a id="aa54a95da545569d7adfd2d3220d6fb41" name="aa54a95da545569d7adfd2d3220d6fb41"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa54a95da545569d7adfd2d3220d6fb41">&#9670;&#160;</a></span>update_background()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.update_background </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">Update the size and position of the background rectangle.</pre> 
+</div>
+</div>
 <a id="a2a9c0d946ffc1a082cc5eecbff4eae22" name="a2a9c0d946ffc1a082cc5eecbff4eae22"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2a9c0d946ffc1a082cc5eecbff4eae22">&#9670;&#160;</a></span>update_category_spinner()</h2>
 
@@ -450,60 +488,23 @@ Postconditions:
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a1df48c030df5b5b6513da824374bed85" name="a1df48c030df5b5b6513da824374bed85"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1df48c030df5b5b6513da824374bed85">&#9670;&#160;</a></span>applied_categories_layout</h2>
+<a id="a74bf7a8624320cc0a09d8719ff365a16" name="a74bf7a8624320cc0a09d8719ff365a16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a74bf7a8624320cc0a09d8719ff365a16">&#9670;&#160;</a></span>bg_rect</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.applied_categories_layout = BoxLayout(orientation='vertical', spacing=5)</td>
+          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.bg_rect</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a1e653d72ad658c917bb3f73334bf3459" name="a1e653d72ad658c917bb3f73334bf3459"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e653d72ad658c917bb3f73334bf3459">&#9670;&#160;</a></span>auto_dismiss</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool EECS581_Project3.screens.edittask.EditTaskModal.auto_dismiss = False</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ad6eb2c1d9920b66f2f8556de638c73b9" name="ad6eb2c1d9920b66f2f8556de638c73b9"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad6eb2c1d9920b66f2f8556de638c73b9">&#9670;&#160;</a></span>categories</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">list EECS581_Project3.screens.edittask.EditTaskModal.categories = [result.name for result in results]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="afa7822fa327541eaf30bcc6e409f31fb" name="afa7822fa327541eaf30bcc6e409f31fb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afa7822fa327541eaf30bcc6e409f31fb">&#9670;&#160;</a></span>categories_ids</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">list EECS581_Project3.screens.edittask.EditTaskModal.categories_ids = [result.id for result in results]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">=  RoundedRectangle(</div>
+<div class="line">                pos=layout.pos,</div>
+<div class="line">                size=layout.size,</div>
+<div class="line">                radius=[dp(20)]</div>
+<div class="line">            )</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aaf4a8e852c3ec104057f288b10e403bf" name="aaf4a8e852c3ec104057f288b10e403bf"></a>
@@ -517,7 +518,7 @@ Postconditions:
         </tr>
       </table>
 </div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">=  Spinner(</div>
+<b>Initial value:</b><div class="fragment"><div class="line">=  UniformSpinner(</div>
 <div class="line">            text=<span class="stringliteral">&quot;Select Category&quot;</span>,</div>
 <div class="line">            values=self.categories + [<span class="stringliteral">&quot;Add New Category&quot;</span>],</div>
 <div class="line">            size_hint=(0.7, <span class="keywordtype">None</span>),</div>
@@ -533,148 +534,28 @@ Postconditions:
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.deadline_label = Label(text=&quot;Pick a deadline&quot;, size_hint_x=0.8)</td>
+          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.deadline_label</td>
         </tr>
       </table>
 </div><div class="memdoc">
-
-</div>
-</div>
-<a id="a113b120d899a5948db6931e8acc4b18e" name="a113b120d899a5948db6931e8acc4b18e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a113b120d899a5948db6931e8acc4b18e">&#9670;&#160;</a></span>notes_input</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.notes_input = TextInput(hint_text=&quot;Notes&quot;, multiline=True)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a89ca28571d9081a6ec9c2a9525167a23" name="a89ca28571d9081a6ec9c2a9525167a23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a89ca28571d9081a6ec9c2a9525167a23">&#9670;&#160;</a></span>priority_button</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.priority_button = Button(text=&quot;Pick Priority&quot;, on_release=self.open_priority_window)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af0801a68f4978564c184f59c141f70ec" name="af0801a68f4978564c184f59c141f70ec"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af0801a68f4978564c184f59c141f70ec">&#9670;&#160;</a></span>recurrence</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">dict EECS581_Project3.screens.edittask.EditTaskModal.recurrence = None</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="aa6c405ee561ce26d301afcf0ce7c834f" name="aa6c405ee561ce26d301afcf0ce7c834f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa6c405ee561ce26d301afcf0ce7c834f">&#9670;&#160;</a></span>refresh_callback</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.refresh_callback = refresh_callback</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae80cf3c6444644790db13ef97a532760" name="ae80cf3c6444644790db13ef97a532760"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae80cf3c6444644790db13ef97a532760">&#9670;&#160;</a></span>repeat_button</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.repeat_button = Button(text=&quot;Does not repeat&quot;, on_release=self.open_repeat_window)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a3fb3a8d0382b1cad68f569c2ffbd4ff3" name="a3fb3a8d0382b1cad68f569c2ffbd4ff3"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3fb3a8d0382b1cad68f569c2ffbd4ff3">&#9670;&#160;</a></span>selected_categories</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.selected_categories = []</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a67face9dd12a3db5420fcbd9efe41674" name="a67face9dd12a3db5420fcbd9efe41674"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67face9dd12a3db5420fcbd9efe41674">&#9670;&#160;</a></span>size_hint</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">tuple EECS581_Project3.screens.edittask.EditTaskModal.size_hint = (0.9, 0.9)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="a4e38948d975fb27147cc52c22d9e479a" name="a4e38948d975fb27147cc52c22d9e479a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4e38948d975fb27147cc52c22d9e479a">&#9670;&#160;</a></span>task_id</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.task_id = task_id</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="af63d3643ce6a1e5c2dcdf5b5e4b5b782" name="af63d3643ce6a1e5c2dcdf5b5e4b5b782"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af63d3643ce6a1e5c2dcdf5b5e4b5b782">&#9670;&#160;</a></span>title_input</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">EECS581_Project3.screens.edittask.EditTaskModal.title_input = TextInput(hint_text=&quot;Task Title&quot;)</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
+<b>Initial value:</b><div class="fragment"><div class="line">=  Label(</div>
+<div class="line">            text=<span class="stringliteral">&quot;Pick a deadline&quot;</span>,</div>
+<div class="line">            color=app.Text_Color,  <span class="comment"># RGBA format for black color</span></div>
+<div class="line">            font_size=app.button_font_size,</div>
+<div class="line">            size_hint_x=0.8</div>
+<div class="line">        )</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>screens/<a class="el" href="edittask_8py.html">edittask.py</a></li>
+<li>screens/<b>edittask.py</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens_1_1edittask.html">edittask</a></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html">EditTaskModal</a></li>
+    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><b>edittask</b></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1edittask_1_1_edit_task_modal.html">EditTaskModal</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

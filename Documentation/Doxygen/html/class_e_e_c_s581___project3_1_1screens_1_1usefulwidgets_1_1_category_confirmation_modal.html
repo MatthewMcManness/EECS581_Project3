@@ -29,7 +29,7 @@
   <td id="projectalign">
    <div id="projectname">BusyBee
    </div>
-   <div id="projectbrief">Mobile friendly calendar and to-do list application</div>
+   <div id="projectbrief">A 2-in-1 calendar and to-do list desktop application.</div>
   </td>
  </tr>
  </tbody>
@@ -115,11 +115,16 @@ Inheritance diagram for EECS581_Project3.screens.usefulwidgets.CategoryConfirmat
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3911d030a9f923307a2a560b2ec7c08b" id="r_a3911d030a9f923307a2a560b2ec7c08b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3911d030a9f923307a2a560b2ec7c08b">__init__</a> (self, category_name, **kwargs)</td></tr>
 <tr class="separator:a3911d030a9f923307a2a560b2ec7c08b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79b37cadfb5cf178015bdbcc47056eb9" id="r_a79b37cadfb5cf178015bdbcc47056eb9"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a79b37cadfb5cf178015bdbcc47056eb9">update_background</a> (self, *args)</td></tr>
+<tr class="separator:a79b37cadfb5cf178015bdbcc47056eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a7527f1354ed52b9ed71d15b41fd6d6a8" id="r_a7527f1354ed52b9ed71d15b41fd6d6a8"><td class="memItemLeft" align="right" valign="top">tuple&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7527f1354ed52b9ed71d15b41fd6d6a8">size_hint</a> = (0.6, 0.3)</td></tr>
+<tr class="memitem:a7527f1354ed52b9ed71d15b41fd6d6a8" id="r_a7527f1354ed52b9ed71d15b41fd6d6a8"><td class="memItemLeft" align="right" valign="top"><a id="a7527f1354ed52b9ed71d15b41fd6d6a8" name="a7527f1354ed52b9ed71d15b41fd6d6a8"></a>
+tuple&#160;</td><td class="memItemRight" valign="bottom"><b>size_hint</b> = (0.6, 0.3)</td></tr>
 <tr class="separator:a7527f1354ed52b9ed71d15b41fd6d6a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5c9391a31cce679675444f4a5eef3b62" id="r_a5c9391a31cce679675444f4a5eef3b62"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5c9391a31cce679675444f4a5eef3b62">bg_rect</a></td></tr>
+<tr class="separator:a5c9391a31cce679675444f4a5eef3b62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><pre class="fragment">A modal to confirm the addition of a new category.</pre> </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -156,30 +161,57 @@ Postconditions:
 </pre> 
 </div>
 </div>
-<h2 class="groupheader">Member Data Documentation</h2>
-<a id="a7527f1354ed52b9ed71d15b41fd6d6a8" name="a7527f1354ed52b9ed71d15b41fd6d6a8"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7527f1354ed52b9ed71d15b41fd6d6a8">&#9670;&#160;</a></span>size_hint</h2>
+<h2 class="groupheader">Member Function Documentation</h2>
+<a id="a79b37cadfb5cf178015bdbcc47056eb9" name="a79b37cadfb5cf178015bdbcc47056eb9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a79b37cadfb5cf178015bdbcc47056eb9">&#9670;&#160;</a></span>update_background()</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">tuple EECS581_Project3.screens.usefulwidgets.CategoryConfirmationModal.size_hint = (0.6, 0.3)</td>
+          <td class="memname">EECS581_Project3.screens.usefulwidgets.CategoryConfirmationModal.update_background </td>
+          <td>(</td>
+          <td class="paramtype"></td>          <td class="paramname"><span class="paramname"><em>self</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">*</td>          <td class="paramname"><span class="paramname"><em>args</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
+<pre class="fragment">Update the size and position of the background rectangle.</pre> 
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a5c9391a31cce679675444f4a5eef3b62" name="a5c9391a31cce679675444f4a5eef3b62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5c9391a31cce679675444f4a5eef3b62">&#9670;&#160;</a></span>bg_rect</h2>
 
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">EECS581_Project3.screens.usefulwidgets.CategoryConfirmationModal.bg_rect</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Initial value:</b><div class="fragment"><div class="line">=  RoundedRectangle(</div>
+<div class="line">                pos=layout.pos,</div>
+<div class="line">                size=layout.size,</div>
+<div class="line">                radius=[dp(20)]</div>
+<div class="line">            )</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>screens/<a class="el" href="usefulwidgets_8py.html">usefulwidgets.py</a></li>
+<li>screens/<b>usefulwidgets.py</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens_1_1usefulwidgets.html">usefulwidgets</a></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_confirmation_modal.html">CategoryConfirmationModal</a></li>
+    <li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3.html">EECS581_Project3</a></li><li class="navelem"><a class="el" href="namespace_e_e_c_s581___project3_1_1screens.html">screens</a></li><li class="navelem"><b>usefulwidgets</b></li><li class="navelem"><a class="el" href="class_e_e_c_s581___project3_1_1screens_1_1usefulwidgets_1_1_category_confirmation_modal.html">CategoryConfirmationModal</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>
