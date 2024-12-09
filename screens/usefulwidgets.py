@@ -15,6 +15,7 @@
 # - November 23, 2024: Updated RepeatOptionsModal and created set_repeat_frequency modal to match the layout with our requirements, modified the save function to handle the recurrence info (Matthew McManness)
 # - December 5, 2024: Updated the logic and UI for the RepeatOptionsModal to match what the group decided (Matthew McManness)
 # - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+# - December 8, 2024: Theme toggling (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and functional.
@@ -120,7 +121,7 @@ class DatePicker(ModalView):
         self.month_year_label = Label(
             text=self.get_month_year_text(),
             font_size=app.button_font_size,
-            color=(0, 0, 0, 1),
+            color=app.Subtitle_Color,
             size_hint_y=None,
             height=40
         )
@@ -198,7 +199,7 @@ class DatePicker(ModalView):
             
             # Add a canvas.before to draw the background
             with header_box.canvas.before:
-                Color(rgba=app.Day_Label_Color)  
+                Color(rgba=app.Weekday_Background)  
                 header_box.bg_rect = Rectangle(pos=header_box.pos, size=header_box.size)
             
             # Update the rectangle when the layout changes size or position
@@ -206,7 +207,7 @@ class DatePicker(ModalView):
             header_box.bind(size=lambda instance, value: setattr(instance.bg_rect, 'size', value))
             
             # Add the day label to the header box
-            header_label = Label(text=day, size_hint=(1, 1), color=(0, 0, 0, 1))  # Black text
+            header_label = Label(text=day, size_hint=(1, 1), color=app.Weekday_Color) 
             header_box.add_widget(header_label)
             
             # Add the header box to the grid
@@ -220,10 +221,10 @@ class DatePicker(ModalView):
                 else:
                     button = Button(
                         text=str(day),
-                        color=(0,0,0,1),
+                        color=app.Text_Color,
                         size_hint_y=row_height,
                         background_normal='',
-                        background_color=(1, 1, 1, 1)  # White background
+                        background_color=app.Event_Box
                     )
                     button.bind(on_release=lambda btn=button: self.select_date(btn))
                     self.grid.add_widget(button)
@@ -238,10 +239,13 @@ class DatePicker(ModalView):
         Postconditions:
             - The selected date is stored and highlighted.
         """
+        app = App.get_running_app()
         if self.selected_button:
-            self.selected_button.background_color = (1, 1, 1, 1)  # Reset color
+            self.selected_button.background_color = app.Event_Box  # Reset background color
+            self.selected_button.color = app.Text_Color  # Reset text color
 
-        button.background_color = (0, 0.5, 1, 1)  # Highlight selected day
+        button.background_color = app.Date_Selected # Highlight selected day
+        button.color = app.Date_Selected_Text
         self.selected_button = button
         self.selected_date = datetime(
             self.current_year, self.current_month, int(button.text)
@@ -265,6 +269,7 @@ class DatePicker(ModalView):
         """Update the size and position of the background rectangle."""
         self.bg_rect.pos = self.pos
         self.bg_rect.size = self.size
+
 ####################### Custom Time Picker ###########################
 class TimePicker(ModalView):
     """A custom time picker mimicking Material Design style."""
@@ -393,7 +398,7 @@ class RepeatOptionsModal(ModalView):
         repeat_layout = BoxLayout(orientation="horizontal", spacing=10, size_hint=(1, None), height=50)
 
         # "Repeats" label
-        self.repeats_label = Label(text="Repeats", color=(0,0,0,1), font_size=app.button_font_size, size_hint=(0.2, 1))
+        self.repeats_label = Label(text="Repeats", color=app.Text_Color, font_size=app.button_font_size, size_hint=(0.2, 1))
 
         # Spinner for repeat frequency
         self.repeats_spinner = UniformSpinner(
@@ -405,9 +410,9 @@ class RepeatOptionsModal(ModalView):
 
         # Counter widgets for repeat times
         self.minus_button = UniformButton(text="-", size_hint=(0.1, 1))
-        self.times_input = Label(text="1", color=(0,0,0,1), font_size=app.button_font_size, size_hint=(0.1, 1), halign="center", valign="middle")
+        self.times_input = Label(text="1", color=app.Text_Color, font_size=app.button_font_size, size_hint=(0.1, 1), halign="center", valign="middle")
         self.plus_button = UniformButton(text="+", size_hint=(0.1, 1))
-        self.times_label = Label(text="times",color=(0,0,0,1), font_size=app.button_font_size, size_hint=(0.2, 1))  # Label for "times"
+        self.times_label = Label(text="times",color=app.Text_Color, font_size=app.button_font_size, size_hint=(0.2, 1))  # Label for "times"
 
         # Increment and decrement logic for the counter
         self.minus_button.bind(on_press=self.decrement_times)
@@ -659,7 +664,7 @@ class DuplicateCategoryModal(ModalView):
         layout.bind(pos=self.update_background, size=self.update_background)
 
 
-        layout.add_widget(Label(text="This category already exists.", color=(0,0,0,1)))
+        layout.add_widget(Label(text="This category already exists.", color=app.Text_Color))
         layout.add_widget(UniformButton(text="OK", on_release=self.dismiss))
 
         self.add_widget(layout)  # Add layout to modal
@@ -703,7 +708,7 @@ class CategoryConfirmationModal(ModalView):
         layout.bind(pos=self.update_background, size=self.update_background)
 
 
-        layout.add_widget(Label(text=f"Category '{category_name}' added successfully!", color=(0,0,0,1)))
+        layout.add_widget(Label(text=f"Category '{category_name}' added successfully!", color=app.Text_Color))
         layout.add_widget(UniformButton(text="OK", on_release=self.dismiss))
 
         self.add_widget(layout)  # Add layout to modal

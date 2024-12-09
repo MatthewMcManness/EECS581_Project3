@@ -19,6 +19,7 @@
 #   - December 06, 2024: Fixed the drag-and-drop functionality to work perfectly! - [Manvir Kaur]
 #   - December 07, 2024: Implemented variables for ease of UI modification - [Matthew McManness]
 #   - December 08, 2024: Removed update_task_order since we do not need that based on our requirements - [Manvir Kaur]
+#   - December 08, 2024: Theme toggling (Magaly Camacho)
 #  - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - This class should be part of a ScreenManager in the Kivy application to function correctly.
@@ -60,6 +61,11 @@ from kivy.uix.button import Button
 
 db = get_database()  # get database
 
+class UniformButton(Button):
+    pass
+class EditButton(UniformButton):
+    pass
+
 class TaskBox(BoxLayout):
     """A BoxLayout to hold task details"""
     task_id = ObjectProperty(None)
@@ -78,7 +84,8 @@ class TaskBox(BoxLayout):
         
         # Initialize the size and background color of the TaskBox
         with self.canvas.before:
-            Color(1, 1, 1, 1)
+            app = App.get_running_app()
+            Color(*app.Task_Box)
             self.rect = Rectangle(size=self.size, pos=self.pos)
 
         # Update the rectangle size and position when TaskBox is resized
@@ -86,14 +93,15 @@ class TaskBox(BoxLayout):
 
     def add_checkbox(self, callback):
         """Add a checkbox to the task box and bind it to a callback."""
-        self.check_box = CheckBox(size_hint_x=0.1)
+        self.check_box = CheckBox(size_hint_x=0.1, color=App.get_running_app().Checkbox_Color)
         self.check_box.bind(on_release=callback)
         self.add_widget(self.check_box)
 
     def add_edit_button(self):
         """Adds an edit button for opening the edit modal."""
-        edit_button = Button(
-            text="Edit", size_hint_x=0.2, on_release=lambda instance: self.edit_callback(self.task_id)
+        edit_button = EditButton(
+            text="Edit", 
+            on_release=lambda instance: self.edit_callback(self.task_id)
         )
         self.add_widget(edit_button)
         self.edit_button = edit_button
@@ -159,12 +167,12 @@ class ToDoListView(Screen):
 
     def add_task(self, task_id, name, priority=None, due_date=None, categories=None, complete=False):
         """Add a new task to the to-do list."""
+        app = App.get_running_app()
         # Create a TaskBox and pass `on_task_click` as the click callback
-        task_box = TaskBox(on_click_callback=self.on_task_click, edit_callback=self.on_edit_task_click, padding="5dp", spacing="5dp", size_hint_y=None, height="60dp", size_hint_x=1)
+        task_box = TaskBox(on_click_callback=self.on_task_click, edit_callback=self.on_edit_task_click, padding="15dp", spacing="5dp", size_hint_y=None, height="60dp", size_hint_x=1)
         task_box.task_id = task_id
 
         # Add checkbox for Task.complete and bind it to toggle_complete
-        # Add checkbox with binding to toggle_complete
         task_box.add_checkbox(lambda instance: self.toggle_complete(instance, task_id, task_box))
         task_box.check_box.active = complete  # Set initial checkbox state
 
@@ -175,17 +183,21 @@ class ToDoListView(Screen):
             categories = "-" 
         if priority is None:
             priority = "-"
-            priority_color = (0,0,0,1)
+            priority_color = app.Text_Color
 
         # Get priority text and color
         else:
             priority, priority_color = Priority.get_str_and_color(priority)
+            priority_color = app.Priority_Colors[priority]
+
+        priority_label = Label(text=priority, size_hint_x=0.1, color=priority_color)
+        priority_label.id = "priority"
 
         # Add widgets to display task info
-        task_box.add_widget(Label(text=name, size_hint_x=0.5, color=(0,0,0,1)))
-        task_box.add_widget(Label(text=due_date, size_hint_x=0.3, color=(0,0,0,1)))
-        task_box.add_widget(Label(text=priority, size_hint_x=0.1, color=priority_color))
-        task_box.add_widget(Label(text=categories, size_hint_x=0.5, color=(0,0,0,1)))
+        task_box.add_widget(Label(text=name, size_hint_x=0.5, color=app.Text_Color))
+        task_box.add_widget(Label(text=due_date, size_hint_x=0.3, color=app.Text_Color))
+        task_box.add_widget(priority_label)
+        task_box.add_widget(Label(text=categories, size_hint_x=0.5, color=app.Text_Color))
         
         task_box.add_edit_button()
 
@@ -287,14 +299,18 @@ class ToDoListView(Screen):
 
     def grey_out_task(self, task_box):
         """Grey out the task's appearance."""
+        app = App.get_running_app() # for theme settings
         # Change text color to grey
         for widget in task_box.children:
+            if isinstance(widget, EditButton):
+                continue
+
             if isinstance(widget, Label):
-                widget.color = (0.5, 0.5, 0.5, 1)  # Grey color
+                widget.color = app.Box_Greyed_Out_Text #(0.5, 0.5, 0.5, 1)  # Grey color
 
         # Change background color to a lighter grey
         with task_box.canvas.before:
-            Color(0.9, 0.9, 0.9, 1)
+            Color(*app.Box_Greyed_Out)
             task_box.rect = Rectangle(size=task_box.size, pos=task_box.pos)
 
         # Bind update_rect on task_box to keep the grey background consistent
@@ -303,14 +319,22 @@ class ToDoListView(Screen):
 
     def reset_task_appearance(self, task_box):
         """Reset the task's appearance to its original color."""
-        # Reset text color to black
-        for widget in task_box.children:
-            if isinstance(widget, Label):
-                widget.color = (0, 0, 0, 1)  # Original black color
+        app = App.get_running_app() # get app for theme config
 
-        # Reset background color to white
+        # Reset text color 
+        for widget in task_box.children:
+            if isinstance(widget, EditButton):
+                continue
+
+            if isinstance(widget, Label):
+                if hasattr(widget, "id") and widget.id == "priority":
+                    widget.color = app.Priority_Colors[widget.text]
+                else:
+                    widget.color = app.Text_Color  # Original black color
+
+        # Reset background color
         with task_box.canvas.before:
-            Color(1, 1, 1, 1)
+            Color(*app.Task_Box)
             task_box.rect = Rectangle(size=task_box.size, pos=task_box.pos)
 
         # Bind update_rect on task_box to maintain the white background

@@ -9,6 +9,7 @@
 # - November 10, 2024: Group modified to ensure event button clicks open the edit modal (Author whole group)
 # - November 20, 2024: Implemented recurrence and fixed some bugs (Magaly Camacho)
 # - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+# - December 8, 2024: Theme toggling (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -93,7 +94,7 @@ class EditEventModal(ModalView):
         self.event_date_label = Label(
             text="Pick Event Date & Time",
             font_size=app.button_font_size,
-            color=(0, 0, 0, 1),
+            color=app.Text_Color,
         )
         date_layout.add_widget(self.event_date_label)
         pick_date_button = UniformButton(

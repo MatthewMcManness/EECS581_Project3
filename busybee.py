@@ -14,6 +14,7 @@
 # - November 24,2024: Resolved conflicts to merch testing-1 branch with main (Magaly Camacho)
 # - December 6, 2024: Implemented variables for ease of UI modification (Matthew McManness)
 # - December 7, 2024: Added theme toggling functionality (Magaly Camacho)
+# - December 8, 2024: Theme toggling improved (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy must be installed and properly configured in the Python environment.
@@ -67,7 +68,7 @@ from kivy.uix.screenmanager import ScreenManager
 from kivy.properties import NumericProperty
 from kivy.core.window import Window
 from kivy.utils import get_color_from_hex
-from theme import Theme, THEME_SETTINGS
+from theme import Theme
 
 
 # -----------------------------------------------------------------------------
@@ -80,20 +81,46 @@ class BusyBeeApp(App):
     #Variables:
 
     #Sizes
-    button_font_size = NumericProperty((Window.width + Window.height) * 0.02)
+    button_font_size = NumericProperty((Window.width + Window.height) * 0.018)
     title_font_size = NumericProperty((Window.width + Window.height) * 0.03)
     label_font_size = NumericProperty((Window.width + Window.height) * 0.015)
     button_size = NumericProperty((Window.width + Window.height) * 0.025)
 
-    #Colors
-    Title_Color = get_color_from_hex("#FFFFFF")
-    Background_Color = get_color_from_hex("#BFB1C1")
-    Button_Color = get_color_from_hex("#4381C1")
-    Day_Label_Color = get_color_from_hex("#92DCE5")
-    Day_Button_Color = get_color_from_hex("#EEE5E9")
-
+    # Colors - Initialize to Light Mode
     current_theme = Theme.LIGHT
+    theme_settings = current_theme.get_settings()
+
+    Title_Color = theme_settings["Title_Color"]
+    Title_Background = theme_settings["Title_Background"]
+
+    Subtitle_Color = theme_settings["Subtitle_Color"]
+    Background_Color = theme_settings["Background_Color"]
+
+    Text_Color = theme_settings["Text_Color"]
+    Checkbox_Color = theme_settings["Checkbox_Color"]
+
+    Button_Color = theme_settings["Button_Color"]
+    Button_Text = theme_settings["Button_Text"]
+
+    Event_Button = theme_settings["Event_Button"]
+    Event_Button_Text = theme_settings["Event_Button_Text"]
     
+    Task_Box = theme_settings["Task_Box"]
+    Event_Box = theme_settings["Event_Box"]
+    Event_More_Label = theme_settings["Event_More_Label"]
+    Box_Greyed_Out = theme_settings["Box_Greyed_Out"]
+    Box_Greyed_Out_Text = theme_settings["Box_Greyed_Out_Text"]
+
+    Date_Selected = theme_settings["Date_Selected"]
+    Date_Selected_Text = theme_settings["Date_Selected_Text"]
+
+    Edit_Button_Color = theme_settings["Edit_Button_Color"]
+    Edit_Button_Text = theme_settings["Edit_Button_Text"]
+
+    Weekday_Background = theme_settings["Weekday_Background"]
+    Weekday_Color = theme_settings["Weekday_Color"]
+
+    Priority_Colors = theme_settings["Priorities"]
 
     def build(self):
         """
@@ -217,23 +244,52 @@ class BusyBeeApp(App):
 
     def toggle_theme(self):
         """Toggle theme between light and dark mode"""
-        # get new them and save
+        # get new theme and save
         self.current_theme = Theme.toggle(self.current_theme)
         theme_settings = self.current_theme.get_settings()
+        self.set_theme_settings(theme_settings)
 
-        # update colors
-        self.Title_Color = theme_settings["Title_Color"]
-        self.Background_Color = theme_settings["Background_Color"]
-        self.Button_Color = theme_settings["Button_Color"]
-        self.Day_Label_Color = theme_settings["Day_Label_Color"]
-        self.Day_Button_Color = theme_settings["Day_Button_Color"]
-
-        # releod screens
-        for screen in self.screen_manager.screens:
+        # reload screens
+        screens = [self.screen_manager.get_screen(screen_name) for screen_name in ["daily", "calendar", "todo"]]
+        for screen in screens:
             screen.__init__()
 
         # re-add tasks
         self.root.get_screen('todo').populate()
+
+    def set_theme_settings(self, theme_settings:dict):
+        """Set color variables based on theme settings"""
+        self.Title_Color = theme_settings["Title_Color"]
+        self.Title_Background = theme_settings["Title_Background"]
+
+        self.Subtitle_Color = theme_settings["Subtitle_Color"]
+        self.Background_Color = theme_settings["Background_Color"]
+
+        self.Text_Color = theme_settings["Text_Color"]
+        self.Checkbox_Color = theme_settings["Checkbox_Color"]
+
+        self.Button_Color = theme_settings["Button_Color"]
+        self.Button_Text = theme_settings["Button_Text"]
+
+        self.Event_Button = theme_settings["Event_Button"]
+        self.Event_Button_Text = theme_settings["Event_Button_Text"]
+        
+        self.Task_Box = theme_settings["Task_Box"]
+        self.Event_Box = theme_settings["Event_Box"]
+        self.Event_More_Label = theme_settings["Event_More_Label"]
+        self.Box_Greyed_Out = theme_settings["Box_Greyed_Out"]
+        self.Box_Greyed_Out_Text = theme_settings["Box_Greyed_Out_Text"]
+
+        self.Date_Selected = theme_settings["Date_Selected"]
+        self.Date_Selected_Text = theme_settings["Date_Selected_Text"]
+
+        self.Edit_Button_Color = theme_settings["Edit_Button_Color"]
+        self.Edit_Button_Text = theme_settings["Edit_Button_Text"]
+
+        self.Weekday_Background = theme_settings["Weekday_Background"]
+        self.Weekday_Color = theme_settings["Weekday_Color"]
+
+        self.Priority_Colors = theme_settings["Priorities"]
         
 
 

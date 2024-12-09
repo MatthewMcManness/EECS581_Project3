@@ -18,6 +18,7 @@
 #   - December 6, 2024: changed the populate_calendar() to call open_daily_view() when a day is pressed and created open_daily_view() (to see the details of days when there are more than two events) - [Matthew McManness] 
 #   - December 7, 2024: Fixed setting date for dailyview - [Magaly Camacho, Mariam Oraby]
 #   - December 7, 2024: Removed EventBox class since it wasn't used - [Magaly Camacho]
+#   - December 8, 2024: Theme toggling (Magaly Camacho)
 #
 # Preconditions:
 #   - The `.kv` file must define a `calendar_grid` widget ID to correctly render the calendar grid.
@@ -74,6 +75,8 @@ from kivy.app import App  # Access the app instance for global styles
 class UniformButton(Button):
     pass
 
+class EventButton(UniformButton):
+    pass
 
 
 # Set the first day of the week to Sunday
@@ -145,13 +148,13 @@ class CalendarView(Screen):
                         size_hint=(None, None),
                         size=(dp(20), dp(20)),
                         pos_hint={'right': 1, 'top': 1},
-                        color=(0, 0, 0, 1)  # Black text color.
+                        color= App.get_running_app().Text_Color  
                     )
 
                     # Create a button for the day, which responds to clicks.
                     day_button = Button(
                         background_normal="",
-                        background_color=(0.9, 0.9, 0.9, 1),  # Light gray background.
+                        background_color=App.get_running_app().Event_Box, 
                         on_press=lambda instance, day=day: self.open_daily_view(day),  # Open DailyView on press.
                         size_hint=(1, 1),  # Make the button fill the cell.
                         text=""  # No text on the button itself.
@@ -170,9 +173,6 @@ class CalendarView(Screen):
         """
         Add a new event to the calendar.
         """
-
-        app = App.get_running_app()
-
         # Define a character limit for truncation
         char_limit = 9  # Adjust this value as needed
 
@@ -184,7 +184,7 @@ class CalendarView(Screen):
             start_time = datetime.strptime(start_time, '%Y-%m-%d %H:%M')
 
         # Create the event button
-        event_button = UniformButton(
+        event_button = EventButton(
             text=display_name,
             size_hint_y=None,
             height=dp(15),
@@ -196,13 +196,17 @@ class CalendarView(Screen):
         event_button.font_size = dp(12)
         event_button.height = dp(15)
 
+        # event box to separate event buttons
+        event_box = BoxLayout(orientation='vertical', size_hint_y=None, height=dp(18), padding=(0, 3))
+        event_box.add_widget(event_button)
+
         # Retrieve the cell widget for the event's start date
         cell = self.get_cell_widget(start_time)
         if cell:
             # Ensure AnchorLayout for events exists
             if not cell.children or not isinstance(cell.children[0], AnchorLayout):
                 anchor_layout = AnchorLayout(anchor_y='top', size_hint_y=None, height=dp(60))
-                events_layout = BoxLayout(orientation='vertical', size_hint_y=None, padding=(2, 2))
+                events_layout = BoxLayout(orientation='vertical', size_hint_y=None, padding=(5, 5))
                 events_layout.bind(minimum_height=events_layout.setter('height'))
                 anchor_layout.add_widget(events_layout)
                 cell.add_widget(anchor_layout)
@@ -210,9 +214,9 @@ class CalendarView(Screen):
                 events_layout = cell.children[0].children[0]
 
             # Add the event button only if fewer than 2 events are currently displayed
-            displayed_events = [child for child in events_layout.children if isinstance(child, Button)]
+            displayed_events = [child for child in events_layout.children if isinstance(child, BoxLayout)]
             if len(displayed_events) < 2:
-                events_layout.add_widget(event_button)
+                events_layout.add_widget(event_box)
 
             # Add "More..." label if there are more than 2 events
             if len(displayed_events) == 2:
@@ -222,12 +226,13 @@ class CalendarView(Screen):
                     None
                 )
                 if not more_label_layout:
-                    more_label_layout = AnchorLayout(anchor_y="bottom", size_hint_y=None, height=dp(15))
+                    more_label_layout = AnchorLayout(anchor_y="bottom", size_hint_y=None, height=dp(15), padding=(0,0))
                     more_label = Label(
                         text="More...",
+                        font_size=dp(12),
                         size_hint=(None, None),
                         height=dp(15),
-                        color=(0.5, 0.5, 0.5, 1)  # Grey color for the "More..." label
+                        color=App.get_running_app().Event_More_Label  # Grey color for the "More..." label
                     )
                     more_label_layout.add_widget(more_label)
                     events_layout.add_widget(more_label_layout)

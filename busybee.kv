@@ -13,6 +13,7 @@
 #   - November 23, 2024: Removed the text setting of lowercase from the sorting spinner - [Manvir Kaur]
 #   - December 6, 2024: Updated styles, colors, and spacing - [Matthew McManness]
 #   - December 7, 2024: Added theme toggle button - [Magaly Camacho]
+#   - December 8, 2024: Theme toggling improved - [Magaly Camacho]
 
 ScreenManager:
     id: screen_manager
@@ -36,14 +37,20 @@ ScreenManager:
             size_hint: None, None
             size: dp(800), dp(600)
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            spacing: dp(10)
 
             # Header with title
             BoxLayout:
+                # Background color
+                canvas.before:
+                    Color:
+                        rgba: app.Title_Background
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
                 size_hint_y: None
-                height: dp(50)
+                height: dp(58)
                 spacing: dp(10)
-                padding: [0, dp(20), 0, dp(10)]  # Add padding on top and bottom
+                padding: [0, dp(24), 0, dp(24)]  # Add padding on top and bottom
                 Label:
                     text: "Calendar"
                     font_size: app.title_font_size
@@ -52,9 +59,9 @@ ScreenManager:
             # Navigation buttons
             BoxLayout:
                 size_hint_y: None
-                height: dp(40)
+                height: dp(60)
                 spacing: dp(10)
-                padding: [dp(10), 0, dp(10), 0]  # Add padding on sides
+                padding: [dp(10), dp(10), dp(10), dp(10)]  # Add padding on sides and top
                 UniformButton:
                     text: "Previous"
                     on_press: root.change_month(-1)
@@ -67,43 +74,43 @@ ScreenManager:
             # Days of the week header
             BoxLayout:
                 size_hint_y: None
-                height: dp(40)
+                height: dp(30)
                 spacing: dp(2)
-                padding: [dp(10), dp(10)]
+                padding: [dp(5), 0]
                 canvas.before:
                     Color:
-                        rgba: app.Day_Label_Color
+                        rgba: app.Weekday_Background
                     Rectangle:
                         pos: self.pos
                         size: self.size
                 Label:
                     text: "Sun"
                     halign: "center"
-                    color: (1, 1, 1, 1)
+                    color: app.Weekday_Color
                 Label:
                     text: "Mon"
                     halign: "center"
-                    color: (1, 1, 1, 1)
+                    color: app.Weekday_Color
                 Label:
                     text: "Tue"
                     halign: "center"
-                    color: (1, 1, 1, 1)
+                    color: app.Weekday_Color
                 Label:
                     text: "Wed"
                     halign: "center"
-                    color: (1, 1, 1, 1)
+                    color: app.Weekday_Color
                 Label:
                     text: "Thu"
                     halign: "center"
-                    color: (1, 1, 1, 1)
+                    color: app.Weekday_Color
                 Label:
                     text: "Fri"
                     halign: "center"
-                    color: (1, 1, 1, 1)
+                    color: app.Weekday_Color
                 Label:
                     text: "Sat"
                     halign: "center"
-                    color: (1, 1, 1, 1)
+                    color: app.Weekday_Color
 
             # Calendar grid
             ScrollView:
@@ -112,8 +119,8 @@ ScreenManager:
                 GridLayout:
                     id: calendar_grid
                     cols: 7
-                    spacing: dp(5)
-                    padding: [dp(5), 0] # add padding to sides
+                    spacing: dp(5) # space between cells
+                    padding: [dp(10), dp(8)] # add padding to sides
                     row_default_height: dp(60)
                     row_force_default: True
                     adaptive_height: True
@@ -121,7 +128,7 @@ ScreenManager:
             # Footer with buttons
             BoxLayout:
                 size_hint_y: None
-                height: dp(80)  # Increased height for padding
+                height: dp(50)  # Increased height for padding
                 spacing: dp(10)
                 padding: [dp(10), dp(10), dp(10), dp(10)]  # Add padding
                 UniformButton:
@@ -150,14 +157,20 @@ ScreenManager:
             size_hint: None, None
             size: dp(800), dp(600)
             pos_hint: {"center_x": 0.5, "center_y": 0.5}
-            spacing: dp(10)
 
             # Header with title
             BoxLayout:
+                # Background color
+                canvas.before:
+                    Color:
+                        rgba: app.Title_Background
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
                 size_hint_y: None
-                height: dp(50)
+                height: dp(58)
                 spacing: dp(10)
-                padding: [0, dp(20), 0, dp(10)]  # Add padding on top and bottom
+                padding: [0, dp(24), 0, dp(24)]  # Add padding on top and bottom
                 Label:
                     text: "To-Do List"
                     font_size: app.title_font_size
@@ -166,9 +179,9 @@ ScreenManager:
             # Sort and filter options
             BoxLayout:
                 size_hint_y: None
-                height: dp(40)
+                height: dp(60)
                 spacing: dp(10)
-                padding: [dp(10), 0, dp(10), 0]
+                padding: [dp(10), dp(10), dp(10), dp(10)]
                 UniformSpinner:
                     id: filter_spinner
                     text: "Filter by Priority"
@@ -226,10 +239,17 @@ ScreenManager:
 
             # Header with title
             BoxLayout:
+                # Background color
+                canvas.before:
+                    Color:
+                        rgba: app.Title_Background
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
                 size_hint_y: None
-                height: dp(50)
+                height: dp(58)
                 spacing: dp(10)
-                padding: [0, dp(20), 0, dp(10)]  # Add padding on top and bottom
+                padding: [0, dp(24), 0, dp(24)]  # Add padding on top and bottom
                 Label:
                     text: "Daily View"
                     font_size: app.title_font_size
@@ -238,21 +258,17 @@ ScreenManager:
             # Date navigation
             BoxLayout:
                 size_hint_y: None
-                height: dp(50)
+                height: dp(60)
                 spacing: dp(10)
-                padding: [dp(10), 0, dp(10), 0]  # Add padding on sides
+                padding: [dp(10), dp(10), dp(10), dp(10)]  # Add padding on sides
                 UniformButton:
                     text: "Previous"
-                    on_press: root.navigate_previous_day()
-                Label:
+                    on_press: root.navigate_previous_day()  
+                UniformButtonClear:
                     id: date_label
                     text: "Date"
-                    font_size: app.button_font_size
-                    color: app.Title_Color
-                    size_hint_x: 1
                     halign: "center"
                     valign: "middle"
-                    text_size: self.size
                 UniformButton:
                     text: "Next"
                     on_press: root.navigate_next_day()
@@ -274,20 +290,20 @@ ScreenManager:
                 spacing: dp(10)
                 padding: [dp(10), dp(10), dp(10), dp(10)]  # Add vertical padding
                 UniformButton:
-                    text: "Add Event"
-                    on_release: app.open_add_event_modal()
-                UniformButton:
                     text: "Calendar View"
                     on_release: app.switch_to_screen("calendar")
+                UniformButton:
+                    text: "Add Event"
+                    on_release: app.open_add_event_modal()
 
 <UniformButton@Button>:
     background_normal: ""
     background_color: (0, 0, 0, 0)
-    color: (1, 1, 1, 1)
+    color: app.Button_Text
     font_size: app.button_font_size
     padding: [dp(10), dp(10)]
     size_hint_y: None
-    height: dp(50)
+    height: dp(40)
     canvas.before:
         Color:
             rgba: app.Button_Color
@@ -296,17 +312,35 @@ ScreenManager:
             size: self.size
             radius: [self.height / 2]
 
-<UniformButtonClear@Button>:
-    background_normal: ""
-    background_color: (0, 0, 0, 0)
-    color: (1, 1, 1, 1)
-    font_size: app.button_font_size
-    padding: [dp(10), dp(10)]
-    size_hint_y: None
-    height: dp(50)
+<EditButton@UniformButton>:
+    color: app.Edit_Button_Text
+    height: dp(30)
+    font_size: 30
+    size_hint_x: 0.1
+    canvas.before:
+        Color:
+            rgba: app.Edit_Button_Color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [self.height / 2]
+
+<UniformButtonClear@UniformButton>:
+    color: app.Subtitle_Color
     canvas.before:
         Color:
             rgba: app.Background_Color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [self.height / 2]
+
+<EventButton@UniformButton>:
+    color: app.Event_Button_Text
+    height: dp(15)
+    canvas.before:
+        Color:
+            rgba: app.Event_Button
         RoundedRectangle:
             pos: self.pos
             size: self.size
@@ -318,8 +352,8 @@ ScreenManager:
     color: (1, 1, 1, 1)
     font_size: app.button_font_size
     size_hint_y: None
-    height: app.button_size
-    padding: [dp(10), dp(5)]
+    height: dp(40) 
+    padding: [dp(10), dp(10)]
     canvas.before:
         Color:
             rgba: app.Button_Color

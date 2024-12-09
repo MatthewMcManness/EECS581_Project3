@@ -13,6 +13,7 @@
 # - November 18, 2024: Updated default frequency string (Magaly Camacho)
 # - November 23, 2024: Updated the save_task function to handle recurrence (Matthew McManness)
 # - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+# - December 8, 2024: Theme toggling (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -120,7 +121,7 @@ class AddTaskModal(ModalView):
         deadline_layout = BoxLayout(orientation='horizontal', spacing=10)
         self.deadline_label = Label(
             text="Pick a deadline",
-            color=(0, 0, 0, 1),  # RGBA format for black color
+            color=app.Text_Color,  # RGBA format for black color
             font_size=app.button_font_size,
             size_hint_x=0.8
         )

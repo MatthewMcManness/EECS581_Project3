@@ -9,6 +9,7 @@
 #   - December 7, 2024: Fixed setting date for dailyview, added prologue comments, made it so calendar view is refreshed when an event is edited - [Magaly Camacho, Mariam Oraby, Manvir Kaur]
 #   - December 7, 2024: Implemented variables for ease of UI modification - [Matthew McManness]
 #   - December 8, 2024: Removed example testing code that's unnecessary now - [Manvir Kaur]
+#   - December 8, 2024: Theme toggling (Magaly Camacho)
 
 from datetime import datetime, timedelta
 from kivy.uix.screenmanager import Screen
@@ -26,8 +27,14 @@ from kivy.lang import Builder
 from kivy.clock import Clock
 from kivy.graphics import Color, Rectangle, RoundedRectangle  
 from screens.calendarview import CalendarView
+from Models.databaseEnums import Frequency
 
 db = get_database()
+
+class UniformButton(Button):
+    pass
+class EditButton(UniformButton):
+    pass
 
 class EventBox(BoxLayout):
     """A BoxLayout to hold event details"""
@@ -36,12 +43,15 @@ class EventBox(BoxLayout):
     def __init__(self, **kwargs):
         """Initialize the EventBox"""
         super().__init__(**kwargs)  # Initialize BoxLayout class
+        app = App.get_running_app()
         # Initialize size of EventBox and make its background color white
         with self.canvas.before:
-            Color(1, 1, 1, 1)
+            Color(*app.Event_Box)
             self.rect = Rectangle(size=self.size, pos=self.pos)
+
         # When EventBox is updated, make sure size is correct
         self.bind(size=self.update_rect, pos=self.update_rect)
+
     def update_rect(self, *args):
         """Update rectangle to match the size and position of the EventBox"""
         self.rect.pos = self.pos
@@ -76,11 +86,6 @@ class DailyView(Screen):  # Change inheritance to Screen
         """Populate the event list for the current date."""
         event_list = self.ids.event_list
         event_list.clear_widgets()
-
-
-    def add_event(self):
-        """Placeholder function to add a new event."""
-        print("Add Event button clicked!")
 
     def on_kv_post(self, base_widget):
         """Populate events after the KV file is loaded."""
@@ -136,39 +141,44 @@ class DailyView(Screen):  # Change inheritance to Screen
 
         if not events:
             # Display a "No events" message if there are no events for the day
-            container.add_widget(Label(text="No events for this day.", size_hint_y=None, height=dp(40)))
+            container.add_widget(Label(text="No events for this day.", size_hint_y=None, height=dp(40), color=App.get_running_app().Text_Color))
             return
 
-        print("here 2")
         for event in events:
-            self.add_event_to_container(event, container)
+            self.add_event(event.id, event.name, event.start_time)
 
-    def add_event_to_container(self, event, container):
+    def add_event(self, event_id:int, name:str, start_time:datetime, frequency=None, times=None, place=None):
         """
         Add a single event to the container.
         """
-        event_box = BoxLayout(orientation='horizontal', size_hint_y=None, height=dp(60), spacing=dp(5), padding=dp(5))
+        app = App.get_running_app()
+        # if event isn't on current/selected day, don't add it
+        if self.current_date.date() != start_time.date():
+            return 
         
+        event_box = EventBox(orientation='horizontal', size_hint_y=None, height=dp(50), spacing=dp(5), padding=dp(10))
+        
+        # Clip name if it's too long
+        max_char = 65
+        if len(name) > max_char:
+            name = name[:max_char] + "..."
         # Display event name and time
         time_label = Label(
-            text=event.start_time.strftime('%I:%M %p'),
-            size_hint=(None, None),
+            text=start_time.strftime('%I:%M %p'),
+            size_hint_x=None,
             width=dp(80),
-            height=dp(40),
-            color=(0, 0, 0, 1)
+            height=dp(30),
+            color=app.Text_Color
         )
         event_label = Label(
-            text=event.name,
-            size_hint_y=None,
-            height=dp(40),
-            color=(0, 0, 0, 1)
+            text=name,
+            height=dp(30),
+            color=app.Text_Color
         )
-        
-        # Add a button to edit the event
-        edit_button = Button(
+
+        edit_button = EditButton(
             text="Edit",
-            size_hint_x=0.2,#(None, None),
-            on_press=lambda instance, event_id=event.id: self.open_edit_event_modal(event.id)
+            on_press=lambda instance, event_id=event_id: self.open_edit_event_modal(event_id)
         )
         
         # Add widgets to the event box
@@ -177,6 +187,7 @@ class DailyView(Screen):  # Change inheritance to Screen
         event_box.add_widget(edit_button)
         
         # Add the event box to the container
+        container = self.ids['event_list']
         container.add_widget(event_box)
 
     def open_edit_event_modal(self, event_id):
@@ -213,7 +224,6 @@ class DailyView(Screen):  # Change inheritance to Screen
                 event_box = EventBox()
                 event_box.add_widget(Label(text=f"{event.start_time.strftime('%H:%M')} - {event.name}"))
                 events_list.add_widget(event_box)
-                print("here")
             
             session.close()
         

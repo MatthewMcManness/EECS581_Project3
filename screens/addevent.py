@@ -13,6 +13,7 @@
 #   - November 20, 2024: Matched layout with editEvent layout - [Magaly Camacho]
 #   - December 7, 2024: Fixed newly added events not being able to be edited - [Magaly Camacho, Manvir Kaur, Mariam Oraby] 
 #   - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
+#   - December 8, 2024: Theme toggling (Magaly Camacho)
 #   - [Insert Further Revisions]: [Brief description of changes] - [Your Name]
 # Preconditions:
 #   - The `DatePicker` class must be implemented and correctly imported from `screens.usefulwidgets`.
@@ -108,7 +109,7 @@ class AddEventModal(ModalView):
         self.event_date_label = Label(
             text="Pick Event Date & Time",
             font_size=app.button_font_size,
-            color=(0, 0, 0, 1),
+            color=app.Text_Color,
         )
         date_layout.add_widget(self.event_date_label)  # Add label to the layout.
 
@@ -224,9 +225,10 @@ class AddEventModal(ModalView):
                 session.add(new_event)  # Save the main event
             event_id = new_event.id  # Get the ID of the newly saved event
 
-        # Update the CalendarView with the new event(s)
+        # Update the CalendarView or DailyView with the new event(s)
         app = App.get_running_app()
         calendar_screen = app.screen_manager.get_screen('calendar')
+        daily_view_screen = app.screen_manager.get_screen('daily')
 
         # Add recurring events to the calendar if applicable
         if recurrence_id:
@@ -237,9 +239,17 @@ class AddEventModal(ModalView):
                     calendar_screen.add_event(
                         event.id, event.name, event.start_time, frequency=frequency, times=times
                     )
+
+                    # add events to daily view
+                    if app.screen_manager.current == 'daily':
+                        daily_view_screen.add_event(event.id, event.name, event.start_time)
         else:
             # Add a single event to the calendar
             calendar_screen.add_event(event_id, event_name, start_time)
+
+            # Add event to daily view
+            if app.screen_manager.current == 'daily':
+                daily_view_screen.add_event(event_id, event_name, start_time)
 
         # Log success and dismiss the modal
         print(f"Event '{event_name}' scheduled for {event_date_label}, id={event_id}")
