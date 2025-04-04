@@ -9,7 +9,7 @@
 # - November 10, 2024: Group modified to ensure event button clicks open the edit modal (Author whole group)
 # - November 20, 2024: Implemented recurrence and fixed some bugs (Magaly Camacho)
 # - December 7, 2024: Implemented variables for ease of UI modification (Matthew McManness)
-# - December 8, 2024: Theme toggling (Magaly Camacho)
+# - December 8, 2024: Theme toggling and standardized recurrence label (Magaly Camacho)
 #
 # Preconditions:
 # - Kivy framework must be installed and configured properly.
@@ -159,10 +159,12 @@ class EditEventModal(ModalView):
                 # Get recurrence info
                 if event.recurrence_id:
                     recurrence: Recurrence = event.recurrence
-                    self.repeat_button.text = Frequency.enum2str(recurrence.frequency)
+                    frequency_name = Frequency.enum2str(recurrence.frequency)
+                    if Frequency.is_no_repeat(recurrence.frequency):
+                        self.repeat_button.text = frequency_name
+                    else:
+                        self.repeat_button.text = f"Repeats {frequency_name} {recurrence.times} times"
 
-                    if not Frequency.is_no_repeat(recurrence.frequency):
-                        self.repeat_button.text += f" ({recurrence.times} times)"
     def save_event(self, *args):
         """Save the event, updating if it exists or creating a new one."""
         if not self.title_input.text:
@@ -199,6 +201,11 @@ class EditEventModal(ModalView):
                     
                         else: # if event doesn't have recurrence and recurrence info was given, make new recurrence
                             make_new_recurrence = True
+
+                    # Clear recurrence if needed
+                    elif event.recurrence_id:
+                        event.recurrence = None
+                        event.recurrence_id = None
                     
                     # Make new recurrence if needed
                     if make_new_recurrence:
@@ -217,7 +224,6 @@ class EditEventModal(ModalView):
                                 start_time=new_date,
                                 recurrence_id=new_recurrence_id
                             )
-                            print(event_i)
 
                             current_date = new_date # save date to calculate next one
                             session.add(event_i)
